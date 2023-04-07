@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "ibm-openapi-validator": "^0.97.5"
+  }
+}

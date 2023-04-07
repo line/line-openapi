@@ -1,0 +1,338 @@
+openapi: "3.0.2"
+info:
+  title: LIFF server API
+  version: "1.0"
+  description: LIFF Server API.
+
+servers:
+  - url: https://api.line.me/
+
+security:
+  - Bearer: []
+
+tags:
+  - name: liff
+
+paths:
+  /liff/v1/apps:
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
+      tags:
+        - liff
+      description: Adding the LIFF app to a channel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/AddLiffAppRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/AddLiffAppResponse"
+              example:
+                liffId: "{liffId}"
+        '400':
+          description: |+
+            This status code means one of the following:
+            
+            - The request contains an invalid value.
+            - The maximum number of LIFF apps that can be added to the channel has been reached.
+        '401':
+          description: |+
+            Authentication failed.
+
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
+      summary: Get all LIFF apps
+      description: Gets information on all the LIFF apps added to the channel.
+      tags:
+        - liff
+      responses:
+        '200':
+          description: OK
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/GetAllLiffAppsResponse"
+              example:
+                apps:
+                  - liffId: "{liffId}"
+                    view:
+                      type: full
+                      url: https://example.com/myservice
+                    description: Happy New York
+                    permanentLinkPattern: concat
+                  - liffId: "{liffId}"
+                    view:
+                      type: tall
+                      url: https://example.com/myservice2
+                    features:
+                      ble: true
+                      qrCode: true
+                    permanentLinkPattern: concat
+                    scope:
+                      - profile
+                      - chat_message.write
+                    botPrompt: none
+        '401':
+          description: |+
+            Authentication failed.
+        '404':
+          description: |+
+            There is no LIFF app on the channel.
+
+
+
+  "/liff/v1/apps/{liffId}":
+    parameters:
+      - name: liffId
+        in: path
+        required: true
+        description: ID of the LIFF app to be updated
+        schema:
+          type: string
+    put:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#update-liff-app
+      description: Update LIFF app settings
+      tags:
+        - liff
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateLiffAppRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/UpdateLiffAppResponse"
+              example:
+                liffId: "{liffId}"
+        '400':
+          description: |+
+            The request contains an invalid value.
+        '401':
+          description: |+
+            Authentication failed.
+        '404':
+          description: |+
+            This status code means one of the following:
+            - The specified LIFF app does not exist.
+            - The specified LIFF app has been added to another channel.
+    delete:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#delete-liff-app
+      summary: Delete LIFF app from a channel
+      description: |+
+        Deletes a LIFF app from a channel.
+      tags:
+        - liff
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: |+
+            Authentication failed.
+        '404':
+          description: |+
+            This status code means one of the following:
+            - The specified LIFF app does not exist.
+            - The specified LIFF app has been added to another channel.
+
+components:
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      description: Channel access token
+
+  schemas:
+    AddLiffAppRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
+      type: object
+      required:
+        - view
+      properties:
+        view:
+          $ref: "#/components/schemas/LiffView"
+        description:
+          type: string
+          description: |+
+            Name of the LIFF app.
+
+            The LIFF app name can't include "LINE" or similar strings, or inappropriate strings.
+        features:
+          $ref: "#/components/schemas/LiffFeatures"
+        permanentLinkPattern:
+          type: string
+          description: |+
+            How additional information in LIFF URLs is handled. Specify `concat`.
+        scope:
+          type: array
+          items:
+            $ref: "#/components/schemas/LiffScope"
+        botPrompt:
+          $ref: "#/components/schemas/LiffBotPrompt"
+    LiffBotPrompt:
+      type: string
+      description: |+
+        Specify the setting for bot link feature with one of the following values:
+        
+        `normal`: Display the option to add the LINE Official Account as a friend in the channel consent screen.
+        `aggressive`: Display a screen with the option to add the LINE Official Account as a friend after the channel consent screen.
+        `none`: Don't display the option to add the LINE Official Account as a friend.
+          The default value is none.
+      enum:
+        - normal
+        - aggressive
+        - none
+    LiffView:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
+      type: object
+      required:
+        - type
+        - url
+      properties:
+        type:
+          description: |+
+            Size of the LIFF app view. Specify one of these values:
+            - compact
+            - tall
+            - full
+          type: string
+          enum:
+            - compact
+            - tall
+            - full
+        url:
+          type: string
+          format: uri
+          description: |+
+            Endpoint URL. This is the URL of the web app that implements the LIFF app
+            (e.g. https://example.com).
+            Used when the LIFF app is launched using the LIFF URL.
+            The URL scheme must be https. URL fragments (#URL-fragment) can't be specified.
+        moduleMode:
+          type: boolean
+          description: |+
+            `true` to use the LIFF app in modular mode.
+            When in modular mode, the action button in the header is not displayed.
+    LiffFeatures:
+      type: object
+      properties:
+        ble:
+          type: boolean
+          description: |+
+            `true` if the LIFF app supports Bluetooth® Low Energy for LINE Things. `false` otherwise.
+        qrCode:
+          type: boolean
+          description: |+
+            `true` to use the 2D code reader in the LIFF app. false otherwise. The default value is `false`.
+          default: false
+
+    AddLiffAppResponse:
+      type: object
+      required:
+        - liffId
+      properties:
+        liffId:
+          type: string
+
+    UpdateLiffAppRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
+      type: object
+      properties:
+        view:
+          $ref: "#/components/schemas/LiffView"
+        description:
+          type: string
+          description: |+
+            Name of the LIFF app.
+
+            The LIFF app name can't include "LINE" or similar strings, or inappropriate strings.
+        features:
+          $ref: "#/components/schemas/LiffFeatures"
+        permanentLinkPattern:
+          type: string
+          description: |+
+            How additional information in LIFF URLs is handled. Specify `concat`.
+        scope:
+          type: array
+          items:
+            $ref: "#/components/schemas/LiffScope"
+        botPrompt:
+          $ref: "#/components/schemas/LiffBotPrompt"
+
+    LiffScope:
+      type: string
+      enum:
+        - openid
+        - email
+        - profile
+        - chat_message.write
+      description: |+
+        Array of scopes required for some LIFF SDK methods to function.
+        The default value is `["profile", "chat_message.write"]`.
+
+    UpdateLiffAppResponse:
+      type: object
+      required:
+        - liffId
+      properties:
+        liffId:
+          type: string
+
+        
+    GetAllLiffAppsResponse:
+      type: object
+      properties:
+        apps:
+          type: array
+          items:
+            $ref: "#/components/schemas/LiffApp"
+    LiffApp:
+      type: object
+      properties:
+        liffId:
+          type: string
+          description: LIFF app ID
+        view:
+          $ref: "#/components/schemas/LiffView"
+        description:
+          type: string
+          description: Name of the LIFF app
+        features:
+          $ref: "#/components/schemas/LiffFeatures"
+        permanentLinkPattern:
+          type: string
+          description: |+
+            How additional information in LIFF URLs is handled. concat is returned.
+        scope:
+          type: array
+          items:
+            $ref: "#/components/schemas/LiffScope"
+        botPrompt:
+          $ref: "#/components/schemas/LiffBotPrompt"
+
+
+
+
+
+
+
+
+
+
