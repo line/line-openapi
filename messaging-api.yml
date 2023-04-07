@@ -3351,7 +3351,7 @@ components:
         propertyName: type
         mapping:
           age: "#/components/schemas/AgeDemographicFilter"
-          app: "#/components/schemas/AppTypeDemographicFilter"
+          appType: "#/components/schemas/AppTypeDemographicFilter"
           area: "#/components/schemas/AreaDemographicFilter"
           gender: "#/components/schemas/GenderDemographicFilter"
           operator: "#/components/schemas/OperatorDemographicFilter"
