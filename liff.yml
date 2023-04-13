@@ -112,12 +112,6 @@ paths:
       responses:
         '200':
           description: OK
-          content:
-            "application/json":
-              schema:
-                $ref: "#/components/schemas/UpdateLiffAppResponse"
-              example:
-                liffId: "{liffId}"
         '400':
           description: |+
             The request contains an invalid value.
@@ -287,15 +281,6 @@ components:
         Array of scopes required for some LIFF SDK methods to function.
         The default value is `["profile", "chat_message.write"]`.
 
-    UpdateLiffAppResponse:
-      type: object
-      required:
-        - liffId
-      properties:
-        liffId:
-          type: string
-
-        
     GetAllLiffAppsResponse:
       type: object
       properties:
