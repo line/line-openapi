@@ -16,9 +16,30 @@ jobs:
       uses: actions/setup-node@v3
       with:
         cache: 'npm'
-    - run: npm install -g zx @stoplight/spectral-cli
+    - run: npm install -g zx
+    - run: npm install -g @stoplight/spectral-cli
     - run: npm install .
     - run: zx ./tools/validate-all.mjs
     - run: zx ./tools/validate-request-suffix.mjs
     - run: zx ./tools/validate-inheritance.mjs
+
+  generate-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        cache: 'npm'
+    - run: npm install -g zx
+    - run: npm install -g @openapitools/openapi-generator-cli
+    - run: openapi-generator-cli version-manager set 6.4.0
+    - run: sed -i -e 's/openapi-generator/openapi-generator-cli/g' ./tools/generate-test.mjs
+    - name: actions/setup-java@v3 (JDK 17)
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: 17
+        architecture: x64
     - run: zx ./tools/generate-test.mjs
