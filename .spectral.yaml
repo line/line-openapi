@@ -1,0 +1,82 @@
+extends:
+  - '@ibm-cloud/openapi-ruleset'
+  - 'spectral:oas'
+rules:
+  # `oas3-unused-component` doesn't care about discriminator.
+  #  https://github.com/stoplightio/spectral/issues/1271
+  oas3-unused-component: off
+  # We can't clarify the contact point at this time.
+  info-contact: off
+
+  # https://github.com/IBM/openapi-validator/blob/main/docs/ibm-cloud-rules.md
+
+  # some API end points doesn't have a version number in path.
+  major-version-in-path: off
+  # we're using kebab case.
+  operation-id-case-convention: off
+  parameter-case-convention: off
+  property-case-convention: off
+  path-segment-case-convention: off
+  operation-id-naming-convention: off
+  # This rule doesn't match to our API specs.
+  enum-case-convention: off
+  # This rule doesn't match to our API specs.
+  response-status-codes: off
+  # Can't care both description and summary at this time.
+  # TODO We may write summary field in the future.
+  operation-summary: off
+  # We're using `format: uri`. But it's not allowed by '@ibm-cloud/openapi-ruleset'.
+  valid-type-format: off
+  # I can't understand why it's needed.
+  request-body-name: off
+  # we don't use ibm-cloud's pagination style
+  pagination-style: off
+  # description-mentions-json is meaningless
+  description-mentions-json: off
+  schema-description: off
+  collection-array-property: off
+  response-error-response-schema: off
+  array-boundary: off
+  string-boundary: off
+
+overrides:
+  # TODO Response detail wasn't documented yet.
+  - files:
+      - "module.yml#/paths/~1v2~1bot~1channel~1detach"
+      - "module.yml#/paths/~1v2~1bot~1chat~1{chatId}~1control~1acquire"
+      - "module.yml#/paths/~1v2~1bot~1chat~1{chatId}~1control~1release"
+      - "shop.yml#/paths/~1shop~1v3~1mission"
+    rules:
+      content-entry-provided: off
+
+  # blob response
+  - files:
+      - "messaging-api-blob.yml#/paths/~1v2~1bot~1message~1{messageId}~1content/get"
+      - "messaging-api-blob.yml#/paths/~1v2~1bot~1message~1{messageId}~1content~1preview/get"
+      - "messaging-api-blob.yml#/paths/~1v2~1bot~1richmenu~1{richMenuId}~1content/get"
+      - "messaging-api-blob.yml#/paths/~1v2~1bot~1richmenu~1{richMenuId}~1content/post"
+      - "messaging-api-blob.yml#/paths/~1v2~1bot~1message~1{messageId}~1content~1transcoding/get"
+    rules:
+      string-boundary: off
+      ibm-content-type-is-specific: off
+
+  # empty response
+  - files:
+      - "messaging-api.yml#/paths"
+      - "manage-audience.yml#/paths/~1v2~1bot~1audienceGroup~1upload"
+      - "manage-audience.yml#/paths/~1v2~1bot~1audienceGroup~1{audienceGroupId}"
+      - "manage-audience.yml#/paths/~1v2~1bot~1audienceGroup~1authorityLevel/put"
+      - "manage-audience-blob.yml#/paths"
+      - "channel-access-token.yml#/paths/~1oauth2~1v2.1~1revoke"
+      - "channel-access-token.yml#/paths/~1v2~1oauth~1revoke"
+      - "messaging-api-blob.yml#/paths/~1v2~1bot~1richmenu~1{richMenuId}~1content"
+    rules:
+      content-entry-provided: off
+
+  # enum with null issue.
+  - files:
+      - "manage-audience.yml#/paths/~1v2~1bot~1audienceGroup~1{audienceGroupId}"
+    rules:
+      oas3-valid-media-example: off
+
+# e.g. spectral lint messaging-api.yml --ruleset=.spectral.yaml
