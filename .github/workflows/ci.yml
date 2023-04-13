@@ -1,0 +1,48 @@
+name: Basic CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        cache: 'npm'
+    - run: npm install -g zx @stoplight/spectral-cli
+    - run: npm install .
+  validate-all:
+    needs:
+      - setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - run: ./tools/validate-all.mjs
+  validate-request-suffix:
+    needs:
+      - setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - run: ./tools/validate-request-suffix.mjs
+  validate-inheritance:
+    needs:
+      - setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - run: ./tools/validate-inheritance.mjs
+  generate-test:
+    needs:
+      - setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - run: ./tools/generate-test.mjs
