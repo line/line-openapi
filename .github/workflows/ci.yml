@@ -24,25 +24,25 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-    - run: ./tools/validate-all.mjs
+    - run: zx ./tools/validate-all.mjs
   validate-request-suffix:
     needs:
       - setup
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-    - run: ./tools/validate-request-suffix.mjs
+    - run: zx ./tools/validate-request-suffix.mjs
   validate-inheritance:
     needs:
       - setup
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-    - run: ./tools/validate-inheritance.mjs
+    - run: zx ./tools/validate-inheritance.mjs
   generate-test:
     needs:
       - setup
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-    - run: ./tools/generate-test.mjs
+    - run: zx ./tools/generate-test.mjs
