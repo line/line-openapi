@@ -406,7 +406,7 @@ components:
       properties:
         subscriptionPeriod:
           type: string
-          description: "Subscription period. Possible values: "within7days", "within90days", "unknown" etc."
+          description: "Subscription period. Possible values: `within7days`, `within90days`, `unknown` etc."
           enum:
             # Less than 7 days
             - within7days
