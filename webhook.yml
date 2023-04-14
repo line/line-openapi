@@ -6,7 +6,7 @@ info:
   version: 1.0.0
 servers:
   # DUMMY
-  - url: 'https://example.com'
+  - url: "https://example.com"
 
 tags:
   - name: dummy
@@ -15,7 +15,7 @@ tags:
 # https://github.com/OpenAPITools/openapi-generator/issues/6689
 # https://github.com/OpenAPITools/openapi-generator/issues/9083
 paths:
-  /callback:
+  "/callback":
     post:
       operationId: callback
       tags:
@@ -28,7 +28,7 @@ paths:
             schema:
               $ref: "#/components/schemas/CallbackRequest"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -91,24 +91,24 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          message: '#/components/schemas/MessageEvent'
-          unsend: '#/components/schemas/UnsendEvent'
-          follow: '#/components/schemas/FollowEvent'
-          unfollow: '#/components/schemas/UnfollowEvent'
-          join: '#/components/schemas/JoinEvent'
-          leave: '#/components/schemas/LeaveEvent'
-          memberJoined: '#/components/schemas/MemberJoinedEvent'
-          memberLeft: '#/components/schemas/MemberLeftEvent'
-          postback: '#/components/schemas/PostbackEvent'
-          videoPlayComplete: '#/components/schemas/VideoPlayCompleteEvent'
-          beacon: '#/components/schemas/BeaconEvent'
-          accountLink: '#/components/schemas/AccountLinkEvent'
-          things: '#/components/schemas/ThingsEvent'
-          module: '#/components/schemas/ModuleEvent'
-          activated: '#/components/schemas/ActivatedEvent'
-          deactivated: '#/components/schemas/DeactivatedEvent'
-          botSuspended: '#/components/schemas/BotSuspendedEvent'
-          botResumed: '#/components/schemas/BotResumedEvent'
+          message: "#/components/schemas/MessageEvent"
+          unsend: "#/components/schemas/UnsendEvent"
+          follow: "#/components/schemas/FollowEvent"
+          unfollow: "#/components/schemas/UnfollowEvent"
+          join: "#/components/schemas/JoinEvent"
+          leave: "#/components/schemas/LeaveEvent"
+          memberJoined: "#/components/schemas/MemberJoinedEvent"
+          memberLeft: "#/components/schemas/MemberLeftEvent"
+          postback: "#/components/schemas/PostbackEvent"
+          videoPlayComplete: "#/components/schemas/VideoPlayCompleteEvent"
+          beacon: "#/components/schemas/BeaconEvent"
+          accountLink: "#/components/schemas/AccountLinkEvent"
+          things: "#/components/schemas/ThingsEvent"
+          module: "#/components/schemas/ModuleEvent"
+          activated: "#/components/schemas/ActivatedEvent"
+          deactivated: "#/components/schemas/DeactivatedEvent"
+          botSuspended: "#/components/schemas/BotSuspendedEvent"
+          botResumed: "#/components/schemas/BotResumedEvent"
 
     EventMode:
       type: string
@@ -138,12 +138,12 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          user: '#/components/schemas/UserSource'
-          group: '#/components/schemas/GroupSource'
-          room: '#/components/schemas/RoomSource'
+          user: "#/components/schemas/UserSource"
+          group: "#/components/schemas/GroupSource"
+          room: "#/components/schemas/RoomSource"
     UserSource:
       allOf:
-        - $ref: '#/components/schemas/Source'
+        - $ref: "#/components/schemas/Source"
         - type: object
           required:
             - type
@@ -153,7 +153,7 @@ components:
               description: ID of the source user
     GroupSource:
       allOf:
-        - $ref: '#/components/schemas/Source'
+        - $ref: "#/components/schemas/Source"
         - type: object
           required:
             - type
@@ -167,7 +167,7 @@ components:
               description: ID of the source user. Only included in message events. Only users of LINE for iOS and LINE for Android are included in userId.
     RoomSource:
       allOf:
-        - $ref: '#/components/schemas/Source'
+        - $ref: "#/components/schemas/Source"
         - type: object
           required:
             - type
@@ -187,7 +187,7 @@ components:
       description: Webhook event object which contains the sent message.
       type: object
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -195,7 +195,7 @@ components:
             replyToken:
               type: string
             message:
-              $ref: '#/components/schemas/MessageContent'
+              $ref: "#/components/schemas/MessageContent"
 
     MessageContent:
       externalDocs:
@@ -208,13 +208,13 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          text:     '#/components/schemas/TextMessageContent'
-          image:    '#/components/schemas/ImageMessageContent'
-          video:    '#/components/schemas/VideoMessageContent'
-          audio:    '#/components/schemas/AudioMessageContent'
-          file:     '#/components/schemas/FileMessageContent'
-          location: '#/components/schemas/LocationMessageContent'
-          sticker:  '#/components/schemas/StickerMessageContent'
+          text:     "#/components/schemas/TextMessageContent"
+          image:    "#/components/schemas/ImageMessageContent"
+          video:    "#/components/schemas/VideoMessageContent"
+          audio:    "#/components/schemas/AudioMessageContent"
+          file:     "#/components/schemas/FileMessageContent"
+          location: "#/components/schemas/LocationMessageContent"
+          sticker:  "#/components/schemas/StickerMessageContent"
     ContentProvider:
       description: Provider of the media file.
       required:
@@ -237,7 +237,7 @@ components:
           description: URL of the preview image. Only included when contentProvider.type is external.
     TextMessageContent:
       allOf:
-        - $ref: '#/components/schemas/MessageContent'
+        - $ref: "#/components/schemas/MessageContent"
         - type: object
           required:
             - id
@@ -282,7 +282,7 @@ components:
       type: object
       properties:
         mentionees:
-          description: 'Array of one or more mention objects. Max: 20 mentions'
+          description: "Array of one or more mention objects. Max: 20 mentions"
           type: array
           items:
             $ref: "#/components/schemas/Mentionee"
@@ -304,7 +304,7 @@ components:
           description: User ID of the mentioned user. Only returned if the user consents to the LINE Official Account obtaining their user profile information.
     ImageMessageContent:
       allOf:
-        - $ref: '#/components/schemas/MessageContent'
+        - $ref: "#/components/schemas/MessageContent"
         - type: object
           required:
             - id
@@ -332,7 +332,7 @@ components:
 
     VideoMessageContent:
       allOf:
-        - $ref: '#/components/schemas/MessageContent'
+        - $ref: "#/components/schemas/MessageContent"
         - type: object
           required:
             - id
@@ -350,7 +350,7 @@ components:
               $ref: "#/components/schemas/ContentProvider"
     AudioMessageContent:
       allOf:
-        - $ref: '#/components/schemas/MessageContent'
+        - $ref: "#/components/schemas/MessageContent"
         - type: object
           required:
             - id
@@ -368,7 +368,7 @@ components:
               description: Length of audio file (milliseconds)
     FileMessageContent:
       allOf:
-        - $ref: '#/components/schemas/MessageContent'
+        - $ref: "#/components/schemas/MessageContent"
         - type: object
           required:
             - id
@@ -387,7 +387,7 @@ components:
               description: File size in bytes
     LocationMessageContent:
       allOf:
-        - $ref: '#/components/schemas/MessageContent'
+        - $ref: "#/components/schemas/MessageContent"
         - type: object
           required:
             - id
@@ -416,7 +416,7 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#wh-sticker
       allOf:
-        - $ref: '#/components/schemas/MessageContent'
+        - $ref: "#/components/schemas/MessageContent"
         - type: object
           required:
             - id
@@ -468,7 +468,7 @@ components:
     UnsendEvent:
       description: Event object for when the user unsends a message.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -489,7 +489,7 @@ components:
     FollowEvent:
       description: Event object for when your LINE Official Account is added as a friend (or unblocked). You can reply to follow events.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -504,7 +504,7 @@ components:
     UnfollowEvent:
       description: Event object for when your LINE Official Account is blocked.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
 
 
@@ -512,7 +512,7 @@ components:
     JoinEvent:
       description: Event object for when your LINE Official Account joins a group chat or multi-person chat. You can reply to join events.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -527,7 +527,7 @@ components:
     LeaveEvent:
       description: Event object for when a user removes your LINE Official Account from a group chat or when your LINE Official Account leaves a group chat or multi-person chat.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -537,7 +537,7 @@ components:
     MemberJoinedEvent:
       description: Event object for when a user joins a group chat or multi-person chat that the LINE Official Account is in.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -565,7 +565,7 @@ components:
     MemberLeftEvent:
       description: Event object for when a user leaves a group chat or multi-person chat that the LINE Official Account is in.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -589,7 +589,7 @@ components:
     PostbackEvent:
       description: Event object for when a user performs a postback action which initiates a postback. You can reply to postback events.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -598,7 +598,7 @@ components:
               type: string
               description: Reply token used to send reply message to this event
             postback:
-              $ref: '#/components/schemas/PostbackContent'
+              $ref: "#/components/schemas/PostbackContent"
     PostbackContent:
       type: object
       required:
@@ -618,7 +618,7 @@ components:
     VideoPlayCompleteEvent:
       description: Event for when a user finishes viewing a video at least once with the specified trackingId sent by the LINE Official Account.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -629,7 +629,7 @@ components:
               type: string
               description: Reply token used to send reply message to this event
             videoPlayComplete:
-              $ref: '#/components/schemas/VideoPlayComplete'
+              $ref: "#/components/schemas/VideoPlayComplete"
     VideoPlayComplete:
       required:
         - trackingId
@@ -644,7 +644,7 @@ components:
     BeaconEvent:
       description: Event object for when a user enters the range of a LINE Beacon. You can reply to beacon events.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -678,7 +678,7 @@ components:
     AccountLinkEvent:
       description: Event object for when a user has linked their LINE account with a provider's service account. You can reply to account link events.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -709,7 +709,7 @@ components:
     ThingsEvent:
       description: Indicates that a user linked a device with LINE.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -731,9 +731,9 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          link: '#/components/schemas/LinkThingsContent'
-          unlink: '#/components/schemas/UnlinkThingsContent'
-          scenarioResult: '#/components/schemas/ScenarioResultThingsContent'
+          link: "#/components/schemas/LinkThingsContent"
+          unlink: "#/components/schemas/UnlinkThingsContent"
+          scenarioResult: "#/components/schemas/ScenarioResultThingsContent"
     LinkThingsContent:
       allOf:
         - $ref: "#/components/schemas/ThingsContent"
@@ -824,7 +824,7 @@ components:
     ModuleEvent:
       description: This event indicates that the module channel has been attached to the LINE Official Account. Sent to the webhook URL server of the module channel.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -841,8 +841,8 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          attached: '#/components/schemas/AttachedModuleContent'
-          detached: '#/components/schemas/DetachedModuleContent'
+          attached: "#/components/schemas/AttachedModuleContent"
+          detached: "#/components/schemas/DetachedModuleContent"
     AttachedModuleContent:
       allOf:
         - $ref: "#/components/schemas/ModuleContent"
@@ -880,7 +880,7 @@ components:
     ActivatedEvent:
       description: This event indicates that the module channel has been switched to Active Channel by calling the Acquire Control API. Sent to the webhook URL server of the module channel.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -901,7 +901,7 @@ components:
     DeactivatedEvent:
       description: This event indicates that the module channel has been switched to Standby Channel by calling Acquire Control API or Release Control API. Sent to the webhook URL server of the module channel.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -910,7 +910,7 @@ components:
     BotSuspendedEvent:
       description: "This event indicates that the LINE Official Account has been suspended (Suspend). Sent to the webhook URL server of the module channel."
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type
@@ -919,7 +919,7 @@ components:
     BotResumedEvent:
       description: This event indicates that the LINE Official Account has returned from the suspended state. Sent to the webhook URL server of the module channel.
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: "#/components/schemas/Event"
         - type: object
           required:
             - type

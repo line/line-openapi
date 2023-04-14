@@ -2,12 +2,12 @@
 openapi: 3.0.0
 info:
   title: LINE Messaging API
-  version: '0.0.1'
+  version: "0.0.1"
   description:
     This document describes LINE Messaging API.
 
 servers:
-  - url: 'https://api.line.me'
+  - url: "https://api.line.me"
 
 security:
   - Bearer: []
@@ -32,15 +32,15 @@ paths:
               "$ref": "#/components/schemas/ReplyMessageRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
-        '400':
+        "400":
           description: Bad request
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '429':
+        "429":
           description: Too Many Requests
           content:
             "application/json":
@@ -73,27 +73,27 @@ paths:
               "$ref": "#/components/schemas/PushMessageRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
-        '400':
+        "400":
           description: Bad Request
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '403':
+        "403":
           description: Forbidden
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '409':
+        "409":
           description: Conflict
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '429':
+        "429":
           description: Too Many Requests
           content:
             "application/json":
@@ -126,27 +126,27 @@ paths:
               "$ref": "#/components/schemas/MulticastRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
-        '400':
+        "400":
           description: Bad Request
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '403':
+        "403":
           description: Forbidden
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '409':
+        "409":
           description: Conflict
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '429':
+        "429":
           description: Too Many Requests
           content:
             "application/json":
@@ -179,27 +179,27 @@ paths:
               "$ref": "#/components/schemas/BroadcastRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
-        '400':
+        "400":
           description: Bad Request
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '403':
+        "403":
           description: Forbidden
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '409':
+        "409":
           description: Conflict
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '429':
+        "429":
           description: Too Many Requests
           content:
             "application/json":
@@ -232,27 +232,27 @@ paths:
               "$ref": "#/components/schemas/NarrowcastRequest"
         required: true
       responses:
-        '202':
+        "202":
           description: Accepted
-        '400':
+        "400":
           description: Bad Request
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '403':
+        "403":
           description: Forbidden
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '409':
+        "409":
           description: Conflict
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '429':
+        "429":
           description: Too Many Requests
           content:
             "application/json":
@@ -275,7 +275,7 @@ paths:
             type: string
           description: The narrowcast message's request ID. Each Messaging API request has a request ID.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -294,7 +294,7 @@ paths:
       operationId: getMessageQuota
       description: Gets the target limit for sending messages in the current month. The total number of the free messages and the additional messages is returned.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -313,7 +313,7 @@ paths:
       operationId: getMessageQuotaConsumption
       description: Gets the number of messages sent in the current month.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -342,7 +342,7 @@ paths:
             Format: `yyyyMMdd` (e.g. `20191231`)
             Timezone: UTC+9
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -372,7 +372,7 @@ paths:
             Format: `yyyyMMdd` (e.g. `20191231`)
             Timezone: UTC+9
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -402,7 +402,7 @@ paths:
             Format: `yyyyMMdd` (e.g. `20191231`)
             Timezone: UTC+9
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -433,7 +433,7 @@ paths:
             Format: yyyyMMdd (e.g. 20191231)
             Timezone: UTC+9
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -459,7 +459,7 @@ paths:
             type: string
           description: User ID
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -494,7 +494,7 @@ paths:
             type: string
           description: User ID
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -527,7 +527,7 @@ paths:
             type: string
           description: User ID
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -562,7 +562,7 @@ paths:
             Value of the continuation token found in the `next` property of the JSON object returned in the response.
             Include this parameter to get the next array of user IDs for the members of the group.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -599,7 +599,7 @@ paths:
             Value of the continuation token found in the `next` property of the JSON object returned in the response.
             Include this parameter to get the next array of user IDs for the members of the group.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -628,15 +628,15 @@ paths:
             type: string
           description: Group ID
       responses:
-        '200':
+        "200":
           description: OK
-        '400':
+        "400":
           description: Bad Request
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '404':
+        "404":
           description: Not Found
           content:
             "application/json":
@@ -659,7 +659,7 @@ paths:
             type: string
           description: Room ID
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/group/{groupId}/summary":
@@ -678,7 +678,7 @@ paths:
             type: string
           description: Group ID
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -705,7 +705,7 @@ paths:
             type: string
           description: Group ID
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -730,7 +730,7 @@ paths:
             type: string
           description: Room ID
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -755,7 +755,7 @@ paths:
       operationId: getRichMenu
       description: Gets a rich menu via a rich menu ID.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -786,7 +786,7 @@ paths:
       operationId: deleteRichMenu
       description: Deletes a rich menu.
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/richmenu/validate":
@@ -804,7 +804,7 @@ paths:
               "$ref": "#/components/schemas/RichMenuRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/richmenu":
@@ -822,7 +822,7 @@ paths:
               "$ref": "#/components/schemas/RichMenuRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -847,7 +847,7 @@ paths:
       operationId: getRichMenuIdOfUser
       description: Get rich menu ID of user
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -863,7 +863,7 @@ paths:
       operationId: unlinkRichMenuIdFromUser
       description: Unlink rich menu from user
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/user/{userId}/richmenu/{richMenuId}":
@@ -888,7 +888,7 @@ paths:
             type: string
           description: ID of a rich menu
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/richmenu/bulk/link":
@@ -906,7 +906,7 @@ paths:
               "$ref": "#/components/schemas/RichMenuBulkLinkRequest"
         required: true
       responses:
-        '202':
+        "202":
           description: Accepted
 
   "/v2/bot/richmenu/bulk/unlink":
@@ -924,7 +924,7 @@ paths:
               "$ref": "#/components/schemas/RichMenuBulkUnlinkRequest"
         required: true
       responses:
-        '202':
+        "202":
           description: Accepted
 
   "/v2/bot/richmenu/list":
@@ -936,7 +936,7 @@ paths:
       operationId: getRichMenuList
       description: Get rich menu list
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -977,7 +977,7 @@ paths:
             type: string
           description: ID of a rich menu
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/user/all/richmenu":
@@ -989,7 +989,7 @@ paths:
       operationId: getDefaultRichMenuId
       description: Gets the ID of the default rich menu set with the Messaging API.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -1005,7 +1005,7 @@ paths:
       operationId: cancelDefaultRichMenu
       description: Cancel default rich menu
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/user/{userId}/linkToken":
@@ -1026,7 +1026,7 @@ paths:
             User ID for the LINE account to be linked.
             Found in the `source` object of account link event objects. Do not use the LINE ID used in LINE.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -1062,7 +1062,7 @@ paths:
             default: 300
             maximum: 1000
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -1084,7 +1084,7 @@ paths:
       operationId: getBotInfo
       description: Get bot info
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -1107,7 +1107,7 @@ paths:
       operationId: getWebhookEndpoint
       description: Get webhook endpoint information
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -1139,7 +1139,7 @@ paths:
               "$ref": "#/components/schemas/SetWebhookEndpointRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/channel/webhook/test":
@@ -1156,7 +1156,7 @@ paths:
             schema:
               "$ref": "#/components/schemas/TestWebhookEndpointRequest"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -1164,10 +1164,10 @@ paths:
                 "$ref": "#/components/schemas/TestWebhookEndpointResponse"
               example:
                 success: true
-                timestamp: '2020-09-30T05:38:20.031Z'
+                timestamp: "2020-09-30T05:38:20.031Z"
                 statusCode: 200
                 reason: OK
-                detail: '200'
+                detail: "200"
 
   "/v2/bot/richmenu/alias":
     post:
@@ -1184,9 +1184,9 @@ paths:
               "$ref": "#/components/schemas/CreateRichMenuAliasRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
-        '400':
+        "400":
           description: Bad Request
           content:
             "application/json":
@@ -1209,7 +1209,7 @@ paths:
             type: string
           description: The rich menu alias ID whose information you want to obtain.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -1239,9 +1239,9 @@ paths:
               "$ref": "#/components/schemas/UpdateRichMenuAliasRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
-        '400':
+        "400":
           description: Bad Request
           content:
             "application/json":
@@ -1262,9 +1262,9 @@ paths:
             type: string
           description: Rich menu alias ID that you want to delete.
       responses:
-        '200':
+        "200":
           description: OK
-        '400':
+        "400":
           description: Bad Request
           content:
             "application/json":
@@ -1280,7 +1280,7 @@ paths:
       operationId: getRichMenuAliasList
       description: Get list of rich menu alias
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -1309,7 +1309,7 @@ paths:
       operationId: getAggregationUnitUsage
       description: Get number of units used this month
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -1343,7 +1343,7 @@ paths:
             Value of the continuation token found in the next property of the JSON object returned in the response.
             If you can't get all the aggregation units in one request, include this parameter to get the remaining array.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -1370,7 +1370,7 @@ paths:
               "$ref": "#/components/schemas/ValidateMessageRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/message/validate/push":
@@ -1388,7 +1388,7 @@ paths:
               "$ref": "#/components/schemas/ValidateMessageRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/message/validate/multicast":
@@ -1406,7 +1406,7 @@ paths:
               "$ref": "#/components/schemas/ValidateMessageRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/message/validate/narrowcast":
@@ -1424,7 +1424,7 @@ paths:
               "$ref": "#/components/schemas/ValidateMessageRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/message/validate/broadcast":
@@ -1442,7 +1442,7 @@ paths:
               "$ref": "#/components/schemas/ValidateMessageRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/message/markAsRead":
@@ -1463,7 +1463,7 @@ paths:
                 userId: Uxxxxxxxxxxxxxxxxxx
         required: true
       responses:
-        '200':
+        "200":
           description: OK
 
   "/bot/pnp/push":
@@ -1490,9 +1490,9 @@ paths:
               "$ref": "#/components/schemas/PnpMessagesRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
-        '422':
+        "422":
           description: Unprocessable Entity
           content:
             "application/json":
@@ -1514,7 +1514,7 @@ paths:
               "$ref": "#/components/schemas/AudienceMatchMessagesRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
           # empty JSON response
 
@@ -1539,7 +1539,7 @@ paths:
             Format: `yyyyMMdd` (Example:`20211231`)
             Time zone: UTC+9
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -1569,7 +1569,7 @@ paths:
             Format: `yyyyMMdd` (e.g. `20190831`)
             Time Zone: UTC+9
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -1591,7 +1591,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-content
       servers:
-        - url: 'https://api-data.line.me'
+        - url: "https://api-data.line.me"
       tags:
         - messaging-api-blob
       operationId: getMessageContent
@@ -1604,7 +1604,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
@@ -1618,7 +1618,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview
       servers:
-        - url: 'https://api-data.line.me'
+        - url: "https://api-data.line.me"
       tags:
         - messaging-api-blob
       operationId: getMessageContentPreview
@@ -1631,7 +1631,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
@@ -1645,7 +1645,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image
       servers:
-        - url: 'https://api-data.line.me'
+        - url: "https://api-data.line.me"
       tags:
         - messaging-api-blob
       operationId: getRichMenuImage
@@ -1658,7 +1658,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             # TODO check the content-type of the actual implementation and replace here.
@@ -1672,7 +1672,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image
       servers:
-        - url: 'https://api-data.line.me'
+        - url: "https://api-data.line.me"
       tags:
         - messaging-api-blob
       operationId: setRichMenuImage
@@ -1692,7 +1692,7 @@ paths:
               type: string
               format: binary
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/message/{messageId}/content/transcoding":
@@ -1700,7 +1700,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status
       servers:
-        - url: 'https://api-data.line.me'
+        - url: "https://api-data.line.me"
       tags:
         - messaging-api-blob
       operationId: getMessageContentTranscodingByMessageId
@@ -1713,7 +1713,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":

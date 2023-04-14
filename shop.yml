@@ -2,12 +2,12 @@
 openapi: 3.0.0
 info:
   title: Mission Stickers API
-  version: '0.0.1'
+  version: "0.0.1"
   description:
     This document describes LINE Mission Stickers API.
 
 servers:
-  - url: 'https://api.line.me'
+  - url: "https://api.line.me"
 
 security:
   - Bearer: []
@@ -31,7 +31,7 @@ paths:
               "$ref": "#/components/schemas/MissionStickerRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: Returns status code 200 and an empty response body.
           # TODO content-type?
 

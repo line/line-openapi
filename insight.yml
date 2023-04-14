@@ -2,12 +2,12 @@
 openapi: 3.0.0
 info:
   title: LINE Messaging API(Insight)
-  version: '0.0.1'
+  version: "0.0.1"
   description:
     This document describes LINE Messaging API(Insight).
 
 servers:
-  - url: 'https://api.line.me'
+  - url: "https://api.line.me"
 
 security:
   - Bearer: []
@@ -16,7 +16,7 @@ tags:
   - name: insight
 
 paths:
-  /v2/bot/insight/demographic:
+  "/v2/bot/insight/demographic":
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
@@ -29,11 +29,11 @@ paths:
         Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia
         (ID).
       responses:
-        '200':
+        "200":
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/GetFriendsDemographicsResponse'
+                $ref: "#/components/schemas/GetFriendsDemographicsResponse"
               example:
                 available: true
                 genders:
@@ -75,7 +75,7 @@ paths:
                     percentage: 0
           description: OK
 
-  /v2/bot/insight/message/delivery:
+  "/v2/bot/insight/message/delivery":
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages
@@ -95,15 +95,15 @@ paths:
           required: true
           schema:
             type: string
-            pattern: '^[0-9]{8}$'
+            pattern: "^[0-9]{8}$"
             minLength: 8
             maxLength: 8
       responses:
-        '200':
+        "200":
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/GetNumberOfMessageDeliveriesResponse'
+                $ref: "#/components/schemas/GetNumberOfMessageDeliveriesResponse"
               example:
                 status: ready
                 broadcast: 5385
@@ -111,7 +111,7 @@ paths:
           description: OK
       summary: Get number of message deliveries
 
-  /v2/bot/insight/followers:
+  "/v2/bot/insight/followers":
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers
@@ -133,23 +133,23 @@ paths:
             Timezone: UTC+9
           schema:
             type: string
-            pattern: '^[0-9]{8}$'
+            pattern: "^[0-9]{8}$"
             maxLength: 8
             minLength: 8
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/GetNumberOfFollowersResponse'
+                $ref: "#/components/schemas/GetNumberOfFollowersResponse"
               example:
                 status: ready
                 followers: 7620
                 targetedReaches: 5848
                 blocks: 237
 
-  /v2/bot/insight/message/event:
+  "/v2/bot/insight/message/event":
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-message-event
@@ -172,12 +172,12 @@ paths:
             type: string
             minLength: 1
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/GetMessageEventResponse'
+                $ref: "#/components/schemas/GetMessageEventResponse"
               example:
                 overview:
                   requestId: f70dd685-499a-4231-a441-f24b8d4fba21
@@ -212,7 +212,7 @@ paths:
                     uniqueClick: 38
                     uniqueClickOfRequest: 38
 
-  /v2/bot/insight/message/event/aggregation:
+  "/v2/bot/insight/message/event/aggregation":
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit
@@ -232,7 +232,7 @@ paths:
           schema:
             # https://developers.line.biz/en/reference/messaging-api/#send-push-message-request-body
             type: string
-            pattern: '^[a-zA-Z0-9_]{1,30}$'
+            pattern: "^[a-zA-Z0-9_]{1,30}$"
             minLength: 1
             maxLength: 30
         - in: query
@@ -245,8 +245,8 @@ paths:
             Time zone: UTC+9
           schema:
             type: string
-            pattern: '^[0-9]{8}$'
-            example: '20210301'
+            pattern: "^[0-9]{8}$"
+            example: "20210301"
             minLength: 8
             maxLength: 8
         - in: query
@@ -259,17 +259,17 @@ paths:
             Time zone: UTC+9
           schema:
             type: string
-            pattern: '^[0-9]{8}$'
-            example: '20210301'
+            pattern: "^[0-9]{8}$"
+            example: "20210301"
             minLength: 8
             maxLength: 8
       responses:
-        '200':
+        "200":
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/GetStatisticsPerUnitResponse'
+                $ref: "#/components/schemas/GetStatisticsPerUnitResponse"
               example:
                 overview:
                   uniqueImpression: 40
@@ -321,26 +321,26 @@ components:
         genders:
           type: array
           items:
-            $ref: '#/components/schemas/GenderTile'
+            $ref: "#/components/schemas/GenderTile"
           description: Percentage per gender.
         ages:
           type: array
           items:
-            $ref: '#/components/schemas/AgeTile'
+            $ref: "#/components/schemas/AgeTile"
           description: Percentage per age group.
         areas:
           type: array
           items:
-            $ref: '#/components/schemas/AreaTile'
+            $ref: "#/components/schemas/AreaTile"
           description: Percentage per area.
         appTypes:
           type: array
           items:
-            $ref: '#/components/schemas/AppTypeTile'
+            $ref: "#/components/schemas/AppTypeTile"
           description: Percentage by OS.
         subscriptionPeriods:
           items:
-            $ref: '#/components/schemas/SubscriptionPeriodTile'
+            $ref: "#/components/schemas/SubscriptionPeriodTile"
           type: array
           description: Percentage per friendship duration.
     GenderTile:
@@ -406,7 +406,7 @@ components:
       properties:
         subscriptionPeriod:
           type: string
-          description: 'Subscription period. Possible values: "within7days", "within90days", "unknown" etc.'
+          description: "Subscription period. Possible values: "within7days", "within90days", "unknown" etc."
           enum:
             # Less than 7 days
             - within7days
@@ -522,17 +522,17 @@ components:
       description: Statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
       properties:
         overview:
-          $ref: '#/components/schemas/GetMessageEventResponseOverview'
+          $ref: "#/components/schemas/GetMessageEventResponseOverview"
         messages:
           description: Array of information about individual message bubbles.
           type: array
           items:
-            $ref: '#/components/schemas/GetMessageEventResponseMessage'
+            $ref: "#/components/schemas/GetMessageEventResponseMessage"
         clicks:
           description: Array of information about opened URLs in the message.
           type: array
           items:
-            $ref: '#/components/schemas/GetMessageEventResponseClick'
+            $ref: "#/components/schemas/GetMessageEventResponseClick"
       type: object
     GetMessageEventResponseOverview:
       description: Summary of message statistics.
@@ -668,17 +668,17 @@ components:
       type: object
       properties:
         overview:
-          $ref: '#/components/schemas/GetStatisticsPerUnitResponseOverview'
+          $ref: "#/components/schemas/GetStatisticsPerUnitResponseOverview"
         messages:
           description: Array of information about individual message bubbles.
           type: array
           items:
-            $ref: '#/components/schemas/GetStatisticsPerUnitResponseMessage'
+            $ref: "#/components/schemas/GetStatisticsPerUnitResponseMessage"
         clicks:
           description: Array of information about opened URLs in the message.
           type: array
           items:
-            $ref: '#/components/schemas/GetStatisticsPerUnitResponseClick'
+            $ref: "#/components/schemas/GetStatisticsPerUnitResponseClick"
       required:
         - clicks
         - messages

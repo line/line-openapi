@@ -2,12 +2,12 @@
 openapi: 3.0.0
 info:
   title: Channel Access Token API
-  version: '0.0.1'
+  version: "0.0.1"
   description:
     This document describes Channel Access Token API.
 
 servers:
-  - url: 'https://api.line.me'
+  - url: "https://api.line.me"
 
 security:
   - Bearer: []
@@ -28,17 +28,17 @@ paths:
         - name: client_assertion_type
           in: query
           required: true
-          description: '`urn:ietf:params:oauth:client-assertion-type:jwt-bearer`'
+          description: "`urn:ietf:params:oauth:client-assertion-type:jwt-bearer`"
           schema:
             type: string
         - name: client_assertion
           in: query
           required: true
-          description: 'A JSON Web Token (JWT) (opens new window)the client needs to create and sign with the private key.'
+          description: "A JSON Web Token (JWT) (opens new window)the client needs to create and sign with the private key."
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -79,7 +79,7 @@ paths:
                   type: string
                   description: A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -107,14 +107,14 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/VerifyChannelAccessTokenResponse"
               example:
-                client_id: '1573163733'
+                client_id: "1573163733"
                 expires_in: 2591659
                 scope: profile chat_message.write
 
@@ -144,7 +144,7 @@ paths:
                   type: string
                   description: Channel access token
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/oauth/accessToken":
@@ -174,7 +174,7 @@ paths:
                   type: string
                   description: Channel secret.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -184,7 +184,7 @@ paths:
                 access_token: W1TeHCgfH2Liwa.....
                 expires_in: 2592000
                 token_type: Bearer
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
@@ -214,14 +214,14 @@ paths:
                   description: A short-lived or long-lived channel access token.
                   type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/VerifyChannelAccessTokenResponse"
               example:
-                client_id: '1350031035'
+                client_id: "1350031035"
                 expires_in: 3138007490
                 scope: P CM
 
@@ -245,7 +245,7 @@ paths:
                   description: Channel access token
                   type: string
       responses:
-        '200':
+        "200":
           description: OK
 
 components:

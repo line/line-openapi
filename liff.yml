@@ -14,7 +14,7 @@ tags:
   - name: liff
 
 paths:
-  /liff/v1/apps:
+  "/liff/v1/apps":
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
@@ -28,7 +28,7 @@ paths:
               "$ref": "#/components/schemas/AddLiffAppRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -36,13 +36,13 @@ paths:
                 $ref: "#/components/schemas/AddLiffAppResponse"
               example:
                 liffId: "{liffId}"
-        '400':
+        "400":
           description: |+
             This status code means one of the following:
             
             - The request contains an invalid value.
             - The maximum number of LIFF apps that can be added to the channel has been reached.
-        '401':
+        "401":
           description: |+
             Authentication failed.
 
@@ -54,7 +54,7 @@ paths:
       tags:
         - liff
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -80,10 +80,10 @@ paths:
                       - profile
                       - chat_message.write
                     botPrompt: none
-        '401':
+        "401":
           description: |+
             Authentication failed.
-        '404':
+        "404":
           description: |+
             There is no LIFF app on the channel.
 
@@ -110,15 +110,15 @@ paths:
               "$ref": "#/components/schemas/UpdateLiffAppRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
-        '400':
+        "400":
           description: |+
             The request contains an invalid value.
-        '401':
+        "401":
           description: |+
             Authentication failed.
-        '404':
+        "404":
           description: |+
             This status code means one of the following:
             - The specified LIFF app does not exist.
@@ -132,12 +132,12 @@ paths:
       tags:
         - liff
       responses:
-        '200':
+        "200":
           description: OK
-        '401':
+        "401":
           description: |+
             Authentication failed.
-        '404':
+        "404":
           description: |+
             This status code means one of the following:
             - The specified LIFF app does not exist.

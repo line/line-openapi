@@ -2,12 +2,12 @@
 openapi: 3.0.0
 info:
   title: LINE Messaging API
-  version: '0.0.1'
+  version: "0.0.1"
   description:
     This document describes LINE Messaging API.
 
 servers:
-  - url: 'https://manager.line.biz'
+  - url: "https://manager.line.biz"
 
 security:
   - basicAuth: []
@@ -16,7 +16,7 @@ tags:
   - name: line-module-attach
 
 paths:
-  /module/auth/v1/token:
+  "/module/auth/v1/token":
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider
@@ -69,11 +69,11 @@ paths:
                   type: string
                   description: If you specified a value for brand_type in the URL for authentication and authorization, specify the same value.
       responses:
-        '200':
+        "200":
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/GetFriendsDemographicsResponse'
+                $ref: "#/components/schemas/GetFriendsDemographicsResponse"
               example:
                 bot_id: U45c5c51f0050ef0f0ee7261d57fd3c56
                 scopes:

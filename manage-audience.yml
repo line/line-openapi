@@ -2,12 +2,12 @@
 openapi: 3.0.0
 info:
   title: LINE Messaging API
-  version: '0.0.1'
+  version: "0.0.1"
   description:
     This document describes LINE Messaging API.
 
 servers:
-  - url: 'https://api.line.me'
+  - url: "https://api.line.me"
 
 security:
   - Bearer: []
@@ -32,7 +32,7 @@ paths:
               "$ref": "#/components/schemas/CreateAudienceGroupRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -61,7 +61,7 @@ paths:
               "$ref": "#/components/schemas/AddAudienceToAudienceGroupRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
           # empty JSON object
 
@@ -80,7 +80,7 @@ paths:
               "$ref": "#/components/schemas/CreateClickBasedAudienceGroupRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -113,7 +113,7 @@ paths:
               "$ref": "#/components/schemas/CreateImpBasedAudienceGroupRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -153,7 +153,7 @@ paths:
               "$ref": "#/components/schemas/UpdateAudienceGroupDescriptionRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
 
   "/v2/bot/audienceGroup/{audienceGroupId}/activate":
@@ -173,7 +173,7 @@ paths:
             type: integer
             format: int64
       responses:
-        '202':
+        "202":
           description: Accepted
 
   "/v2/bot/audienceGroup/{audienceGroupId}":
@@ -193,7 +193,7 @@ paths:
       operationId: deleteAudienceGroup
       description: Delete audience
       responses:
-        '200':
+        "200":
           description: OK
           # an empty JSON object
     get:
@@ -204,7 +204,7 @@ paths:
       operationId: getAudienceData
       description: Gets audience data.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -270,10 +270,10 @@ paths:
                     jobs: [ ]
                     adaccount:
                       name: Ad Account Name
-        '400':
+        "400":
           description: Bad request
           content:
-            'application/json':
+            "application/json":
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               example:
@@ -346,7 +346,7 @@ paths:
             `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window).
             `MESSAGING_API`: Return only audiences created with Messaging API.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -405,7 +405,7 @@ paths:
       operationId: getAudienceGroupAuthorityLevel
       description: Get the authority level of the audience
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -427,7 +427,7 @@ paths:
               "$ref": "#/components/schemas/UpdateAudienceGroupAuthorityLevelRequest"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
           # empty json response
 
@@ -436,7 +436,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file
       servers:
-        - url: 'https://api-data.line.me'
+        - url: "https://api-data.line.me"
       tags:
         - manage-audience-blob
       operationId: createAudienceForUploadingUserIds
@@ -476,7 +476,7 @@ paths:
                 contentType: text/plain
         required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
@@ -495,7 +495,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file
       servers:
-        - url: 'https://api-data.line.me'
+        - url: "https://api-data.line.me"
       tags:
         - manage-audience-blob
       operationId: addUserIdsToAudience
@@ -527,7 +527,7 @@ paths:
               file:
                 contentType: text/plain
       responses:
-        '202':
+        "202":
           description: OK
           # empty response
 

@@ -2,12 +2,12 @@
 openapi: 3.0.0
 info:
   title: LINE Messaging API
-  version: '0.0.1'
+  version: "0.0.1"
   description:
     This document describes LINE Messaging API.
 
 servers:
-  - url: 'https://api.line.me'
+  - url: "https://api.line.me"
 
 security:
   - Bearer: []
@@ -16,7 +16,7 @@ tags:
   - name: line-module
 
 paths:
-  /v2/bot/channel/detach:
+  "/v2/bot/channel/detach":
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin
@@ -30,10 +30,10 @@ paths:
             schema:
               "$ref": "#/components/schemas/DetachModuleRequest"
       responses:
-        '200':
+        "200":
           description: OK
 
-  /v2/bot/chat/{chatId}/control/acquire:
+  "/v2/bot/chat/{chatId}/control/acquire":
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#acquire-control-api
@@ -56,10 +56,10 @@ paths:
             schema:
               "$ref": "#/components/schemas/AcquireChatControlRequest"
       responses:
-        '200':
+        "200":
           description: OK
 
-  /v2/bot/chat/{chatId}/control/release:
+  "/v2/bot/chat/{chatId}/control/release":
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#release-control-api
@@ -76,10 +76,10 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
 
-  /v2/bot/list:
+  "/v2/bot/list":
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
@@ -108,7 +108,7 @@ paths:
             default: 100
             maximum: 100
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "application/json":
