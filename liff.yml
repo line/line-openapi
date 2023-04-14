@@ -2,7 +2,7 @@ openapi: "3.0.2"
 info:
   title: LIFF server API
   version: "1.0"
-  description: LIFF Server API.
+  description: "LIFF Server API."
 
 servers:
   - url: https://api.line.me/
@@ -14,13 +14,13 @@ tags:
   - name: liff
 
 paths:
-  /liff/v1/apps:
+  "/liff/v1/apps":
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
       tags:
         - liff
-      description: Adding the LIFF app to a channel
+      description: "Adding the LIFF app to a channel"
       requestBody:
         content:
           application/json:
@@ -28,34 +28,34 @@ paths:
               "$ref": "#/components/schemas/AddLiffAppRequest"
         required: true
       responses:
-        '200':
-          description: OK
+        "200":
+          description: "OK"
           content:
             "application/json":
               schema:
                 $ref: "#/components/schemas/AddLiffAppResponse"
               example:
                 liffId: "{liffId}"
-        '400':
+        "400":
           description: |+
             This status code means one of the following:
             
             - The request contains an invalid value.
             - The maximum number of LIFF apps that can be added to the channel has been reached.
-        '401':
+        "401":
           description: |+
             Authentication failed.
 
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
-      summary: Get all LIFF apps
-      description: Gets information on all the LIFF apps added to the channel.
+      summary: "Get all LIFF apps"
+      description: "Gets information on all the LIFF apps added to the channel."
       tags:
         - liff
       responses:
-        '200':
-          description: OK
+        "200":
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -66,7 +66,7 @@ paths:
                     view:
                       type: full
                       url: https://example.com/myservice
-                    description: Happy New York
+                    description: "Happy New York"
                     permanentLinkPattern: concat
                   - liffId: "{liffId}"
                     view:
@@ -80,10 +80,10 @@ paths:
                       - profile
                       - chat_message.write
                     botPrompt: none
-        '401':
+        "401":
           description: |+
             Authentication failed.
-        '404':
+        "404":
           description: |+
             There is no LIFF app on the channel.
 
@@ -94,13 +94,13 @@ paths:
       - name: liffId
         in: path
         required: true
-        description: ID of the LIFF app to be updated
+        description: "ID of the LIFF app to be updated"
         schema:
           type: string
     put:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#update-liff-app
-      description: Update LIFF app settings
+      description: "Update LIFF app settings"
       tags:
         - liff
       requestBody:
@@ -110,15 +110,15 @@ paths:
               "$ref": "#/components/schemas/UpdateLiffAppRequest"
         required: true
       responses:
-        '200':
-          description: OK
-        '400':
+        "200":
+          description: "OK"
+        "400":
           description: |+
             The request contains an invalid value.
-        '401':
+        "401":
           description: |+
             Authentication failed.
-        '404':
+        "404":
           description: |+
             This status code means one of the following:
             - The specified LIFF app does not exist.
@@ -126,18 +126,18 @@ paths:
     delete:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#delete-liff-app
-      summary: Delete LIFF app from a channel
+      summary: "Delete LIFF app from a channel"
       description: |+
         Deletes a LIFF app from a channel.
       tags:
         - liff
       responses:
-        '200':
-          description: OK
-        '401':
+        "200":
+          description: "OK"
+        "401":
           description: |+
             Authentication failed.
-        '404':
+        "404":
           description: |+
             This status code means one of the following:
             - The specified LIFF app does not exist.
@@ -148,7 +148,7 @@ components:
     Bearer:
       type: http
       scheme: bearer
-      description: Channel access token
+      description: "Channel access token"
 
   schemas:
     AddLiffAppRequest:
@@ -293,12 +293,12 @@ components:
       properties:
         liffId:
           type: string
-          description: LIFF app ID
+          description: "LIFF app ID"
         view:
           $ref: "#/components/schemas/LiffView"
         description:
           type: string
-          description: Name of the LIFF app
+          description: "Name of the LIFF app"
         features:
           $ref: "#/components/schemas/LiffFeatures"
         permanentLinkPattern:

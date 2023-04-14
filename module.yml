@@ -2,12 +2,12 @@
 openapi: 3.0.0
 info:
   title: LINE Messaging API
-  version: '0.0.1'
+  version: "0.0.1"
   description:
     This document describes LINE Messaging API.
 
 servers:
-  - url: 'https://api.line.me'
+  - url: "https://api.line.me"
 
 security:
   - Bearer: []
@@ -16,24 +16,24 @@ tags:
   - name: line-module
 
 paths:
-  /v2/bot/channel/detach:
+  "/v2/bot/channel/detach":
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin
       tags:
         - line-module
       operationId: detachModule
-      description: The module channel admin calls the Detach API to detach the module channel from a LINE Official Account.
+      description: "The module channel admin calls the Detach API to detach the module channel from a LINE Official Account."
       requestBody:
         content:
           application/json:
             schema:
               "$ref": "#/components/schemas/DetachModuleRequest"
       responses:
-        '200':
-          description: OK
+        "200":
+          description: "OK"
 
-  /v2/bot/chat/{chatId}/control/acquire:
+  "/v2/bot/chat/{chatId}/control/acquire":
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#acquire-control-api
@@ -47,7 +47,7 @@ paths:
         - name: chatId
           in: path
           required: true
-          description: The `userId`, `roomId`, or `groupId`
+          description: "The `userId`, `roomId`, or `groupId`"
           schema:
             type: string
       requestBody:
@@ -56,10 +56,10 @@ paths:
             schema:
               "$ref": "#/components/schemas/AcquireChatControlRequest"
       responses:
-        '200':
-          description: OK
+        "200":
+          description: "OK"
 
-  /v2/bot/chat/{chatId}/control/release:
+  "/v2/bot/chat/{chatId}/control/release":
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#release-control-api
@@ -72,21 +72,21 @@ paths:
         - name: chatId
           in: path
           required: true
-          description: The `userId`, `roomId`, or `groupId`
+          description: "The `userId`, `roomId`, or `groupId`"
           schema:
             type: string
       responses:
-        '200':
-          description: OK
+        "200":
+          description: "OK"
 
-  /v2/bot/list:
+  "/v2/bot/list":
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
       tags:
         - line-module
       operationId: getModules
-      description: Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels.
+      description: "Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels."
       parameters:
         - name: start
           in: query
@@ -108,8 +108,8 @@ paths:
             default: 100
             maximum: 100
       responses:
-        '200':
-          description: OK
+        "200":
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -137,22 +137,22 @@ components:
     Bearer:
       type: http
       scheme: bearer
-      description: Channel access token
+      description: "Channel access token"
 
   schemas:
     DetachModuleRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin
       type: object
-      description: Unlink (detach) the module channel by the operation of the module channel administrator
+      description: "Unlink (detach) the module channel by the operation of the module channel administrator"
       properties:
         botId:
-          description: User ID of the LINE Official Account bot attached to the module channel.
+          description: "User ID of the LINE Official Account bot attached to the module channel."
           type: string
     AcquireChatControlRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#acquire-control-api
-      description: Request entity of the Acquire Control API
+      description: "Request entity of the Acquire Control API"
       type: object
       properties:
         expired:
@@ -176,7 +176,7 @@ components:
     GetModulesResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
-      description: List of bots to which the module is attached
+      description: "List of bots to which the module is attached"
       required:
         - bots
       type: object
@@ -185,7 +185,7 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/ModuleBot"
-          description: Array of Bot list Item objects representing basic information about the bot.
+          description: "Array of Bot list Item objects representing basic information about the bot."
         next:
           type: string
           description: |+
@@ -195,7 +195,7 @@ components:
     ModuleBot:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
-      description: basic information about the bot.
+      description: "basic information about the bot."
       required:
         - userId
         - basicId
@@ -204,16 +204,16 @@ components:
       properties:
         userId:
           type: string
-          description: Bot's user ID
+          description: "Bot's user ID"
         basicId:
           type: string
-          description: Bot's basic ID
+          description: "Bot's basic ID"
         premiumId:
           type: string
-          description: Bot's premium ID. Not included in the response if the premium ID isn't set.
+          description: "Bot's premium ID. Not included in the response if the premium ID isn't set."
         displayName:
           type: string
-          description: Bot's display name
+          description: "Bot's display name"
         pictureUrl:
           type: string
-          description: Profile image URL. Image URL starting with "https://". Not included in the response if the bot doesn't have a profile image.
+          description: "Profile image URL. Image URL starting with `https://`. Not included in the response if the bot doesn't have a profile image."

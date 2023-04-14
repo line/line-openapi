@@ -2,12 +2,12 @@
 openapi: 3.0.0
 info:
   title: Mission Stickers API
-  version: '0.0.1'
+  version: "0.0.1"
   description:
     This document describes LINE Mission Stickers API.
 
 servers:
-  - url: 'https://api.line.me'
+  - url: "https://api.line.me"
 
 security:
   - Bearer: []
@@ -23,7 +23,7 @@ paths:
       tags:
         - shop
       operationId: missionStickerV3
-      description: Sends a mission sticker.
+      description: "Sends a mission sticker."
       requestBody:
         content:
           application/json:
@@ -31,8 +31,8 @@ paths:
               "$ref": "#/components/schemas/MissionStickerRequest"
         required: true
       responses:
-        '200':
-          description: Returns status code 200 and an empty response body.
+        "200":
+          description: "Returns status code 200 and an empty response body."
           # TODO content-type?
 
 components:
@@ -40,13 +40,13 @@ components:
     Bearer:
       type: http
       scheme: bearer
-      description: Channel access token
+      description: "Channel access token"
 
   schemas:
     MissionStickerRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3
-      description: Send mission stickers (v3)
+      description: "Send mission stickers (v3)"
       required:
         - to
         - productId
@@ -56,10 +56,10 @@ components:
       properties:
         to:
           type: string
-          description: Destination user ID
+          description: "Destination user ID"
         productId:
           type: string
-          description: Package ID for a set of stickers
+          description: "Package ID for a set of stickers"
         productType:
           type: string
           description: "`STICKER`"
