@@ -24,7 +24,7 @@ paths:
       tags:
         - manage-audience
       operationId: createAudienceGroup
-      description: Create audience for uploading user IDs (by JSON)
+      description: "Create audience for uploading user IDs (by JSON)"
       requestBody:
         content:
           application/json:
@@ -33,7 +33,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -42,7 +42,7 @@ paths:
                 audienceGroupId: 1234567890123
                 createRoute: MESSAGING_API
                 type: UPLOAD
-                description: audienceGroupName_01
+                description: "audienceGroupName_01"
                 created: 1613698278
                 permission: READ_WRITE
                 expireTimestamp: 1629250278
@@ -53,7 +53,7 @@ paths:
       tags:
         - manage-audience
       operationId: addAudienceToAudienceGroup
-      description: Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
+      description: "Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)"
       requestBody:
         content:
           application/json:
@@ -62,7 +62,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
           # empty JSON object
 
   "/v2/bot/audienceGroup/click":
@@ -72,7 +72,7 @@ paths:
       tags:
         - manage-audience
       operationId: createClickBasedAudienceGroup
-      description: Create audience for click-based retargeting
+      description: "Create audience for click-based retargeting"
       requestBody:
         content:
           application/json:
@@ -81,7 +81,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -90,7 +90,7 @@ paths:
                 audienceGroupId: 1234567890123
                 createRoute: MESSAGING_API
                 type: CLICK
-                description: audienceGroupName_01
+                description: "audienceGroupName_01"
                 created: 1613705240
                 permission: READ_WRITE
                 expireTimestamp: 1629257239
@@ -105,7 +105,7 @@ paths:
       tags:
         - manage-audience
       operationId: createImpBasedAudienceGroup
-      description: Create audience for impression-based retargeting
+      description: "Create audience for impression-based retargeting"
       requestBody:
         content:
           application/json:
@@ -114,7 +114,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -123,7 +123,7 @@ paths:
                 audienceGroupId: 1234567890123
                 createRoute: MESSAGING_API
                 type: IMP
-                description: audienceGroupName_01
+                description: "audienceGroupName_01"
                 created: 1613707097
                 permission: READ_WRITE
                 expireTimestamp: 1629259095
@@ -137,12 +137,12 @@ paths:
       tags:
         - manage-audience
       operationId: updateAudienceGroupDescription
-      description: Renames an existing audience.
+      description: "Renames an existing audience."
       parameters:
         - name: audienceGroupId
           in: path
           required: true
-          description: The audience ID.
+          description: "The audience ID."
           schema:
             type: integer
             format: int64
@@ -154,7 +154,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/audienceGroup/{audienceGroupId}/activate":
     put:
@@ -163,25 +163,25 @@ paths:
       tags:
         - manage-audience
       operationId: activateAudienceGroup
-      description: Activate audience
+      description: "Activate audience"
       parameters:
         - name: audienceGroupId
           in: path
           required: true
-          description: The audience ID.
+          description: "The audience ID."
           schema:
             type: integer
             format: int64
       responses:
         "202":
-          description: Accepted
+          description: "Accepted"
 
   "/v2/bot/audienceGroup/{audienceGroupId}":
     parameters:
       - name: audienceGroupId
         in: path
         required: true
-        description: The audience ID.
+        description: "The audience ID."
         schema:
           type: integer
           format: int64
@@ -191,10 +191,10 @@ paths:
       tags:
         - manage-audience
       operationId: deleteAudienceGroup
-      description: Delete audience
+      description: "Delete audience"
       responses:
         "200":
-          description: OK
+          description: "OK"
           # an empty JSON object
     get:
       externalDocs:
@@ -202,23 +202,23 @@ paths:
       tags:
         - manage-audience
       operationId: getAudienceData
-      description: Gets audience data.
+      description: "Gets audience data."
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/GetAudienceDataResponse"
               examples:
                 UPLOADING_USER_IDS:
-                  summary: Example of an audience used for uploading user IDs
+                  summary: "Example of an audience used for uploading user IDs"
                   value:
                     audienceGroup:
                       audienceGroupId: 1234567890123
                       createRoute: OA_MANAGER
                       type: UPLOAD
-                      description: audienceGroupName_01
+                      description: "audienceGroupName_01"
                       status: READY
                       audienceCount: 1887
                       created: 1608617466
@@ -228,7 +228,7 @@ paths:
                     jobs:
                       - audienceGroupJobId: 12345678
                         audienceGroupId: 1234567890123
-                        description: audience_list.txt
+                        description: "audience_list.txt"
                         type: DIFF_ADD
                         status: FINISHED
                         failedType: ~
@@ -236,13 +236,13 @@ paths:
                         created: 1608617472
                         jobStatus: FINISHED
                 CLICK_BASED:
-                  summary: Example of an audience used for click-based retargeting
+                  summary: "Example of an audience used for click-based retargeting"
                   value:
                     audienceGroup:
                       audienceGroupId: 1234567890987
                       createRoute: OA_MANAGER
                       type: CLICK
-                      description: audienceGroupName_02
+                      description: "audienceGroupName_02"
                       status: IN_PROGRESS
                       audienceCount: 8619
                       created: 1611114828
@@ -253,13 +253,13 @@ paths:
                       clickUrl: https://example.com/
                     jobs: [ ]
                 APP_EVENTS:
-                  summary: Example of an audience used for app events
+                  summary: "Example of an audience used for app events"
                   value:
                     audienceGroup:
                       audienceGroupId: 2345678909876
                       createRoute: AD_MANAGER
                       type: APP_EVENT
-                      description: audienceGroupName_03
+                      description: "audienceGroupName_03"
                       status: READY
                       audienceCount: 8619
                       created: 1608619802
@@ -271,7 +271,7 @@ paths:
                     adaccount:
                       name: Ad Account Name
         "400":
-          description: Bad request
+          description: "Bad request"
           content:
             "application/json":
               schema:
@@ -288,7 +288,7 @@ paths:
       tags:
         - manage-audience
       operationId: getAudienceGroups
-      description: Gets data for more than one audience.
+      description: "Gets data for more than one audience."
       parameters:
         - name: page
           in: query
@@ -297,7 +297,7 @@ paths:
             type: integer
             format: int64
             minimum: 1
-          description: The page to return when getting (paginated) results. Must be 1 or higher.
+          description: "The page to return when getting (paginated) results. Must be 1 or higher."
         - name: description
           in: query
           required: true
@@ -347,20 +347,20 @@ paths:
             `MESSAGING_API`: Return only audiences created with Messaging API.
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/GetAudienceGroupsResponse"
               examples:
                 TWO_AUDIENCES:
-                  summary: Example of when there are two audiences that match the specified filter
+                  summary: "Example of when there are two audiences that match the specified filter"
                   value:
                     audienceGroups:
                       - audienceGroupId: 1234567890123
                         createRoute: OA_MANAGER
                         type: CLICK
-                        description: audienceGroupName_01
+                        description: "audienceGroupName_01"
                         status: IN_PROGRESS
                         audienceCount: 8619
                         created: 1611114828
@@ -372,7 +372,7 @@ paths:
                       - audienceGroupId: 2345678901234
                         createRoute: AD_MANAGER
                         type: APP_EVENT
-                        description: audienceGroupName_02
+                        description: "audienceGroupName_02"
                         status: READY
                         audienceCount: 3368
                         created: 1608619802
@@ -386,7 +386,7 @@ paths:
                     size: 40
                     page: 1
                 NO_AUDIENCE:
-                  summary: Example of when there is no audience that matches the specified filter
+                  summary: "Example of when there is no audience that matches the specified filter"
                   value:
                     audienceGroups: []
                     hasNextPage: false
@@ -403,10 +403,10 @@ paths:
       tags:
         - manage-audience
       operationId: getAudienceGroupAuthorityLevel
-      description: Get the authority level of the audience
+      description: "Get the authority level of the audience"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -419,7 +419,7 @@ paths:
       tags:
         - manage-audience
       operationId: updateAudienceGroupAuthorityLevel
-      description: Change the authority level of the audience
+      description: "Change the authority level of the audience"
       requestBody:
         content:
           application/json:
@@ -428,7 +428,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
           # empty json response
 
   "/v2/bot/audienceGroup/upload/byFile":
@@ -440,12 +440,12 @@ paths:
       tags:
         - manage-audience-blob
       operationId: createAudienceForUploadingUserIds
-      description: Create audience for uploading user IDs (by file).
+      description: "Create audience for uploading user IDs (by file)."
       requestBody:
         content:
           multipart/form-data:
             schema:
-              description: Request for createAudienceForUploadingUserIds
+              description: "Request for createAudienceForUploadingUserIds"
               type: object
               required:
                 - file
@@ -477,7 +477,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -486,7 +486,7 @@ paths:
                 audienceGroupId: 1234567890123
                 createRoute: MESSAGING_API
                 type: UPLOAD
-                description: audienceGroupName_01
+                description: "audienceGroupName_01"
                 created: 1613700237
                 permission: READ_WRITE
                 expireTimestamp: 1629252237
@@ -499,13 +499,13 @@ paths:
       tags:
         - manage-audience-blob
       operationId: addUserIdsToAudience
-      description: Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file).
+      description: "Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file)."
       requestBody:
         required: true
         content:
           multipart/form-data:
             schema:
-              description: Request of the addUserIdsToAudience
+              description: "Request of the addUserIdsToAudience"
               type: object
               required:
                 - file
@@ -513,10 +513,10 @@ paths:
                 audienceGroupId:
                   type: integer
                   format: int64
-                  description: The audience ID.
+                  description: "The audience ID."
                 uploadDescription:
                   type: string
-                  description: The description to register with the job
+                  description: "The description to register with the job"
                 file:
                   type: string
                   format: binary
@@ -528,7 +528,7 @@ paths:
                 contentType: text/plain
       responses:
         "202":
-          description: OK
+          description: "OK"
           # empty response
 
 components:
@@ -536,14 +536,14 @@ components:
     Bearer:
       type: http
       scheme: bearer
-      description: Channel access token
+      description: "Channel access token"
 
   schemas:
     CreateAudienceGroupRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group
       type: object
-      description: Create audience for uploading user IDs (by JSON)
+      description: "Create audience for uploading user IDs (by JSON)"
       properties:
         description:
           type: string
@@ -569,22 +569,22 @@ components:
             Max number: 10,000
           maxItems: 10000
     Audience:
-      description: Audience
+      description: "Audience"
       type: object
       properties:
         id:
           type: string
-          description: A user ID or IFA. You can specify an empty array.
+          description: "A user ID or IFA. You can specify an empty array."
     CreateAudienceGroupResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group
       type: object
-      description: Create audience for uploading user IDs (by JSON)
+      description: "Create audience for uploading user IDs (by JSON)"
       properties:
         audienceGroupId:
           type: integer
           format: int64
-          description: The audience ID.
+          description: "The audience ID."
         createRoute:
           type: string
           enum:
@@ -597,11 +597,11 @@ components:
           "$ref": "#/components/schemas/AudienceGroupType"
         description:
           type: string
-          description: The audience's name.
+          description: "The audience's name."
         created:
           type: integer
           format: int64
-          description: When the audience was created (in UNIX time).
+          description: "When the audience was created (in UNIX time)."
         permission:
           type: string
           enum:
@@ -625,7 +625,7 @@ components:
             `true`: Accounts are specified with IFAs.
             `false` (default): Accounts are specified with user IDs.
     AudienceGroupType:
-      description: Audience group type
+      description: "Audience group type"
       type: string
       enum:
         - UPLOAD
@@ -642,17 +642,17 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group
       type: object
-      description: Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
+      description: "Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)"
       properties:
         audienceGroupId:
           type: integer
           format: int64
-          description: The audience ID.
+          description: "The audience ID."
         uploadDescription:
           type: string
-          description: The audience's name.
+          description: "The audience's name."
         audiences:
-          description: An array of up to 10,000 user IDs or IFAs.
+          description: "An array of up to 10,000 user IDs or IFAs."
           type: array
           items:
             "$ref": "#/components/schemas/Audience"
@@ -661,7 +661,7 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group
       type: object
-      description: Create audience for click-based retargeting
+      description: "Create audience for click-based retargeting"
       properties:
         description:
           type: string
@@ -685,28 +685,28 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group
       type: object
-      description: Create audience for click-based retargeting
+      description: "Create audience for click-based retargeting"
       properties:
         audienceGroupId:
           type: integer
           format: int64
-          description: The audience ID.
+          description: "The audience ID."
         type:
           "$ref": "#/components/schemas/AudienceGroupType"
         description:
           type: string
-          description: The audience's name.
+          description: "The audience's name."
         created:
           type: integer
           format: int64
-          description: When the audience was created (in UNIX time).
+          description: "When the audience was created (in UNIX time)."
         requestId:
           type: string
-          description: The request ID that was specified when the audience was created.
+          description: "The request ID that was specified when the audience was created."
         clickUrl:
           type: string
           format: uri
-          description: The URL that was specified when the audience was created.
+          description: "The URL that was specified when the audience was created."
         createRoute:
           type: string
           enum:
@@ -727,7 +727,7 @@ components:
         expireTimestamp:
           type: integer
           format: int64
-          description: Time of audience expiration. Only returned for specific audiences.
+          description: "Time of audience expiration. Only returned for specific audiences."
         isIfaAudience:
           type: boolean
           default: false
@@ -740,7 +740,7 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group
       type: object
-      description: Create audience for impression-based retargeting
+      description: "Create audience for impression-based retargeting"
       properties:
         description:
           type: string
@@ -759,29 +759,29 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group
       type: object
-      description: Create audience for impression-based retargeting
+      description: "Create audience for impression-based retargeting"
       properties:
         audienceGroupId:
           type: integer
           format: int64
-          description: The audience ID.
+          description: "The audience ID."
         type:
           "$ref": "#/components/schemas/AudienceGroupType"
         description:
           type: string
-          description: The audience's name.
+          description: "The audience's name."
         created:
           type: integer
           format: int64
-          description: When the audience was created (in UNIX time).
+          description: "When the audience was created (in UNIX time)."
         requestId:
           type: string
-          description: The request ID that was specified when the audience was created.
+          description: "The request ID that was specified when the audience was created."
     UpdateAudienceGroupDescriptionRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group
       type: object
-      description: Rename an audience
+      description: "Rename an audience"
       properties:
         description:
           type: string
@@ -794,7 +794,7 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-audience-group
       type: object
-      description: Get audience data
+      description: "Get audience data"
       properties:
         audienceGroup:
           "$ref": "#/components/schemas/AudienceGroup"
@@ -812,17 +812,17 @@ components:
       # https://developers.line.biz/en/reference/messaging-api/#get-audience-groups
       # https://developers.line.biz/en/reference/messaging-api/#get-audience-group
       type: object
-      description: Audience group
+      description: "Audience group"
       properties:
         audienceGroupId:
           type: integer
           format: int64
-          description: The audience ID.
+          description: "The audience ID."
         type:
           "$ref": "#/components/schemas/AudienceGroupType"
         description:
           type: string
-          description: The audience's name.
+          description: "The audience's name."
         status:
           "$ref": "#/components/schemas/AudienceGroupStatus"
         failedType:
@@ -830,11 +830,11 @@ components:
         audienceCount:
           type: integer
           format: int64
-          description: The number of users included in the audience.
+          description: "The number of users included in the audience."
         created:
           type: integer
           format: int64
-          description: When the audience was created (in UNIX time).
+          description: "When the audience was created (in UNIX time)."
         requestId:
           type: string
           description: |+
@@ -857,20 +857,20 @@ components:
     AudienceGroupJob:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-audience-group
-      description: Audience group job
+      description: "Audience group job"
       type: object
       properties:
         audienceGroupJobId:
           type: integer
           format: int64
-          description: A job ID.
+          description: "A job ID."
         audienceGroupId:
           type: integer
           format: int64
-          description: An audience ID.
+          description: "An audience ID."
         description:
           type: string
-          description: The job's description.
+          description: "The job's description."
         type:
           "$ref": "#/components/schemas/AudienceGroupJobType"
         jobStatus:
@@ -880,15 +880,15 @@ components:
         audienceCount:
           type: integer
           format: int64
-          description: The number of accounts (recipients) that were added or removed.
+          description: "The number of accounts (recipients) that were added or removed."
         created:
           type: integer
           format: int64
-          description: When the job was created (in UNIX time).
+          description: "When the job was created (in UNIX time)."
     AudienceGroupStatus:
       # https://developers.line.biz/en/reference/messaging-api/#get-audience-groups
       # https://developers.line.biz/en/reference/messaging-api/#get-audience-group
-      description: Status
+      description: "Status"
       type: string
       enum:
         - IN_PROGRESS
@@ -898,7 +898,7 @@ components:
         - INACTIVE
         - ACTIVATING
     AudienceGroupFailedType:
-      description: Failed type
+      description: "Failed type"
       type: string
       nullable: true
       enum:
@@ -906,7 +906,7 @@ components:
         - INTERNAL_ERROR
         - null
     AudienceGroupPermission:
-      description: Permission
+      description: "Permission"
       type: string
       enum:
         - READ
@@ -926,12 +926,12 @@ components:
         - POINT_AD
         - AD_MANAGER
     AudienceGroupJobType:
-      description: Job Type
+      description: "Job Type"
       type: string
       enum:
         - DIFF_ADD
     AudienceGroupJobStatus:
-      description: Job status
+      description: "Job status"
       type: string
       enum:
         - QUEUED
@@ -939,7 +939,7 @@ components:
         - FINISHED
         - FAILED
     AudienceGroupJobFailedType:
-      description: Failed type
+      description: "Failed type"
       type: string
       enum:
         - INTERNAL_ERROR
@@ -948,42 +948,42 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-audience-groups
       type: object
-      description: Gets data for more than one audience.
+      description: "Gets data for more than one audience."
       properties:
         audienceGroups:
-          description: An array of audience data. If there are no audiences that match the specified filter, an empty array will be returned.
+          description: "An array of audience data. If there are no audiences that match the specified filter, an empty array will be returned."
           type: array
           items:
             "$ref": "#/components/schemas/AudienceGroup"
         hasNextPage:
           type: boolean
-          description: true when this is not the last page.
+          description: "true when this is not the last page."
         totalCount:
           type: integer
           format: int64
-          description: The total number of audiences that can be returned with the specified filter.
+          description: "The total number of audiences that can be returned with the specified filter."
         readWriteAudienceGroupTotalCount:
           type: integer
           format: int64
-          description: Of the audiences you can get with the specified filter, the number of audiences with the update permission set to READ_WRITE.
+          description: "Of the audiences you can get with the specified filter, the number of audiences with the update permission set to READ_WRITE."
         page:
           type: integer
           format: int64
-          description: The current page number.
+          description: "The current page number."
         size:
           type: integer
           format: int64
-          description: The maximum number of audiences on the current page.
+          description: "The maximum number of audiences on the current page."
     GetAudienceGroupAuthorityLevelResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-authority-level
       type: object
-      description: Get the authority level of the audience
+      description: "Get the authority level of the audience"
       properties:
         authorityLevel:
           "$ref": "#/components/schemas/AudienceGroupAuthorityLevel"
     AudienceGroupAuthorityLevel:
-      description: authority level
+      description: "authority level"
       type: string
       enum:
         - PUBLIC
@@ -992,7 +992,7 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#change-authority-level
       type: object
-      description: Change the authority level of the audience
+      description: "Change the authority level of the audience"
       properties:
         authorityLevel:
           "$ref": "#/components/schemas/AudienceGroupAuthorityLevel"
@@ -1002,22 +1002,22 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file
       type: object
-      description: Create audience for uploading user IDs (by file)
+      description: "Create audience for uploading user IDs (by file)"
       properties:
         audienceGroupId:
           type: integer
           format: int64
-          description: The audience ID.
+          description: "The audience ID."
         type:
           type: string
-          description: Constant. "UPLOAD".
+          description: "Constant. `UPLOAD`."
         description:
           type: string
-          description: The audience's name.
+          description: "The audience's name."
         created:
           type: integer
           format: int64
-          description: When the audience was created (in UNIX time).
+          description: "When the audience was created (in UNIX time)."
 
     ErrorResponse:
       externalDocs:
@@ -1028,18 +1028,18 @@ components:
       properties:
         message:
           type: string
-          description: Message containing information about the error.
+          description: "Message containing information about the error."
         details:
           type: array
           items:
             $ref: "#/components/schemas/ErrorDetail"
-          description: An array of error details. If the array is empty, this property will not be included in the response.
+          description: "An array of error details. If the array is empty, this property will not be included in the response."
     ErrorDetail:
       type: object
       properties:
         message:
           type: string
-          description: Details of the error. Not included in the response under certain situations.
+          description: "Details of the error. Not included in the response under certain situations."
         property:
           type: string
-          description: Location of where the error occurred. Returns the JSON field name or query parameter name of the request. Not included in the response under certain situations.
+          description: "Location of where the error occurred. Returns the JSON field name or query parameter name of the request. Not included in the response under certain situations."

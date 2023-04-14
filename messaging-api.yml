@@ -24,7 +24,7 @@ paths:
       tags:
         - messaging-api
       operationId: replyMessage
-      description: Send reply message
+      description: "Send reply message"
       requestBody:
         content:
           application/json:
@@ -33,15 +33,15 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
         "400":
-          description: Bad request
+          description: "Bad request"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         "429":
-          description: Too Many Requests
+          description: "Too Many Requests"
           content:
             "application/json":
               schema:
@@ -54,7 +54,7 @@ paths:
       tags:
         - messaging-api
       operationId: pushMessage
-      description: Sends a message to a user, group chat, or multi-person chat at any time.
+      description: "Sends a message to a user, group chat, or multi-person chat at any time."
       parameters:
         - name: X-Line-Retry-Key
           in: header
@@ -74,27 +74,27 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
         "400":
-          description: Bad Request
+          description: "Bad Request"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         "403":
-          description: Forbidden
+          description: "Forbidden"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         "409":
-          description: Conflict
+          description: "Conflict"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         "429":
-          description: Too Many Requests
+          description: "Too Many Requests"
           content:
             "application/json":
               schema:
@@ -107,7 +107,7 @@ paths:
       tags:
         - messaging-api
       operationId: multicast
-      description: An API that efficiently sends the same message to multiple user IDs. You can't send messages to group chats or multi-person chats.
+      description: "An API that efficiently sends the same message to multiple user IDs. You can't send messages to group chats or multi-person chats."
       parameters:
         - name: X-Line-Retry-Key
           in: header
@@ -127,27 +127,27 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
         "400":
-          description: Bad Request
+          description: "Bad Request"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         "403":
-          description: Forbidden
+          description: "Forbidden"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         "409":
-          description: Conflict
+          description: "Conflict"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         "429":
-          description: Too Many Requests
+          description: "Too Many Requests"
           content:
             "application/json":
               schema:
@@ -160,7 +160,7 @@ paths:
       tags:
         - messaging-api
       operationId: broadcast
-      description: Sends a message to multiple users at any time.
+      description: "Sends a message to multiple users at any time."
       parameters:
         - name: X-Line-Retry-Key
           in: header
@@ -180,27 +180,27 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
         "400":
-          description: Bad Request
+          description: "Bad Request"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         "403":
-          description: Forbidden
+          description: "Forbidden"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         "409":
-          description: Conflict
+          description: "Conflict"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         "429":
-          description: Too Many Requests
+          description: "Too Many Requests"
           content:
             "application/json":
               schema:
@@ -213,7 +213,7 @@ paths:
       tags:
         - messaging-api
       operationId: narrowcast
-      description: Send narrowcast message
+      description: "Send narrowcast message"
       parameters:
         - name: X-Line-Retry-Key
           in: header
@@ -233,27 +233,27 @@ paths:
         required: true
       responses:
         "202":
-          description: Accepted
+          description: "Accepted"
         "400":
-          description: Bad Request
+          description: "Bad Request"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         "403":
-          description: Forbidden
+          description: "Forbidden"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         "409":
-          description: Conflict
+          description: "Conflict"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         "429":
-          description: Too Many Requests
+          description: "Too Many Requests"
           content:
             "application/json":
               schema:
@@ -266,17 +266,17 @@ paths:
       tags:
         - messaging-api
       operationId: getNarrowcastProgress
-      description: Gets the status of a narrowcast message.
+      description: "Gets the status of a narrowcast message."
       parameters:
         - name: requestId
           in: query
           required: true
           schema:
             type: string
-          description: The narrowcast message's request ID. Each Messaging API request has a request ID.
+          description: "The narrowcast message's request ID. Each Messaging API request has a request ID."
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -292,10 +292,10 @@ paths:
       tags:
         - messaging-api
       operationId: getMessageQuota
-      description: Gets the target limit for sending messages in the current month. The total number of the free messages and the additional messages is returned.
+      description: "Gets the target limit for sending messages in the current month. The total number of the free messages and the additional messages is returned."
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -311,10 +311,10 @@ paths:
       tags:
         - messaging-api
       operationId: getMessageQuotaConsumption
-      description: Gets the number of messages sent in the current month.
+      description: "Gets the number of messages sent in the current month."
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -329,7 +329,7 @@ paths:
       tags:
         - messaging-api
       operationId: getNumberOfSentReplyMessages
-      description: Get number of sent reply messages
+      description: "Get number of sent reply messages"
       parameters:
         - name: date
           in: query
@@ -343,7 +343,7 @@ paths:
             Timezone: UTC+9
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -359,7 +359,7 @@ paths:
       tags:
         - messaging-api
       operationId: getNumberOfSentPushMessages
-      description: Get number of sent push messages
+      description: "Get number of sent push messages"
       parameters:
         - name: date
           in: query
@@ -373,7 +373,7 @@ paths:
             Timezone: UTC+9
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -389,7 +389,7 @@ paths:
       tags:
         - messaging-api
       operationId: getNumberOfSentMulticastMessages
-      description: Get number of sent multicast messages
+      description: "Get number of sent multicast messages"
       parameters:
         - name: date
           in: query
@@ -403,7 +403,7 @@ paths:
             Timezone: UTC+9
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -419,7 +419,7 @@ paths:
       tags:
         - messaging-api
       operationId: getNumberOfSentBroadcastMessages
-      description: Get number of sent broadcast messages
+      description: "Get number of sent broadcast messages"
       parameters:
         - name: date
           in: query
@@ -434,7 +434,7 @@ paths:
             Timezone: UTC+9
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -450,17 +450,17 @@ paths:
       tags:
         - messaging-api
       operationId: getProfile
-      description: Get profile
+      description: "Get profile"
       parameters:
         - name: userId
           in: path
           required: true
           schema:
             type: string
-          description: User ID
+          description: "User ID"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -479,23 +479,23 @@ paths:
       tags:
         - messaging-api
       operationId: getGroupMemberProfile
-      description: Get group chat member profile
+      description: "Get group chat member profile"
       parameters:
         - name: groupId
           in: path
           required: true
           schema:
             type: string
-          description: Group ID
+          description: "Group ID"
         - name: userId
           in: path
           required: true
           schema:
             type: string
-          description: User ID
+          description: "User ID"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -512,23 +512,23 @@ paths:
       tags:
         - messaging-api
       operationId: getRoomMemberProfile
-      description: Get multi-person chat member profile
+      description: "Get multi-person chat member profile"
       parameters:
         - name: roomId
           in: path
           required: true
           schema:
             type: string
-          description: Room ID
+          description: "Room ID"
         - name: userId
           in: path
           required: true
           schema:
             type: string
-          description: User ID
+          description: "User ID"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -545,14 +545,14 @@ paths:
       tags:
         - messaging-api
       operationId: getGroupMembersIds
-      description: Get group chat member user IDs
+      description: "Get group chat member user IDs"
       parameters:
         - name: groupId
           in: path
           required: true
           schema:
             type: string
-          description: Group ID
+          description: "Group ID"
         - name: start
           in: query
           required: false
@@ -563,7 +563,7 @@ paths:
             Include this parameter to get the next array of user IDs for the members of the group.
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -582,14 +582,14 @@ paths:
       tags:
         - messaging-api
       operationId: getRoomMembersIds
-      description: Get multi-person chat member user IDs
+      description: "Get multi-person chat member user IDs"
       parameters:
         - name: roomId
           in: path
           required: true
           schema:
             type: string
-          description: Room ID
+          description: "Room ID"
         - name: start
           in: query
           required: false
@@ -600,7 +600,7 @@ paths:
             Include this parameter to get the next array of user IDs for the members of the group.
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -619,25 +619,25 @@ paths:
       tags:
         - messaging-api
       operationId: leaveGroup
-      description: Leave group chat
+      description: "Leave group chat"
       parameters:
         - name: groupId
           in: path
           required: true
           schema:
             type: string
-          description: Group ID
+          description: "Group ID"
       responses:
         "200":
-          description: OK
+          description: "OK"
         "400":
-          description: Bad Request
+          description: "Bad Request"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         "404":
-          description: Not Found
+          description: "Not Found"
           content:
             "application/json":
               schema:
@@ -650,17 +650,17 @@ paths:
       tags:
         - messaging-api
       operationId: leaveRoom
-      description: Leave multi-person chat
+      description: "Leave multi-person chat"
       parameters:
         - name: roomId
           in: path
           required: true
           schema:
             type: string
-          description: Room ID
+          description: "Room ID"
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/group/{groupId}/summary":
     get:
@@ -669,17 +669,17 @@ paths:
       tags:
         - messaging-api
       operationId: getGroupSummary
-      description: Get group chat summary
+      description: "Get group chat summary"
       parameters:
         - name: groupId
           in: path
           required: true
           schema:
             type: string
-          description: Group ID
+          description: "Group ID"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -696,17 +696,17 @@ paths:
       tags:
         - messaging-api
       operationId: getGroupMemberCount
-      description: Get number of users in a group chat
+      description: "Get number of users in a group chat"
       parameters:
         - name: groupId
           in: path
           required: true
           schema:
             type: string
-          description: Group ID
+          description: "Group ID"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -721,17 +721,17 @@ paths:
       tags:
         - messaging-api
       operationId: getRoomMemberCount
-      description: Get number of users in a multi-person chat
+      description: "Get number of users in a multi-person chat"
       parameters:
         - name: roomId
           in: path
           required: true
           schema:
             type: string
-          description: Room ID
+          description: "Room ID"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -746,17 +746,17 @@ paths:
         required: true
         schema:
           type: string
-        description: ID of a rich menu
+        description: "ID of a rich menu"
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu
       tags:
         - messaging-api
       operationId: getRichMenu
-      description: Gets a rich menu via a rich menu ID.
+      description: "Gets a rich menu via a rich menu ID."
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -784,10 +784,10 @@ paths:
       tags:
         - messaging-api
       operationId: deleteRichMenu
-      description: Deletes a rich menu.
+      description: "Deletes a rich menu."
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/richmenu/validate":
     post:
@@ -796,7 +796,7 @@ paths:
       tags:
         - messaging-api
       operationId: validateRichMenuObject
-      description: Validate rich menu object
+      description: "Validate rich menu object"
       requestBody:
         content:
           application/json:
@@ -805,7 +805,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/richmenu":
     post:
@@ -814,7 +814,7 @@ paths:
       tags:
         - messaging-api
       operationId: createRichMenu
-      description: Create rich menu
+      description: "Create rich menu"
       requestBody:
         content:
           application/json:
@@ -823,7 +823,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -838,17 +838,17 @@ paths:
         required: true
         schema:
           type: string
-        description: User ID. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
+        description: "User ID. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE."
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-id-of-user
       tags:
         - messaging-api
       operationId: getRichMenuIdOfUser
-      description: Get rich menu ID of user
+      description: "Get rich menu ID of user"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -861,10 +861,10 @@ paths:
       tags:
         - messaging-api
       operationId: unlinkRichMenuIdFromUser
-      description: Unlink rich menu from user
+      description: "Unlink rich menu from user"
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/user/{userId}/richmenu/{richMenuId}":
     post:
@@ -873,23 +873,23 @@ paths:
       tags:
         - messaging-api
       operationId: linkRichMenuIdToUser
-      description: Link rich menu to user.
+      description: "Link rich menu to user."
       parameters:
         - name: userId
           in: path
           required: true
           schema:
             type: string
-          description: User ID. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
+          description: "User ID. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE."
         - name: richMenuId
           in: path
           required: true
           schema:
             type: string
-          description: ID of a rich menu
+          description: "ID of a rich menu"
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/richmenu/bulk/link":
     post:
@@ -898,7 +898,7 @@ paths:
       tags:
         - messaging-api
       operationId: linkRichMenuIdToUsers
-      description: Link rich menu to multiple users
+      description: "Link rich menu to multiple users"
       requestBody:
         content:
           application/json:
@@ -907,7 +907,7 @@ paths:
         required: true
       responses:
         "202":
-          description: Accepted
+          description: "Accepted"
 
   "/v2/bot/richmenu/bulk/unlink":
     post:
@@ -916,7 +916,7 @@ paths:
       tags:
         - messaging-api
       operationId: unlinkRichMenuIdFromUsers
-      description: Unlink rich menus from multiple users
+      description: "Unlink rich menus from multiple users"
       requestBody:
         content:
           application/json:
@@ -925,7 +925,7 @@ paths:
         required: true
       responses:
         "202":
-          description: Accepted
+          description: "Accepted"
 
   "/v2/bot/richmenu/list":
     get:
@@ -934,10 +934,10 @@ paths:
       tags:
         - messaging-api
       operationId: getRichMenuList
-      description: Get rich menu list
+      description: "Get rich menu list"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -968,17 +968,17 @@ paths:
       tags:
         - messaging-api
       operationId: setDefaultRichMenu
-      description: Set default rich menu
+      description: "Set default rich menu"
       parameters:
         - name: richMenuId
           in: path
           required: true
           schema:
             type: string
-          description: ID of a rich menu
+          description: "ID of a rich menu"
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/user/all/richmenu":
     get:
@@ -987,10 +987,10 @@ paths:
       tags:
         - messaging-api
       operationId: getDefaultRichMenuId
-      description: Gets the ID of the default rich menu set with the Messaging API.
+      description: "Gets the ID of the default rich menu set with the Messaging API."
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -1003,10 +1003,10 @@ paths:
       tags:
         - messaging-api
       operationId: cancelDefaultRichMenu
-      description: Cancel default rich menu
+      description: "Cancel default rich menu"
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/user/{userId}/linkToken":
     post:
@@ -1015,7 +1015,7 @@ paths:
       tags:
         - messaging-api
       operationId: issueLinkToken
-      description: Issue link token
+      description: "Issue link token"
       parameters:
         - name: userId
           in: path
@@ -1027,7 +1027,7 @@ paths:
             Found in the `source` object of account link event objects. Do not use the LINE ID used in LINE.
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -1042,7 +1042,7 @@ paths:
       tags:
         - messaging-api
       operationId: getFollowers
-      description: Get a list of users who added your LINE Official Account as a friend
+      description: "Get a list of users who added your LINE Official Account as a friend"
       parameters:
         - name: start
           in: query
@@ -1055,7 +1055,7 @@ paths:
         - name: limit
           in: query
           required: false
-          description: The maximum number of user IDs to retrieve in a single request.
+          description: "The maximum number of user IDs to retrieve in a single request."
           schema:
             type: integer
             format: int32
@@ -1063,7 +1063,7 @@ paths:
             maximum: 1000
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -1082,10 +1082,10 @@ paths:
       tags:
         - messaging-api
       operationId: getBotInfo
-      description: Get bot info
+      description: "Get bot info"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -1105,22 +1105,22 @@ paths:
       tags:
         - messaging-api
       operationId: getWebhookEndpoint
-      description: Get webhook endpoint information
+      description: "Get webhook endpoint information"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/GetWebhookEndpointResponse"
               examples:
                 ACTIVE:
-                  summary: If the webhook URL was set and the webhook usage is enabled
+                  summary: "If the webhook URL was set and the webhook usage is enabled"
                   value:
                     endpoint: https://example.com/test
                     active: true
                 INACTIVE:
-                  summary: If the webhook URL was set and the webhook usage is disabled
+                  summary: "If the webhook URL was set and the webhook usage is disabled"
                   value:
                     endpoint: https://example.com/test
                     active: false
@@ -1131,7 +1131,7 @@ paths:
       tags:
         - messaging-api
       operationId: setWebhookEndpoint
-      description: Set webhook endpoint URL
+      description: "Set webhook endpoint URL"
       requestBody:
         content:
           application/json:
@@ -1140,7 +1140,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/channel/webhook/test":
     post:
@@ -1149,7 +1149,7 @@ paths:
       tags:
         - messaging-api
       operationId: testWebhookEndpoint
-      description: Test webhook endpoint
+      description: "Test webhook endpoint"
       requestBody:
         content:
           application/json:
@@ -1157,7 +1157,7 @@ paths:
               "$ref": "#/components/schemas/TestWebhookEndpointRequest"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -1176,7 +1176,7 @@ paths:
       tags:
         - messaging-api
       operationId: createRichMenuAlias
-      description: Create rich menu alias
+      description: "Create rich menu alias"
       requestBody:
         content:
           application/json:
@@ -1185,9 +1185,9 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
         "400":
-          description: Bad Request
+          description: "Bad Request"
           content:
             "application/json":
               schema:
@@ -1200,17 +1200,17 @@ paths:
       tags:
         - messaging-api
       operationId: getRichMenuAlias
-      description: Get rich menu alias information
+      description: "Get rich menu alias information"
       parameters:
         - name: richMenuAliasId
           in: path
           required: true
           schema:
             type: string
-          description: The rich menu alias ID whose information you want to obtain.
+          description: "The rich menu alias ID whose information you want to obtain."
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -1224,14 +1224,14 @@ paths:
       tags:
         - messaging-api
       operationId: updateRichMenuAlias
-      description: Update rich menu alias
+      description: "Update rich menu alias"
       parameters:
         - name: richMenuAliasId
           in: path
           required: true
           schema:
             type: string
-          description: The rich menu alias ID you want to update.
+          description: "The rich menu alias ID you want to update."
       requestBody:
         content:
           application/json:
@@ -1240,9 +1240,9 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
         "400":
-          description: Bad Request
+          description: "Bad Request"
           content:
             "application/json":
               schema:
@@ -1253,19 +1253,19 @@ paths:
       tags:
         - messaging-api
       operationId: deleteRichMenuAlias
-      description: Delete rich menu alias
+      description: "Delete rich menu alias"
       parameters:
         - name: richMenuAliasId
           in: path
           required: true
           schema:
             type: string
-          description: Rich menu alias ID that you want to delete.
+          description: "Rich menu alias ID that you want to delete."
       responses:
         "200":
-          description: OK
+          description: "OK"
         "400":
-          description: Bad Request
+          description: "Bad Request"
           content:
             "application/json":
               schema:
@@ -1278,17 +1278,17 @@ paths:
       tags:
         - messaging-api
       operationId: getRichMenuAliasList
-      description: Get list of rich menu alias
+      description: "Get list of rich menu alias"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/RichMenuAliasListResponse"
               examples:
                 TWO_ALIASES:
-                  summary: If you have 2 rich menu aliases
+                  summary: "If you have 2 rich menu aliases"
                   value:
                     aliases:
                       - richMenuAliasId: richmenu-alias-a
@@ -1296,7 +1296,7 @@ paths:
                       - richMenuAliasId: richmenu-alias-b
                         richMenuId: richmenu-88c05ef6921ae53f8b58a25f3a65faf7
                 NO_ALIASES:
-                  summary: If you have 0 rich menu alias
+                  summary: "If you have 0 rich menu alias"
                   value:
                     aliases: []
 
@@ -1307,10 +1307,10 @@ paths:
       tags:
         - messaging-api
       operationId: getAggregationUnitUsage
-      description: Get number of units used this month
+      description: "Get number of units used this month"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -1325,7 +1325,7 @@ paths:
       tags:
         - messaging-api
       operationId: getAggregationUnitNameList
-      description: Get name list of units used this month
+      description: "Get name list of units used this month"
       parameters:
         - name: limit
           in: query
@@ -1344,7 +1344,7 @@ paths:
             If you can't get all the aggregation units in one request, include this parameter to get the remaining array.
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -1362,7 +1362,7 @@ paths:
       tags:
         - messaging-api
       operationId: validateReply
-      description: Validate message objects of a reply message
+      description: "Validate message objects of a reply message"
       requestBody:
         content:
           application/json:
@@ -1371,7 +1371,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/message/validate/push":
     post:
@@ -1380,7 +1380,7 @@ paths:
       tags:
         - messaging-api
       operationId: validatePush
-      description: Validate message objects of a push message
+      description: "Validate message objects of a push message"
       requestBody:
         content:
           application/json:
@@ -1389,7 +1389,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/message/validate/multicast":
     post:
@@ -1398,7 +1398,7 @@ paths:
       tags:
         - messaging-api
       operationId: validateMulticast
-      description: Validate message objects of a multicast message
+      description: "Validate message objects of a multicast message"
       requestBody:
         content:
           application/json:
@@ -1407,7 +1407,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/message/validate/narrowcast":
     post:
@@ -1416,7 +1416,7 @@ paths:
       tags:
         - messaging-api
       operationId: validateNarrowcast
-      description: Validate message objects of a narrowcast message
+      description: "Validate message objects of a narrowcast message"
       requestBody:
         content:
           application/json:
@@ -1425,7 +1425,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/message/validate/broadcast":
     post:
@@ -1434,7 +1434,7 @@ paths:
       tags:
         - messaging-api
       operationId: validateBroadcast
-      description: Validate message objects of a broadcast message
+      description: "Validate message objects of a broadcast message"
       requestBody:
         content:
           application/json:
@@ -1443,7 +1443,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/message/markAsRead":
     post:
@@ -1452,7 +1452,7 @@ paths:
       tags:
         - messaging-api
       operationId: markMessagesAsRead
-      description: Mark messages from users as read
+      description: "Mark messages from users as read"
       requestBody:
         content:
           application/json:
@@ -1464,7 +1464,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/bot/pnp/push":
     post:
@@ -1473,7 +1473,7 @@ paths:
       tags:
         - messaging-api
       operationId: pushMessagesByPhone
-      description: Send LINE notification message
+      description: "Send LINE notification message"
       parameters:
         - name: X-Line-Delivery-Tag
           in: header
@@ -1482,7 +1482,7 @@ paths:
             type: string
             minLength: 16
             maxLength: 100
-          description: String returned in the delivery.data property of the delivery completion event via Webhook.
+          description: "String returned in the delivery.data property of the delivery completion event via Webhook."
       requestBody:
         content:
           application/json:
@@ -1491,9 +1491,9 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
         "422":
-          description: Unprocessable Entity
+          description: "Unprocessable Entity"
           content:
             "application/json":
               schema:
@@ -1506,7 +1506,7 @@ paths:
       tags:
         - messaging-api
       operationId: audienceMatch
-      description: Send a message using phone number
+      description: "Send a message using phone number"
       requestBody:
         content:
           application/json:
@@ -1515,7 +1515,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
           # empty JSON response
 
   "/v2/bot/message/delivery/pnp":
@@ -1525,7 +1525,7 @@ paths:
       tags:
         - messaging-api
       operationId: getPNPMessageStatistics
-      description: Get number of sent LINE notification messages　
+      description: "Get number of sent LINE notification messages　"
       parameters:
         - name: date
           in: query
@@ -1540,7 +1540,7 @@ paths:
             Time zone: UTC+9
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -1556,7 +1556,7 @@ paths:
       tags:
         - messaging-api
       operationId: getAdPhoneMessageStatistics
-      description: Get result of message delivery using phone number
+      description: "Get result of message delivery using phone number"
       parameters:
         - name: date
           in: query
@@ -1570,19 +1570,19 @@ paths:
             Time Zone: UTC+9
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/NumberOfMessagesResponse"
               examples:
                 READY:
-                  summary: Example of response when status is "ready"
+                  summary: "Example of response when status is `ready`"
                   value:
                     status: ready
                     success: 10000
                 UNAVAILABLE_FOR_PRIVACY:
-                  summary: Example response when status is "unavailable_for_privacy"
+                  summary: "Example response when status is `unavailable_for_privacy`"
                   value:
                     status: unavailable_for_privacy
 
@@ -1595,21 +1595,21 @@ paths:
       tags:
         - messaging-api-blob
       operationId: getMessageContent
-      description: Download image, video, and audio data sent from users.
+      description: "Download image, video, and audio data sent from users."
       parameters:
         - name: messageId
           in: path
           required: true
-          description: Message ID of video or audio
+          description: "Message ID of video or audio"
           schema:
             type: string
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "*/*":
               schema:
-                description: blob response
+                description: "blob response"
                 type: string
                 format: binary
 
@@ -1622,23 +1622,23 @@ paths:
       tags:
         - messaging-api-blob
       operationId: getMessageContentPreview
-      description: Get a preview image of the image or video
+      description: "Get a preview image of the image or video"
       parameters:
         - name: messageId
           in: path
           required: true
-          description: Message ID of image or video
+          description: "Message ID of image or video"
           schema:
             type: string
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "*/*":
               schema:
                 type: string
                 format: binary
-                description: blob response
+                description: "blob response"
 
   "/v2/bot/richmenu/{richMenuId}/content":
     get:
@@ -1649,24 +1649,24 @@ paths:
       tags:
         - messaging-api-blob
       operationId: getRichMenuImage
-      description: Download rich menu image.
+      description: "Download rich menu image."
       parameters:
         - name: richMenuId
           in: path
           required: true
-          description: ID of the rich menu with the image to be downloaded
+          description: "ID of the rich menu with the image to be downloaded"
           schema:
             type: string
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             # TODO check the content-type of the actual implementation and replace here.
             "*/*":
               schema:
                 type: string
                 format: binary
-                description: blob response
+                description: "blob response"
 
     post:
       externalDocs:
@@ -1676,24 +1676,24 @@ paths:
       tags:
         - messaging-api-blob
       operationId: setRichMenuImage
-      description: Upload rich menu image
+      description: "Upload rich menu image"
       parameters:
         - name: richMenuId
           in: path
           required: true
-          description: The ID of the rich menu to attach the image to
+          description: "The ID of the rich menu to attach the image to"
           schema:
             type: string
       requestBody:
         content:
           "*/*":
             schema:
-              description: blob request
+              description: "blob request"
               type: string
               format: binary
       responses:
         "200":
-          description: OK
+          description: "OK"
 
   "/v2/bot/message/{messageId}/content/transcoding":
     get:
@@ -1704,17 +1704,17 @@ paths:
       tags:
         - messaging-api-blob
       operationId: getMessageContentTranscodingByMessageId
-      description: Verify the preparation status of a video or audio for getting
+      description: "Verify the preparation status of a video or audio for getting"
       parameters:
         - name: messageId
           in: path
           required: true
-          description: Message ID of video or audio
+          description: "Message ID of video or audio"
           schema:
             type: string
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -1728,7 +1728,7 @@ components:
     Bearer:
       type: http
       scheme: bearer
-      description: Channel access token
+      description: "Channel access token"
 
   schemas:
     SetWebhookEndpointRequest:
@@ -1743,7 +1743,7 @@ components:
           minLength: 0
           type: string
           format: uri
-          description: A valid webhook URL.
+          description: "A valid webhook URL."
     IssueLinkTokenResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#issue-link-token
@@ -1759,15 +1759,15 @@ components:
     Action:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#action-objects
-      description: Action
+      description: "Action"
       type: object
       properties:
         type:
           type: string
-          description: Type of action
+          description: "Type of action"
         label:
           type: string
-          description: Label for the action.
+          description: "Label for the action."
       discriminator:
         propertyName: type
         mapping:
@@ -1788,7 +1788,7 @@ components:
           type: string
     RichMenuArea:
       type: object
-      description: Rich menu area
+      description: "Rich menu area"
       properties:
         bounds:
           "$ref": "#/components/schemas/RichMenuBounds"
@@ -1798,32 +1798,32 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#bounds-object
       type: object
-      description: Rich menu bounds
+      description: "Rich menu bounds"
       properties:
         x:
           maximum: 2147483647
           minimum: 0
           type: integer
           format: int64
-          description: Horizontal position relative to the top-left corner of the area.
+          description: "Horizontal position relative to the top-left corner of the area."
         y:
           maximum: 2147483647
           minimum: 0
           type: integer
           format: int64
-          description: Vertical position relative to the top-left corner of the area.
+          description: "Vertical position relative to the top-left corner of the area."
         width:
           maximum: 2147483647
           minimum: 1
           type: integer
           format: int64
-          description: Width of the area.
+          description: "Width of the area."
         height:
           maximum: 2147483647
           minimum: 1
           type: integer
           format: int64
-          description: Height of the area.
+          description: "Height of the area."
     CameraAction:
       type: object
       allOf:
@@ -1901,33 +1901,33 @@ components:
           description: "`true` to display the rich menu by default. Otherwise, `false`."
         name:
           type: string
-          description: Name of the rich menu. This value can be used to help manage your rich menus and is not displayed to users.
+          description: "Name of the rich menu. This value can be used to help manage your rich menus and is not displayed to users."
           maxLength: 300
         chatBarText:
           type: string
-          description: Text displayed in the chat bar
+          description: "Text displayed in the chat bar"
           maxLength: 14
         areas:
           type: array
-          description: Array of area objects which define the coordinates and size of tappable areas
+          description: "Array of area objects which define the coordinates and size of tappable areas"
           items:
             "$ref": "#/components/schemas/RichMenuArea"
     RichMenuSize:
       type: object
-      description: Rich menu size
+      description: "Rich menu size"
       properties:
         width:
           maximum: 2147483647
           minimum: 1
           type: integer
           format: int64
-          description: width
+          description: "width"
         height:
           maximum: 2147483647
           minimum: 1
           type: integer
           format: int64
-          description: height
+          description: "height"
     RichMenuSwitchAction:
       type: object
       allOf:
@@ -1966,7 +1966,7 @@ components:
           type: array
           items:
             type: string
-          description: Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
+          description: "Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE."
     RichMenuBulkLinkRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users
@@ -1977,14 +1977,14 @@ components:
       properties:
         richMenuId:
           type: string
-          description: ID of a rich menu
+          description: "ID of a rich menu"
         userIds:
           maxItems: 500
           minItems: 1
           type: array
           items:
             type: string
-          description: Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
+          description: "Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE."
     CreateRichMenuAliasRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias
@@ -1995,13 +1995,13 @@ components:
       properties:
         richMenuAliasId:
           type: string
-          description: Rich menu alias ID, which can be any ID, unique for each channel.
+          description: "Rich menu alias ID, which can be any ID, unique for each channel."
           maxLength: 32
           minLength: 1
           pattern: "^[a-z0-9_-]{1,32}$"
         richMenuId:
           type: string
-          description: The rich menu ID to be associated with the rich menu alias.
+          description: "The rich menu ID to be associated with the rich menu alias."
     UpdateRichMenuAliasRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#update-rich-menu-alias
@@ -2011,7 +2011,7 @@ components:
       properties:
         richMenuId:
           type: string
-          description: The rich menu ID to be associated with the rich menu alias.
+          description: "The rich menu ID to be associated with the rich menu alias."
     AudioMessage:
       type: object
       allOf:
@@ -2226,7 +2226,7 @@ components:
               items:
                 "$ref": "#/components/schemas/Action"
     CarouselColumn:
-      description: Column object for carousel template.
+      description: "Column object for carousel template."
       type: object
       properties:
         thumbnailImageUrl:
@@ -2426,7 +2426,7 @@ components:
             flex:
               type: integer
               format: int32
-              description: The ratio of the width or height of this component within the parent box.
+              description: "The ratio of the width or height of this component within the parent box."
             margin:
               type: string
               description: |+
@@ -2443,16 +2443,16 @@ components:
                 `absolute`: Use the top left of parent element as reference. The default value is relative.
             offsetTop:
               type: string
-              description: Offset.
+              description: "Offset."
             offsetBottom:
               type: string
-              description: Offset.
+              description: "Offset."
             offsetStart:
               type: string
-              description: Offset.
+              description: "Offset."
             offsetEnd:
               type: string
-              description: Offset.
+              description: "Offset."
             align:
               type: string
               enum:
@@ -2467,7 +2467,7 @@ components:
                 - top
                 - bottom
                 - center
-              description: Alignment style in vertical direction.
+              description: "Alignment style in vertical direction."
             size:
               type: string
               default: md
@@ -2490,7 +2490,7 @@ components:
                 The display style of the image if the aspect ratio of the image and that specified by the aspectRatio property do not match.
             backgroundColor:
               type: string
-              description: Background color of the image. Use a hexadecimal color code.
+              description: "Background color of the image. Use a hexadecimal color code."
             action:
               "$ref": "#/components/schemas/Action"
             animated:
@@ -2659,7 +2659,7 @@ components:
       properties:
         type:
           type: string
-          description: Type of message
+          description: "Type of message"
         quickReply:
           "$ref": "#/components/schemas/QuickReply"
         sender:
@@ -2680,14 +2680,14 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#items-object
       type: object
-      description: Quick reply
+      description: "Quick reply"
       properties:
         items:
           type: array
           maxItems: 13
           items:
             "$ref": "#/components/schemas/QuickReplyItem"
-          description: Quick reply button objects.
+          description: "Quick reply button objects."
     QuickReplyItem:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#items-object
@@ -2696,7 +2696,7 @@ components:
         imageUrl:
           type: string
           format: uri
-          description: URL of the icon that is displayed at the beginning of the button
+          description: "URL of the icon that is displayed at the beginning of the button"
           maxLength: 2000
         action:
           "$ref": "#/components/schemas/Action"
@@ -2706,16 +2706,16 @@ components:
           default: "action"
     Sender:
       type: object
-      description: Change icon and display name
+      description: "Change icon and display name"
       properties:
         name:
           type: string
-          description: Display name. Certain words such as `LINE` may not be used.
+          description: "Display name. Certain words such as `LINE` may not be used."
           maxLength: 20
         iconUrl:
           type: string
           format: uri
-          description: URL of the image to display as an icon when sending a message
+          description: "URL of the image to display as an icon when sending a message"
           maxLength: 2000
     FlexSeparator:
       type: object
@@ -2904,7 +2904,7 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/Message"
-          description: Array of message objects to validate
+          description: "Array of message objects to validate"
 
     FlexVideo:
       type: object
@@ -2948,21 +2948,21 @@ components:
       properties:
         message:
           type: string
-          description: Message containing information about the error.
+          description: "Message containing information about the error."
         details:
           type: array
           items:
             $ref: "#/components/schemas/ErrorDetail"
-          description: An array of error details. If the array is empty, this property will not be included in the response.
+          description: "An array of error details. If the array is empty, this property will not be included in the response."
     ErrorDetail:
       type: object
       properties:
         message:
           type: string
-          description: Details of the error. Not included in the response under certain situations.
+          description: "Details of the error. Not included in the response under certain situations."
         property:
           type: string
-          description: Location of where the error occurred. Returns the JSON field name or query parameter name of the request. Not included in the response under certain situations.
+          description: "Location of where the error occurred. Returns the JSON field name or query parameter name of the request. Not included in the response under certain situations."
 
     ReplyMessageRequest:
       externalDocs:
@@ -2974,9 +2974,9 @@ components:
       properties:
         replyToken:
           type: string
-          description: replyToken received via webhook.
+          description: "replyToken received via webhook."
         messages:
-          description: List of messages.
+          description: "List of messages."
           maxItems: 5
           minItems: 1
           type: array
@@ -2994,9 +2994,9 @@ components:
       properties:
         to:
           type: string
-          description: ID of the receiver.
+          description: "ID of the receiver."
         messages:
-          description: List of Message objects.
+          description: "List of Message objects."
           maxItems: 5
           minItems: 1
           type: array
@@ -3342,11 +3342,11 @@ components:
               format: int64
     DemographicFilter:
       type: object
-      description: Demographic filter
+      description: "Demographic filter"
       properties:
         type:
           type: string
-          description: Type of demographic filter
+          description: "Type of demographic filter"
       discriminator:
         propertyName: type
         mapping:
@@ -3358,7 +3358,7 @@ components:
           subscriptionPeriod: "#/components/schemas/SubscriptionPeriodDemographicFilter"
     Filter:
       type: object
-      description: Filter for narrowcast
+      description: "Filter for narrowcast"
       properties:
         demographic:
           $ref: "#/components/schemas/DemographicFilter"
@@ -3381,7 +3381,7 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message
       type: object
-      description: Limit of the Narrowcast
+      description: "Limit of the Narrowcast"
       properties:
         max:
           minimum: 1
@@ -3411,7 +3411,7 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/Message"
-          description: List of Message objects.
+          description: "List of Message objects."
         recipient:
           "$ref": "#/components/schemas/Recipient"
         filter:
@@ -3459,10 +3459,10 @@ components:
               "$ref": "#/components/schemas/Recipient"
     Recipient:
       type: object
-      description: Recipient
+      description: "Recipient"
       properties:
         type:
-          description: Type of recipient
+          description: "Type of recipient"
           type: string
       discriminator:
         propertyName: type
@@ -3508,14 +3508,14 @@ components:
           maxItems: 5
           minItems: 1
           type: array
-          description: Messages to send
+          description: "Messages to send"
           items:
             "$ref": "#/components/schemas/Message"
         to:
           maxItems: 500
           minItems: 1
           type: array
-          description: Array of user IDs. Use userId values which are returned in webhook event objects. Do not use LINE IDs found on LINE.
+          description: "Array of user IDs. Use userId values which are returned in webhook event objects. Do not use LINE IDs found on LINE."
           items:
             type: string
         notificationDisabled:
@@ -3523,7 +3523,7 @@ components:
         customAggregationUnits:
           type: array
           maxItems: 1
-          description: Name of aggregation unit. Case-sensitive.
+          description: "Name of aggregation unit. Case-sensitive."
           items:
             type: string
             maxLength: 30
@@ -3542,7 +3542,7 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/Message"
-          description: List of Message objects.
+          description: "List of Message objects."
         notificationDisabled:
           "$ref": "#/components/schemas/NotificationDisabled"
     TestWebhookEndpointRequest:
@@ -3555,7 +3555,7 @@ components:
           minLength: 0
           type: string
           format: uri
-          description: A webhook URL to be validated.
+          description: "A webhook URL to be validated."
     TestWebhookEndpointResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint
@@ -3568,7 +3568,7 @@ components:
       properties:
         success:
           type: boolean
-          description: Result of the communication from the LINE platform to the webhook URL.
+          description: "Result of the communication from the LINE platform to the webhook URL."
         timestamp:
           type: string
           format: date-time
@@ -3577,13 +3577,13 @@ components:
         statusCode:
           type: integer
           format: int32
-          description: The HTTP status code. If the webhook response isn't received, the status code is set to zero or a negative number.
+          description: "The HTTP status code. If the webhook response isn't received, the status code is set to zero or a negative number."
         reason:
           type: string
-          description: Reason for the response.
+          description: "Reason for the response."
         detail:
           type: string
-          description: Details of the response.
+          description: "Details of the response."
     RichMenuIdResponse:
       # https://developers.line.biz/en/reference/messaging-api/#create-rich-menu
       # https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-id-of-user
@@ -3594,7 +3594,7 @@ components:
       properties:
         richMenuId:
           type: string
-          description: Rich menu ID
+          description: "Rich menu ID"
     UserProfileResponse:
       # https://developers.line.biz/en/reference/messaging-api/#get-profile
       # https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile
@@ -3606,20 +3606,20 @@ components:
       properties:
         displayName:
           type: string
-          description: User's display name
+          description: "User's display name"
         userId:
           type: string
-          description: User ID
+          description: "User ID"
         pictureUrl:
           type: string
           format: uri
-          description: Profile image URL. "https" image URL. Not included in the response if the user doesn't have a profile image.
+          description: "Profile image URL. `https` image URL. Not included in the response if the user doesn't have a profile image."
         statusMessage:
           type: string
-          description: User's status message. Not included in the response if the user doesn't have a status message.
+          description: "User's status message. Not included in the response if the user doesn't have a status message."
         language:
           type: string
-          description: User's language, as a BCP 47 (opens new window)language tag. Not included in the response if the user hasn't yet consented to the LINE Privacy Policy.
+          description: "User's language, as a BCP 47 (opens new window)language tag. Not included in the response if the user hasn't yet consented to the LINE Privacy Policy."
           example: en
     RichMenuResponse:
       # https://developers.line.biz/en/reference/messaging-api/#get-rich-menu
@@ -3635,7 +3635,7 @@ components:
       properties:
         richMenuId:
           type: string
-          description: ID of a rich menu
+          description: "ID of a rich menu"
         size:
           "$ref": "#/components/schemas/RichMenuSize"
         selected:
@@ -3643,17 +3643,17 @@ components:
           description: "`true` to display the rich menu by default. Otherwise, `false`."
         name:
           type: string
-          description: Name of the rich menu. This value can be used to help manage your rich menus and is not displayed to users.
+          description: "Name of the rich menu. This value can be used to help manage your rich menus and is not displayed to users."
           maxLength: 300
         chatBarText:
           type: string
-          description: Text displayed in the chat bar
+          description: "Text displayed in the chat bar"
           maxLength: 14
         areas:
           type: array
           items:
             "$ref": "#/components/schemas/RichMenuArea"
-          description: Array of area objects which define the coordinates and size of tappable areas
+          description: "Array of area objects which define the coordinates and size of tappable areas"
           maxItems: 20
     RichMenuListResponse:
       externalDocs:
@@ -3666,7 +3666,7 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/RichMenuResponse"
-          description: Rich menus
+          description: "Rich menus"
     RichMenuAliasListResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list
@@ -3678,7 +3678,7 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/RichMenuAliasResponse"
-          description: Rich menu aliases.
+          description: "Rich menu aliases."
     RichMenuAliasResponse:
       required:
         - richMenuAliasId
@@ -3687,10 +3687,10 @@ components:
       properties:
         richMenuAliasId:
           type: string
-          description: Rich menu alias ID.
+          description: "Rich menu alias ID."
         richMenuId:
           type: string
-          description: The rich menu ID associated with the rich menu alias.
+          description: "The rich menu ID associated with the rich menu alias."
     MessageQuotaResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-quota
@@ -3712,7 +3712,7 @@ components:
       enum:
         - none
         - limited
-      description: One of the following values to indicate whether a target limit is set or not.
+      description: "One of the following values to indicate whether a target limit is set or not."
     QuotaConsumptionResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-consumption
@@ -3723,7 +3723,7 @@ components:
         totalUsage:
           type: integer
           format: int64
-          description: The number of sent messages in the current month
+          description: "The number of sent messages in the current month"
     NarrowcastProgressResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status
@@ -3749,18 +3749,18 @@ components:
         successCount:
           type: integer
           format: int64
-          description: The number of users who successfully received the message.
+          description: "The number of users who successfully received the message."
         failureCount:
           type: integer
           format: int64
-          description: The number of users who failed to send the message.
+          description: "The number of users who failed to send the message."
         targetCount:
           type: integer
           format: int64
-          description: The number of intended recipients of the message.
+          description: "The number of intended recipients of the message."
         failedDescription:
           type: string
-          description: The reason the message failed to be sent. This is only included with a `phase` property value of `failed`.
+          description: "The reason the message failed to be sent. This is only included with a `phase` property value of `failed`."
         errorCode:
           type: integer
           format: int64
@@ -3823,7 +3823,7 @@ components:
           type: array
           items:
             type: string
-          description: An array of strings indicating the names of aggregation units used this month.
+          description: "An array of strings indicating the names of aggregation units used this month."
         next:
           type: string
           description: |+
@@ -3839,7 +3839,7 @@ components:
         numOfCustomAggregationUnits:
           type: integer
           format: int64
-          description: Number of aggregation units used this month.
+          description: "Number of aggregation units used this month."
     BotInfoResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-bot-info
@@ -3853,20 +3853,20 @@ components:
       properties:
         userId:
           type: string
-          description: Bot's user ID
+          description: "Bot's user ID"
         basicId:
           type: string
-          description: Bot's basic ID
+          description: "Bot's basic ID"
         premiumId:
           type: string
-          description: Bot's premium ID. Not included in the response if the premium ID isn't set.
+          description: "Bot's premium ID. Not included in the response if the premium ID isn't set."
         displayName:
           type: string
-          description: Bot's display name
+          description: "Bot's display name"
         pictureUrl:
           type: string
           format: uri
-          description: Profile image URL. "https" image URL. Not included in the response if the bot doesn't have a profile image.
+          description: "Profile image URL. `https` image URL. Not included in the response if the bot doesn't have a profile image."
         chatMode:
           type: string
           enum:
@@ -3898,7 +3898,7 @@ components:
         endpoint:
           type: string
           format: uri
-          description: Webhook URL
+          description: "Webhook URL"
         active:
           type: boolean
           description: |+
@@ -3915,7 +3915,7 @@ components:
       properties:
         memberIds:
           type: array
-          description: List of user IDs of members in the group chat. Only users of LINE for iOS and LINE for Android are included in `memberIds`.
+          description: "List of user IDs of members in the group chat. Only users of LINE for iOS and LINE for Android are included in `memberIds`."
           items:
             type: string
           maxItems: 100
@@ -3934,14 +3934,14 @@ components:
       properties:
         groupId:
           type: string
-          description: Group ID
+          description: "Group ID"
         groupName:
           type: string
-          description: Group name
+          description: "Group name"
         pictureUrl:
           type: string
           format: uri
-          description: Group icon URL. Not included in the response if the user doesn't set a group profile icon.
+          description: "Group icon URL. Not included in the response if the user doesn't set a group profile icon."
     GroupMemberCountResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-members-group-count
@@ -3952,7 +3952,7 @@ components:
         count:
           type: integer
           format: int32
-          description: The count of members in the group chat. The number returned excludes the LINE Official Account.
+          description: "The count of members in the group chat. The number returned excludes the LINE Official Account."
     RoomMemberCountResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-members-room-count
@@ -3963,7 +3963,7 @@ components:
         count:
           type: integer
           format: int32
-          description: The count of members in the multi-person chat. The number returned excludes the LINE Official Account.
+          description: "The count of members in the multi-person chat. The number returned excludes the LINE Official Account."
     GetFollowersResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-follower-ids
@@ -4002,11 +4002,11 @@ components:
       required:
         - userId
       type: object
-      description: Chat reference
+      description: "Chat reference"
       properties:
         userId:
           type: string
-          description: The target user ID
+          description: "The target user ID"
 
     PnpMessagesRequest:
       externalDocs:
@@ -4022,10 +4022,10 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/Message"
-          description: Message to be sent.
+          description: "Message to be sent."
         to:
           type: string
-          description: Message destination. Specify a phone number that has been normalized to E.164 format and hashed with SHA256.
+          description: "Message destination. Specify a phone number that has been normalized to E.164 format and hashed with SHA256."
         notificationDisabled:
           "$ref": "#/components/schemas/NotificationDisabled"
 
@@ -4038,14 +4038,14 @@ components:
       type: object
       properties:
         messages:
-          description: Destination of the message (A value obtained by hashing the telephone number, which is another value normalized to E.164 format, with SHA256).
+          description: "Destination of the message (A value obtained by hashing the telephone number, which is another value normalized to E.164 format, with SHA256)."
           maxItems: 5
           minItems: 1
           type: array
           items:
             "$ref": "#/components/schemas/Message"
         to:
-          description: Message to send.
+          description: "Message to send."
           maxItems: 500
           minItems: 1
           type: array
@@ -4064,7 +4064,7 @@ components:
     GetMessageContentTranscodingResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status
-      description: Transcoding response
+      description: "Transcoding response"
       required:
         - status
       type: object

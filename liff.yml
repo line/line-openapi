@@ -2,7 +2,7 @@ openapi: "3.0.2"
 info:
   title: LIFF server API
   version: "1.0"
-  description: LIFF Server API.
+  description: "LIFF Server API."
 
 servers:
   - url: https://api.line.me/
@@ -20,7 +20,7 @@ paths:
         url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
       tags:
         - liff
-      description: Adding the LIFF app to a channel
+      description: "Adding the LIFF app to a channel"
       requestBody:
         content:
           application/json:
@@ -29,7 +29,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -49,13 +49,13 @@ paths:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
-      summary: Get all LIFF apps
-      description: Gets information on all the LIFF apps added to the channel.
+      summary: "Get all LIFF apps"
+      description: "Gets information on all the LIFF apps added to the channel."
       tags:
         - liff
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             "application/json":
               schema:
@@ -66,7 +66,7 @@ paths:
                     view:
                       type: full
                       url: https://example.com/myservice
-                    description: Happy New York
+                    description: "Happy New York"
                     permanentLinkPattern: concat
                   - liffId: "{liffId}"
                     view:
@@ -94,13 +94,13 @@ paths:
       - name: liffId
         in: path
         required: true
-        description: ID of the LIFF app to be updated
+        description: "ID of the LIFF app to be updated"
         schema:
           type: string
     put:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#update-liff-app
-      description: Update LIFF app settings
+      description: "Update LIFF app settings"
       tags:
         - liff
       requestBody:
@@ -111,7 +111,7 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: "OK"
         "400":
           description: |+
             The request contains an invalid value.
@@ -126,14 +126,14 @@ paths:
     delete:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#delete-liff-app
-      summary: Delete LIFF app from a channel
+      summary: "Delete LIFF app from a channel"
       description: |+
         Deletes a LIFF app from a channel.
       tags:
         - liff
       responses:
         "200":
-          description: OK
+          description: "OK"
         "401":
           description: |+
             Authentication failed.
@@ -148,7 +148,7 @@ components:
     Bearer:
       type: http
       scheme: bearer
-      description: Channel access token
+      description: "Channel access token"
 
   schemas:
     AddLiffAppRequest:
@@ -293,12 +293,12 @@ components:
       properties:
         liffId:
           type: string
-          description: LIFF app ID
+          description: "LIFF app ID"
         view:
           $ref: "#/components/schemas/LiffView"
         description:
           type: string
-          description: Name of the LIFF app
+          description: "Name of the LIFF app"
         features:
           $ref: "#/components/schemas/LiffFeatures"
         permanentLinkPattern:

@@ -10,6 +10,8 @@ for (let ymlFile of globby.globbySync("*.yml")) {
     // convert single quotes to double quotes.
     let dst = src.replace(/ '([^']+)'/g, ` "$1"`);
     dst = dst.replace(/ (\/[^:\n]+):/g, ` "$1":`);
+    dst = dst.replace(/(description|summary): ([^|"'][^\n]+)/g,
+        (m, key, val) => `${key}: "${val.replace(/"/g, '`')}"`);
 
     fs.writeFileSync(ymlFile, dst);
 }

@@ -2,7 +2,7 @@
 openapi: 3.0.3
 info:
   title: Webhook Type Definition
-  description: Webhook event definition of the LINE Messaging API
+  description: "Webhook event definition of the LINE Messaging API"
   version: 1.0.0
 servers:
   # DUMMY
@@ -29,11 +29,11 @@ paths:
               $ref: "#/components/schemas/CallbackRequest"
       responses:
         "200":
-          description: OK
+          description: "OK"
           content:
             application/json:
               schema:
-                description: dummy response
+                description: "dummy response"
                 type: string
                 example: OK
 
@@ -64,7 +64,7 @@ components:
             $ref: "#/components/schemas/Event"
 
     Event:
-      description: Webhook event
+      description: "Webhook event"
       required:
         - timestamp
         - mode
@@ -74,18 +74,18 @@ components:
       properties:
         type:
           type: string
-          description: Type of the event
+          description: "Type of the event"
         source:
           $ref: "#/components/schemas/Source"
         timestamp:
           type: integer
           format: int64
-          description: Time of the event in milliseconds.
+          description: "Time of the event in milliseconds."
         mode:
           $ref: "#/components/schemas/EventMode"
         webhookEventId:
           type: string
-          description: Webhook Event ID. An ID that uniquely identifies a webhook event. This is a string in ULID format.
+          description: "Webhook Event ID. An ID that uniquely identifies a webhook event. This is a string in ULID format."
         deliveryContext:
           $ref: "#/components/schemas/DeliveryContext"
       discriminator:
@@ -112,29 +112,29 @@ components:
 
     EventMode:
       type: string
-      description: Channel state.
+      description: "Channel state."
       enum: [active, standby]
 
     DeliveryContext:
       type: object
-      description: webhook's delivery context information
+      description: "webhook's delivery context information"
       required:
         - isRedelivery
       properties:
         isRedelivery:
           type: boolean
-          description: Whether the webhook event is a redelivered one or not.
+          description: "Whether the webhook event is a redelivered one or not."
 
 
     Source:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#source-user
-      description: the source of the event.
+      description: "the source of the event."
       type: object
       properties:
         type:
           type: string
-          description: source type
+          description: "source type"
       discriminator:
         propertyName: type
         mapping:
@@ -150,7 +150,7 @@ components:
           properties:
             userId:
               type: string
-              description: ID of the source user
+              description: "ID of the source user"
     GroupSource:
       allOf:
         - $ref: "#/components/schemas/Source"
@@ -161,10 +161,10 @@ components:
           properties:
             groupId:
               type: string
-              description: Group ID of the source group chat
+              description: "Group ID of the source group chat"
             userId:
               type: string
-              description: ID of the source user. Only included in message events. Only users of LINE for iOS and LINE for Android are included in userId.
+              description: "ID of the source user. Only included in message events. Only users of LINE for iOS and LINE for Android are included in userId."
     RoomSource:
       allOf:
         - $ref: "#/components/schemas/Source"
@@ -172,19 +172,19 @@ components:
           required:
             - type
             - roomId
-          description: Source multi-person chat
+          description: "Source multi-person chat"
           properties:
             userId:
               type: string
-              description: ID of the source user. Only included in message events. Only users of LINE for iOS and LINE for Android are included in userId.
+              description: "ID of the source user. Only included in message events. Only users of LINE for iOS and LINE for Android are included in userId."
             roomId:
               type: string
-              description: Room ID of the source multi-person chat
+              description: "Room ID of the source multi-person chat"
 
 
     # https://developers.line.biz/en/reference/messaging-api/#message-event
     MessageEvent:
-      description: Webhook event object which contains the sent message.
+      description: "Webhook event object which contains the sent message."
       type: object
       allOf:
         - $ref: "#/components/schemas/Event"
@@ -204,7 +204,7 @@ components:
       properties:
         type:
           type: string
-          description: Type
+          description: "Type"
       discriminator:
         propertyName: type
         mapping:
@@ -216,25 +216,25 @@ components:
           location: "#/components/schemas/LocationMessageContent"
           sticker:  "#/components/schemas/StickerMessageContent"
     ContentProvider:
-      description: Provider of the media file.
+      description: "Provider of the media file."
       required:
         - type
       type: object
       properties:
         type:
           type: string
-          description: Provider of the image file.
+          description: "Provider of the image file."
           enum:
             - line
             - external
         originalContentUrl:
           type: string
           format: uri
-          description: URL of the image file. Only included when contentProvider.type is external.
+          description: "URL of the image file. Only included when contentProvider.type is external."
         previewImageUrl:
           format: uri
           type: string
-          description: URL of the preview image. Only included when contentProvider.type is external.
+          description: "URL of the preview image. Only included when contentProvider.type is external."
     TextMessageContent:
       allOf:
         - $ref: "#/components/schemas/MessageContent"
@@ -245,12 +245,12 @@ components:
           properties:
             id:
               type: string
-              description: Message ID
+              description: "Message ID"
             text:
               type: string
-              description: Message text.
+              description: "Message text."
             emojis:
-              description: Array of one or more LINE emoji objects. Only included in the message event when the text property contains a LINE emoji.
+              description: "Array of one or more LINE emoji objects. Only included in the message event when the text property contains a LINE emoji."
               type: array
               items:
                 $ref: "#/components/schemas/Emoji"
@@ -266,16 +266,16 @@ components:
       properties:
         index:
           type: integer
-          description: Index position for a character in text, with the first character being at position 0.
+          description: "Index position for a character in text, with the first character being at position 0."
         length:
           type: integer
-          description: The length of the LINE emoji string. For LINE emoji (hello), 7 is the length.
+          description: "The length of the LINE emoji string. For LINE emoji (hello), 7 is the length."
         productId:
           type: string
-          description: Product ID for a LINE emoji set.
+          description: "Product ID for a LINE emoji set."
         emojiId:
           type: string
-          description: ID for a LINE emoji inside a set.
+          description: "ID for a LINE emoji inside a set."
     Mention:
       required:
         - mentionees
@@ -295,13 +295,13 @@ components:
         # TODO: Define enum of |type| property: https://developers.line.biz/en/news/2023/03/08/messaging-api-updated/
         index:
           type: integer
-          description: Index position of the user mention for a character in text, with the first character being at position 0.
+          description: "Index position of the user mention for a character in text, with the first character being at position 0."
         length:
           type: integer
-          description: The length of the text of the mentioned user. For a mention @example, 8 is the length.
+          description: "The length of the text of the mentioned user. For a mention @example, 8 is the length."
         userId:
           type: string
-          description: User ID of the mentioned user. Only returned if the user consents to the LINE Official Account obtaining their user profile information.
+          description: "User ID of the mentioned user. Only returned if the user consents to the LINE Official Account obtaining their user profile information."
     ImageMessageContent:
       allOf:
         - $ref: "#/components/schemas/MessageContent"
@@ -312,7 +312,7 @@ components:
           properties:
             id:
               type: string
-              description: Message ID
+              description: "Message ID"
             contentProvider:
               $ref: "#/components/schemas/ContentProvider"
             imageSet:
@@ -322,13 +322,13 @@ components:
       properties:
         id:
           type: string
-          description: Image set ID. Only included when multiple images are sent simultaneously.
+          description: "Image set ID. Only included when multiple images are sent simultaneously."
         index:
           type: integer
-          description: An index starting from 1, indicating the image number in a set of images sent simultaneously. Only included when multiple images are sent simultaneously. However, it won't be included if the sender is using LINE 11.15 or earlier for Android.
+          description: "An index starting from 1, indicating the image number in a set of images sent simultaneously. Only included when multiple images are sent simultaneously. However, it won't be included if the sender is using LINE 11.15 or earlier for Android."
         total:
           type: integer
-          description: The total number of images sent simultaneously.
+          description: "The total number of images sent simultaneously."
 
     VideoMessageContent:
       allOf:
@@ -337,15 +337,15 @@ components:
           required:
             - id
             - contentProvider
-          description: Message object which contains the video content sent from the source. The preview image is displayed in the chat and the video is played when the image is tapped.
+          description: "Message object which contains the video content sent from the source. The preview image is displayed in the chat and the video is played when the image is tapped."
           properties:
             id:
               type: string
-              description: Message ID
+              description: "Message ID"
             duration:
               type: integer
               format: int64
-              description: Length of video file (milliseconds)
+              description: "Length of video file (milliseconds)"
             contentProvider:
               $ref: "#/components/schemas/ContentProvider"
     AudioMessageContent:
@@ -355,17 +355,17 @@ components:
           required:
             - id
             - contentProvider
-          description: Message object which contains the audio content sent from the source.
+          description: "Message object which contains the audio content sent from the source."
           properties:
             id:
               type: string
-              description: Message ID
+              description: "Message ID"
             contentProvider:
               $ref: "#/components/schemas/ContentProvider"
             duration:
               type: integer
               format: int64
-              description: Length of audio file (milliseconds)
+              description: "Length of audio file (milliseconds)"
     FileMessageContent:
       allOf:
         - $ref: "#/components/schemas/MessageContent"
@@ -374,17 +374,17 @@ components:
             - id
             - fileName
             - fileSize
-          description: Message object which contains the file sent from the source.
+          description: "Message object which contains the file sent from the source."
           properties:
             id:
               type: string
-              description: Message ID
+              description: "Message ID"
             fileName:
               type: string
-              description: File name
+              description: "File name"
             fileSize:
               type: integer
-              description: File size in bytes
+              description: "File size in bytes"
     LocationMessageContent:
       allOf:
         - $ref: "#/components/schemas/MessageContent"
@@ -393,25 +393,25 @@ components:
             - id
             - latitude
             - longitude
-          description: Message object which contains the location data sent from the source.
+          description: "Message object which contains the location data sent from the source."
           properties:
             id:
               type: string
-              description: Message ID
+              description: "Message ID"
             title:
               type: string
-              description: Title
+              description: "Title"
             address:
               type: string
-              description: Address
+              description: "Address"
             latitude:
               type: number
               format: double
-              description: Latitude
+              description: "Latitude"
             longitude:
               type: number
               format: double
-              description: Longitude
+              description: "Longitude"
     StickerMessageContent:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#wh-sticker
@@ -423,17 +423,17 @@ components:
             - packageId
             - stickerId
             - stickerResourceType
-          description: Message object which contains the sticker data sent from the source.
+          description: "Message object which contains the sticker data sent from the source."
           properties:
             id:
               type: string
-              description: Message ID
+              description: "Message ID"
             packageId:
               type: string
-              description: Package ID
+              description: "Package ID"
             stickerId:
               type: string
-              description: Sticker ID
+              description: "Sticker ID"
             stickerResourceType:
               type: string
               enum:
@@ -466,7 +466,7 @@ components:
 
     # https://developers.line.biz/en/reference/messaging-api/#unsend-event
     UnsendEvent:
-      description: Event object for when the user unsends a message.
+      description: "Event object for when the user unsends a message."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -482,12 +482,12 @@ components:
       properties:
         messageId:
           type: string
-          description: The message ID of the unsent message
+          description: "The message ID of the unsent message"
 
 
     # https://developers.line.biz/en/reference/messaging-api/#follow-event
     FollowEvent:
-      description: Event object for when your LINE Official Account is added as a friend (or unblocked). You can reply to follow events.
+      description: "Event object for when your LINE Official Account is added as a friend (or unblocked). You can reply to follow events."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -497,12 +497,12 @@ components:
           properties:
             replyToken:
               type: string
-              description: Reply token used to send reply message to this event
+              description: "Reply token used to send reply message to this event"
 
 
     # https://developers.line.biz/en/reference/messaging-api/#unfollow-event
     UnfollowEvent:
-      description: Event object for when your LINE Official Account is blocked.
+      description: "Event object for when your LINE Official Account is blocked."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -510,7 +510,7 @@ components:
 
     # https://developers.line.biz/en/reference/messaging-api/#join-event
     JoinEvent:
-      description: Event object for when your LINE Official Account joins a group chat or multi-person chat. You can reply to join events.
+      description: "Event object for when your LINE Official Account joins a group chat or multi-person chat. You can reply to join events."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -520,12 +520,12 @@ components:
           properties:
             replyToken:
               type: string
-              description: Reply token used to send reply message to this event
+              description: "Reply token used to send reply message to this event"
 
 
     # https://developers.line.biz/en/reference/messaging-api/#leave-event
     LeaveEvent:
-      description: Event object for when a user removes your LINE Official Account from a group chat or when your LINE Official Account leaves a group chat or multi-person chat.
+      description: "Event object for when a user removes your LINE Official Account from a group chat or when your LINE Official Account leaves a group chat or multi-person chat."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -535,7 +535,7 @@ components:
 
     # https://developers.line.biz/en/reference/messaging-api/#member-joined-event
     MemberJoinedEvent:
-      description: Event object for when a user joins a group chat or multi-person chat that the LINE Official Account is in.
+      description: "Event object for when a user joins a group chat or multi-person chat that the LINE Official Account is in."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -546,7 +546,7 @@ components:
           properties:
             replyToken:
               type: string
-              description: Reply token used to send reply message to this event
+              description: "Reply token used to send reply message to this event"
             joined:
               $ref: "#/components/schemas/JoinedMembers"
     JoinedMembers:
@@ -555,7 +555,7 @@ components:
       type: object
       properties:
         members:
-          description: Users who joined. Array of source user objects.
+          description: "Users who joined. Array of source user objects."
           type: array
           items:
             $ref: "#/components/schemas/UserSource"
@@ -563,7 +563,7 @@ components:
 
     # https://developers.line.biz/en/reference/messaging-api/#member-left-event
     MemberLeftEvent:
-      description: Event object for when a user leaves a group chat or multi-person chat that the LINE Official Account is in.
+      description: "Event object for when a user leaves a group chat or multi-person chat that the LINE Official Account is in."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -579,7 +579,7 @@ components:
       type: object
       properties:
         members:
-          description: Users who left. Array of source user objects.
+          description: "Users who left. Array of source user objects."
           type: array
           items:
             $ref: "#/components/schemas/UserSource"
@@ -587,7 +587,7 @@ components:
 
     # https://developers.line.biz/en/reference/messaging-api/#postback-event
     PostbackEvent:
-      description: Event object for when a user performs a postback action which initiates a postback. You can reply to postback events.
+      description: "Event object for when a user performs a postback action which initiates a postback. You can reply to postback events."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -596,7 +596,7 @@ components:
           properties:
             replyToken:
               type: string
-              description: Reply token used to send reply message to this event
+              description: "Reply token used to send reply message to this event"
             postback:
               $ref: "#/components/schemas/PostbackContent"
     PostbackContent:
@@ -607,7 +607,7 @@ components:
       properties:
         data:
           type: string
-          description: Postback data
+          description: "Postback data"
         params:
           type: object
           additionalProperties:
@@ -616,7 +616,7 @@ components:
 
     # https://developers.line.biz/en/reference/messaging-api/#video-viewing-complete
     VideoPlayCompleteEvent:
-      description: Event for when a user finishes viewing a video at least once with the specified trackingId sent by the LINE Official Account.
+      description: "Event for when a user finishes viewing a video at least once with the specified trackingId sent by the LINE Official Account."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -627,7 +627,7 @@ components:
           properties:
             replyToken:
               type: string
-              description: Reply token used to send reply message to this event
+              description: "Reply token used to send reply message to this event"
             videoPlayComplete:
               $ref: "#/components/schemas/VideoPlayComplete"
     VideoPlayComplete:
@@ -637,12 +637,12 @@ components:
       properties:
         trackingId:
           type: string
-          description: ID used to identify a video. Returns the same value as the trackingId assigned to the video message.
+          description: "ID used to identify a video. Returns the same value as the trackingId assigned to the video message."
 
 
     # https://developers.line.biz/en/reference/messaging-api/#beacon-event
     BeaconEvent:
-      description: Event object for when a user enters the range of a LINE Beacon. You can reply to beacon events.
+      description: "Event object for when a user enters the range of a LINE Beacon. You can reply to beacon events."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -653,7 +653,7 @@ components:
           properties:
             replyToken:
               type: string
-              description: Reply token used to send reply message to this event
+              description: "Reply token used to send reply message to this event"
             beacon:
               $ref: "#/components/schemas/BeaconContent"
     BeaconContent:
@@ -664,19 +664,19 @@ components:
       properties:
         hwid:
           type: string
-          description: Hardware ID of the beacon that was detected
+          description: "Hardware ID of the beacon that was detected"
         type:
           type: string
-          description: Type of beacon event.
+          description: "Type of beacon event."
           enum: [enter, banner, stay]
         dm:
           type: string
-          description: Device message of beacon that was detected.
+          description: "Device message of beacon that was detected."
 
 
     # https://developers.line.biz/en/reference/messaging-api/#account-link-event
     AccountLinkEvent:
-      description: Event object for when a user has linked their LINE account with a provider's service account. You can reply to account link events.
+      description: "Event object for when a user has linked their LINE account with a provider's service account. You can reply to account link events."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -686,11 +686,11 @@ components:
           properties:
             replyToken:
               type: string
-              description: Reply token used to send reply message to this event. This property won't be included if linking the account has failed.
+              description: "Reply token used to send reply message to this event. This property won't be included if linking the account has failed."
             link:
               $ref: "#/components/schemas/LinkContent"
     LinkContent:
-      description: Content of the account link event.
+      description: "Content of the account link event."
       required:
         - result
         - nonce
@@ -702,12 +702,12 @@ components:
           description: "One of the following values to indicate whether linking the account was successful or not"
         nonce:
           type: string
-          description: Specified nonce (number used once) when verifying the user ID.
+          description: "Specified nonce (number used once) when verifying the user ID."
 
 
     # https://developers.line.biz/en/reference/messaging-api/#scenario-result-event
     ThingsEvent:
-      description: Indicates that a user linked a device with LINE.
+      description: "Indicates that a user linked a device with LINE."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -718,7 +718,7 @@ components:
           properties:
             replyToken:
               type: string
-              description: Reply token used to send reply message to this event
+              description: "Reply token used to send reply message to this event"
             things:
               $ref: "#/components/schemas/ThingsContent"
 
@@ -727,7 +727,7 @@ components:
       properties:
         type:
           type: string
-          description: Type
+          description: "Type"
       discriminator:
         propertyName: type
         mapping:
@@ -740,22 +740,22 @@ components:
         - type: object
           required:
             - deviceId
-          description: Indicates that a user linked a device with LINE.
+          description: "Indicates that a user linked a device with LINE."
           properties:
             deviceId:
               type: string
-              description: Device ID of the device that has been linked with LINE.
+              description: "Device ID of the device that has been linked with LINE."
     UnlinkThingsContent:
       allOf:
         - $ref: "#/components/schemas/ThingsContent"
         - type: object
           required:
             - deviceId
-          description: Indicates that the user unlinked a device from LINE.
+          description: "Indicates that the user unlinked a device from LINE."
           properties:
             deviceId:
               type: string
-              description: Device ID of the device that has been linked with LINE.
+              description: "Device ID of the device that has been linked with LINE."
     ScenarioResultThingsContent:
       allOf:
         - $ref: "#/components/schemas/ThingsContent"
@@ -763,11 +763,11 @@ components:
           required:
             - deviceId
             - result
-          description: This event indicates that an automatic communication scenario has been executed.
+          description: "This event indicates that an automatic communication scenario has been executed."
           properties:
             deviceId:
               type: string
-              description: Device ID of the device that has been linked with LINE.
+              description: "Device ID of the device that has been linked with LINE."
             result:
               $ref: "#/components/schemas/ScenarioResult"
     ScenarioResult:
@@ -781,31 +781,31 @@ components:
       properties:
         scenarioId:
           type: string
-          description: Scenario ID executed
+          description: "Scenario ID executed"
         revision:
           type: string
-          description: Revision number of the scenario set containing the executed scenario
+          description: "Revision number of the scenario set containing the executed scenario"
         startTime:
           type: integer
           format: int64
-          description: Timestamp for when execution of scenario action started (milliseconds, LINE app time)
+          description: "Timestamp for when execution of scenario action started (milliseconds, LINE app time)"
         endTime:
           type: integer
           format: int64
-          description: Timestamp for when execution of scenario was completed (milliseconds, LINE app time)
+          description: "Timestamp for when execution of scenario was completed (milliseconds, LINE app time)"
         resultCode:
           type: string
-          description: Scenario execution completion status
+          description: "Scenario execution completion status"
         actionResults:
-          description: Execution result of individual operations specified in action. Only included when things.result.resultCode is success.
+          description: "Execution result of individual operations specified in action. Only included when things.result.resultCode is success."
           type: array
           items:
             $ref: "#/components/schemas/ActionResult"
         bleNotificationPayload:
-          description: Data contained in notification.
+          description: "Data contained in notification."
           type: string
         errorReason:
-          description: Error reason.
+          description: "Error reason."
           type: string
     ActionResult:
       required:
@@ -816,13 +816,13 @@ components:
           type: string
           enum: [ void, binary ]
         data:
-          description: Base64-encoded binary data
+          description: "Base64-encoded binary data"
           type: string
 
 
     # https://developers.line.biz/en/reference/partner-docs/#module-webhook-event-object
     ModuleEvent:
-      description: This event indicates that the module channel has been attached to the LINE Official Account. Sent to the webhook URL server of the module channel.
+      description: "This event indicates that the module channel has been attached to the LINE Official Account. Sent to the webhook URL server of the module channel."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -837,7 +837,7 @@ components:
       properties:
         type:
           type: string
-          description: Type
+          description: "Type"
       discriminator:
         propertyName: type
         mapping:
@@ -852,10 +852,10 @@ components:
             - scopes
           properties:
             botId:
-              description: User ID of the bot on the attached LINE Official Account
+              description: "User ID of the bot on the attached LINE Official Account"
               type: string
             scopes:
-              description: An array of strings indicating the scope permitted by the admin of the LINE Official Account.
+              description: "An array of strings indicating the scope permitted by the admin of the LINE Official Account."
               type: array
               items:
                 type: string
@@ -868,17 +868,17 @@ components:
             - reason
           properties:
             botId:
-              description: Detached LINE Official Account bot user ID
+              description: "Detached LINE Official Account bot user ID"
               type: string
             reason:
-              description: Reason for detaching
+              description: "Reason for detaching"
               type: string
               enum:
                 - bot_deleted
 
     # https://developers.line.biz/en/reference/partner-docs/#activated-event
     ActivatedEvent:
-      description: This event indicates that the module channel has been switched to Active Channel by calling the Acquire Control API. Sent to the webhook URL server of the module channel.
+      description: "This event indicates that the module channel has been switched to Active Channel by calling the Acquire Control API. Sent to the webhook URL server of the module channel."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -899,7 +899,7 @@ components:
 
     # https://developers.line.biz/en/reference/partner-docs/#deactivated-event
     DeactivatedEvent:
-      description: This event indicates that the module channel has been switched to Standby Channel by calling Acquire Control API or Release Control API. Sent to the webhook URL server of the module channel.
+      description: "This event indicates that the module channel has been switched to Standby Channel by calling Acquire Control API or Release Control API. Sent to the webhook URL server of the module channel."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
@@ -917,7 +917,7 @@ components:
 
     # https://developers.line.biz/en/reference/partner-docs/#botresumed-event
     BotResumedEvent:
-      description: This event indicates that the LINE Official Account has returned from the suspended state. Sent to the webhook URL server of the module channel.
+      description: "This event indicates that the LINE Official Account has returned from the suspended state. Sent to the webhook URL server of the module channel."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
