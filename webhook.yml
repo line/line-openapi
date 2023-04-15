@@ -287,21 +287,43 @@ components:
           items:
             $ref: "#/components/schemas/Mentionee"
     Mentionee:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#wh-text
       required:
         - index
         - length
       type: object
       properties:
-        # TODO: Define enum of |type| property: https://developers.line.biz/en/news/2023/03/08/messaging-api-updated/
+        type:
+          type: string
+          description: "Mentioned target."
         index:
           type: integer
+          format: int32
           description: "Index position of the user mention for a character in text, with the first character being at position 0."
         length:
           type: integer
+          format: int32
           description: "The length of the text of the mentioned user. For a mention @example, 8 is the length."
-        userId:
-          type: string
-          description: "User ID of the mentioned user. Only returned if the user consents to the LINE Official Account obtaining their user profile information."
+      discriminator:
+        propertyName: type
+        mapping:
+          user: "#/components/schemas/UserMentionee"
+          all: "#/components/schemas/AllMentionee"
+    UserMentionee:
+      description: "Mentioned target is user"
+      allOf:
+        - $ref: "#/components/schemas/Mentionee"
+        - type: object
+          properties:
+            userId:
+              type: string
+              description: "User ID of the mentioned user. Only included if mention.mentions[].type is user and the user consents to the LINE Official Account obtaining their user profile information."
+    AllMentionee:
+      description: "Mentioned target is entire group"
+      allOf:
+        - $ref: "#/components/schemas/Mentionee"
+        - type: object
     ImageMessageContent:
       allOf:
         - $ref: "#/components/schemas/MessageContent"
