@@ -17,6 +17,161 @@ tags:
   - name: messaging-api-blob
 
 paths:
+  # Webhook
+  "/v2/bot/channel/webhook/endpoint":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information
+      tags:
+        - messaging-api
+      operationId: getWebhookEndpoint
+      description: "Get webhook endpoint information"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/GetWebhookEndpointResponse"
+              examples:
+                ACTIVE:
+                  summary: "If the webhook URL was set and the webhook usage is enabled"
+                  value:
+                    endpoint: https://example.com/test
+                    active: true
+                INACTIVE:
+                  summary: "If the webhook URL was set and the webhook usage is disabled"
+                  value:
+                    endpoint: https://example.com/test
+                    active: false
+
+    put:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url
+      tags:
+        - messaging-api
+      operationId: setWebhookEndpoint
+      description: "Set webhook endpoint URL"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/SetWebhookEndpointRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+
+  "/v2/bot/channel/webhook/test":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint
+      tags:
+        - messaging-api
+      operationId: testWebhookEndpoint
+      description: "Test webhook endpoint"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TestWebhookEndpointRequest"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/TestWebhookEndpointResponse"
+              example:
+                success: true
+                timestamp: "2020-09-30T05:38:20.031Z"
+                statusCode: 200
+                reason: OK
+                detail: "200"
+
+  # Webhook content
+  "/v2/bot/message/{messageId}/content":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-content
+      servers:
+        - url: "https://api-data.line.me"
+      tags:
+        - messaging-api-blob
+      operationId: getMessageContent
+      description: "Download image, video, and audio data sent from users."
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          description: "Message ID of video or audio"
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "*/*":
+              schema:
+                description: "blob response"
+                type: string
+                format: binary
+
+  "/v2/bot/message/{messageId}/content/preview":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview
+      servers:
+        - url: "https://api-data.line.me"
+      tags:
+        - messaging-api-blob
+      operationId: getMessageContentPreview
+      description: "Get a preview image of the image or video"
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          description: "Message ID of image or video"
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "*/*":
+              schema:
+                type: string
+                format: binary
+                description: "blob response"
+
+  "/v2/bot/message/{messageId}/content/transcoding":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status
+      servers:
+        - url: "https://api-data.line.me"
+      tags:
+        - messaging-api-blob
+      operationId: getMessageContentTranscodingByMessageId
+      description: "Verify the preparation status of a video or audio for getting"
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          description: "Message ID of video or audio"
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/GetMessageContentTranscodingResponse"
+              example:
+                status: processing
+
+  # Messaging
   "/v2/bot/message/reply":
     post:
       externalDocs:
@@ -153,59 +308,6 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
 
-  "/v2/bot/message/broadcast":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#send-broadcast-message
-      tags:
-        - messaging-api
-      operationId: broadcast
-      description: "Sends a message to multiple users at any time."
-      parameters:
-        - name: X-Line-Retry-Key
-          in: header
-          required: false
-          schema:
-            type: string
-            format: uuid
-          description: |+
-            Retry key.
-            Specifies the UUID in hexadecimal format (e.g., `123e4567-e89b-12d3-a456-426614174000`) generated by any method.
-            The retry key isn't generated by LINE. Each developer must generate their own retry key.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/BroadcastRequest"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-        "400":
-          description: "Bad Request"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        "403":
-          description: "Forbidden"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        "409":
-          description: "Conflict"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        "429":
-          description: "Too Many Requests"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-
   "/v2/bot/message/narrowcast":
     post:
       externalDocs:
@@ -285,6 +387,60 @@ paths:
                 phase: waiting
                 acceptedTime: 2020-12-03T10:15:30.121Z
 
+  "/v2/bot/message/broadcast":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#send-broadcast-message
+      tags:
+        - messaging-api
+      operationId: broadcast
+      description: "Sends a message to multiple users at any time."
+      parameters:
+        - name: X-Line-Retry-Key
+          in: header
+          required: false
+          schema:
+            type: string
+            format: uuid
+          description: |+
+            Retry key.
+            Specifies the UUID in hexadecimal format (e.g., `123e4567-e89b-12d3-a456-426614174000`) generated by any method.
+            The retry key isn't generated by LINE. Each developer must generate their own retry key.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/BroadcastRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "Bad Request"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        "403":
+          description: "Forbidden"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        "409":
+          description: "Conflict"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        "429":
+          description: "Too Many Requests"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+
+  # Quota
   "/v2/bot/message/quota":
     get:
       externalDocs:
@@ -322,6 +478,7 @@ paths:
               example:
                 "totalUsage": 500
 
+  # Delivery
   "/v2/bot/message/delivery/reply":
     get:
       externalDocs:
@@ -443,6 +600,154 @@ paths:
                 status: ready
                 success: 10000
 
+  # Message validation
+  "/v2/bot/message/validate/reply":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-reply-message
+      tags:
+        - messaging-api
+      operationId: validateReply
+      description: "Validate message objects of a reply message"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ValidateMessageRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+
+  "/v2/bot/message/validate/push":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-push-message
+      tags:
+        - messaging-api
+      operationId: validatePush
+      description: "Validate message objects of a push message"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ValidateMessageRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+
+  "/v2/bot/message/validate/multicast":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-multicast-message
+      tags:
+        - messaging-api
+      operationId: validateMulticast
+      description: "Validate message objects of a multicast message"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ValidateMessageRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+
+  "/v2/bot/message/validate/narrowcast":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-narrowcast-message
+      tags:
+        - messaging-api
+      operationId: validateNarrowcast
+      description: "Validate message objects of a narrowcast message"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ValidateMessageRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+
+  "/v2/bot/message/validate/broadcast":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-broadcast-message
+      tags:
+        - messaging-api
+      operationId: validateBroadcast
+      description: "Validate message objects of a broadcast message"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ValidateMessageRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+
+  # Aggregation Unit
+  "/v2/bot/message/aggregation/info":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month
+      tags:
+        - messaging-api
+      operationId: getAggregationUnitUsage
+      description: "Get number of units used this month"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/GetAggregationUnitUsageResponse"
+              example:
+                numOfCustomAggregationUnits: 22
+
+  "/v2/bot/message/aggregation/list":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month
+      tags:
+        - messaging-api
+      operationId: getAggregationUnitNameList
+      description: "Get name list of units used this month"
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+          description: |+
+            The maximum number of aggregation units you can get per request.
+        - name: start
+          in: query
+          required: false
+          schema:
+            type: string
+          description: |+
+            Value of the continuation token found in the next property of the JSON object returned in the response.
+            If you can't get all the aggregation units in one request, include this parameter to get the remaining array.
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/GetAggregationUnitNameListResponse"
+              example:
+                customAggregationUnits:
+                  - promotion_a
+                  - promotion_b
+                next: jxEWCEEP...
+
+  # Users
   "/v2/bot/profile/{userId}":
     get:
       externalDocs:
@@ -472,6 +777,71 @@ paths:
                 pictureUrl: https://obs.line-apps.com/...
                 statusMessage: Hello, LINE!
 
+  "/v2/bot/followers/ids":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-follower-ids
+      tags:
+        - messaging-api
+      operationId: getFollowers
+      description: "Get a list of users who added your LINE Official Account as a friend"
+      parameters:
+        - name: start
+          in: query
+          required: false
+          description: |+
+            Value of the continuation token found in the next property of the JSON object returned in the response.
+            Include this parameter to get the next array of user IDs.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          description: "The maximum number of user IDs to retrieve in a single request."
+          schema:
+            type: integer
+            format: int32
+            default: 300
+            maximum: 1000
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/GetFollowersResponse"
+              example:
+                userIds:
+                  - U4af4980629...
+                  - U0c229f96c4...
+                  - U95afb1d4df...
+                next: yANU9IA...
+
+  # Bot
+  "/v2/bot/info":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-bot-info
+      tags:
+        - messaging-api
+      operationId: getBotInfo
+      description: "Get bot info"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/BotInfoResponse"
+              example:
+                userId: Ub9952f8...
+                basicId: "@216ru..."
+                displayName: Example name
+                pictureUrl: https://obs.line-apps.com/...
+                chatMode: chat
+                markAsReadMode: manual
+
+  # Group
   "/v2/bot/group/{groupId}/member/{userId}":
     get:
       externalDocs:
@@ -739,6 +1109,104 @@ paths:
               example:
                 count: 3
 
+  # RichMenu
+  "/v2/bot/richmenu":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#create-rich-menu
+      tags:
+        - messaging-api
+      operationId: createRichMenu
+      description: "Create rich menu"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RichMenuRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/RichMenuIdResponse"
+              example:
+                "richMenuId": "{richMenuId}"
+
+  "/v2/bot/richmenu/validate":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#validate-rich-menu-object
+      tags:
+        - messaging-api
+      operationId: validateRichMenuObject
+      description: "Validate rich menu object"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RichMenuRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+
+  "/v2/bot/richmenu/{richMenuId}/content":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image
+      servers:
+        - url: "https://api-data.line.me"
+      tags:
+        - messaging-api-blob
+      operationId: getRichMenuImage
+      description: "Download rich menu image."
+      parameters:
+        - name: richMenuId
+          in: path
+          required: true
+          description: "ID of the rich menu with the image to be downloaded"
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+          content:
+            # TODO check the content-type of the actual implementation and replace here.
+            "*/*":
+              schema:
+                type: string
+                format: binary
+                description: "blob response"
+
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image
+      servers:
+        - url: "https://api-data.line.me"
+      tags:
+        - messaging-api-blob
+      operationId: setRichMenuImage
+      description: "Upload rich menu image"
+      parameters:
+        - name: richMenuId
+          in: path
+          required: true
+          description: "The ID of the rich menu to attach the image to"
+          schema:
+            type: string
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              description: "blob request"
+              type: string
+              format: binary
+      responses:
+        "200":
+          description: "OK"
+
   "/v2/bot/richmenu/{richMenuId}":
     parameters:
       - name: richMenuId
@@ -789,144 +1257,6 @@ paths:
         "200":
           description: "OK"
 
-  "/v2/bot/richmenu/validate":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#validate-rich-menu-object
-      tags:
-        - messaging-api
-      operationId: validateRichMenuObject
-      description: "Validate rich menu object"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/RichMenuRequest"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-
-  "/v2/bot/richmenu":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#create-rich-menu
-      tags:
-        - messaging-api
-      operationId: createRichMenu
-      description: "Create rich menu"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/RichMenuRequest"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/RichMenuIdResponse"
-              example:
-                "richMenuId": "{richMenuId}"
-
-  "/v2/bot/user/{userId}/richmenu":
-    parameters:
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: string
-        description: "User ID. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE."
-    get:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-id-of-user
-      tags:
-        - messaging-api
-      operationId: getRichMenuIdOfUser
-      description: "Get rich menu ID of user"
-      responses:
-        "200":
-          description: "OK"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/RichMenuIdResponse"
-              example:
-                "richMenuId": "{richMenuId}"
-    delete:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-user
-      tags:
-        - messaging-api
-      operationId: unlinkRichMenuIdFromUser
-      description: "Unlink rich menu from user"
-      responses:
-        "200":
-          description: "OK"
-
-  "/v2/bot/user/{userId}/richmenu/{richMenuId}":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-user
-      tags:
-        - messaging-api
-      operationId: linkRichMenuIdToUser
-      description: "Link rich menu to user."
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: "User ID. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE."
-        - name: richMenuId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: "ID of a rich menu"
-      responses:
-        "200":
-          description: "OK"
-
-  "/v2/bot/richmenu/bulk/link":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users
-      tags:
-        - messaging-api
-      operationId: linkRichMenuIdToUsers
-      description: "Link rich menu to multiple users"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/RichMenuBulkLinkRequest"
-        required: true
-      responses:
-        "202":
-          description: "Accepted"
-
-  "/v2/bot/richmenu/bulk/unlink":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users
-      tags:
-        - messaging-api
-      operationId: unlinkRichMenuIdFromUsers
-      description: "Unlink rich menus from multiple users"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/RichMenuBulkUnlinkRequest"
-        required: true
-      responses:
-        "202":
-          description: "Accepted"
-
   "/v2/bot/richmenu/list":
     get:
       externalDocs:
@@ -961,6 +1291,7 @@ paths:
                           type: postback
                           data: action=buy&itemid=123
 
+  # Default RichMenu
   "/v2/bot/user/all/richmenu/{richMenuId}":
     post:
       externalDocs:
@@ -1008,167 +1339,7 @@ paths:
         "200":
           description: "OK"
 
-  "/v2/bot/user/{userId}/linkToken":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#issue-link-token
-      tags:
-        - messaging-api
-      operationId: issueLinkToken
-      description: "Issue link token"
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: |+
-            User ID for the LINE account to be linked.
-            Found in the `source` object of account link event objects. Do not use the LINE ID used in LINE.
-      responses:
-        "200":
-          description: "OK"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/IssueLinkTokenResponse"
-              example:
-                linkToken: NMZTNuVrPTqlr2IF8Bnymkb7rXfYv5EY
-
-  "/v2/bot/followers/ids":
-    get:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-follower-ids
-      tags:
-        - messaging-api
-      operationId: getFollowers
-      description: "Get a list of users who added your LINE Official Account as a friend"
-      parameters:
-        - name: start
-          in: query
-          required: false
-          description: |+
-            Value of the continuation token found in the next property of the JSON object returned in the response.
-            Include this parameter to get the next array of user IDs.
-          schema:
-            type: string
-        - name: limit
-          in: query
-          required: false
-          description: "The maximum number of user IDs to retrieve in a single request."
-          schema:
-            type: integer
-            format: int32
-            default: 300
-            maximum: 1000
-      responses:
-        "200":
-          description: "OK"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/GetFollowersResponse"
-              example:
-                userIds:
-                  - U4af4980629...
-                  - U0c229f96c4...
-                  - U95afb1d4df...
-                next: yANU9IA...
-
-  "/v2/bot/info":
-    get:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-bot-info
-      tags:
-        - messaging-api
-      operationId: getBotInfo
-      description: "Get bot info"
-      responses:
-        "200":
-          description: "OK"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/BotInfoResponse"
-              example:
-                userId: Ub9952f8...
-                basicId: "@216ru..."
-                displayName: Example name
-                pictureUrl: https://obs.line-apps.com/...
-                chatMode: chat
-                markAsReadMode: manual
-
-  "/v2/bot/channel/webhook/endpoint":
-    get:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information
-      tags:
-        - messaging-api
-      operationId: getWebhookEndpoint
-      description: "Get webhook endpoint information"
-      responses:
-        "200":
-          description: "OK"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/GetWebhookEndpointResponse"
-              examples:
-                ACTIVE:
-                  summary: "If the webhook URL was set and the webhook usage is enabled"
-                  value:
-                    endpoint: https://example.com/test
-                    active: true
-                INACTIVE:
-                  summary: "If the webhook URL was set and the webhook usage is disabled"
-                  value:
-                    endpoint: https://example.com/test
-                    active: false
-
-    put:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url
-      tags:
-        - messaging-api
-      operationId: setWebhookEndpoint
-      description: "Set webhook endpoint URL"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/SetWebhookEndpointRequest"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-
-  "/v2/bot/channel/webhook/test":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint
-      tags:
-        - messaging-api
-      operationId: testWebhookEndpoint
-      description: "Test webhook endpoint"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/TestWebhookEndpointRequest"
-      responses:
-        "200":
-          description: "OK"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/TestWebhookEndpointResponse"
-              example:
-                success: true
-                timestamp: "2020-09-30T05:38:20.031Z"
-                statusCode: 200
-                reason: OK
-                detail: "200"
-
+  # RichMenu Alias
   "/v2/bot/richmenu/alias":
     post:
       externalDocs:
@@ -1298,153 +1469,134 @@ paths:
                 NO_ALIASES:
                   summary: "If you have 0 rich menu alias"
                   value:
-                    aliases: []
+                    aliases: [ ]
 
-  "/v2/bot/message/aggregation/info":
+  # User RichMenu
+  "/v2/bot/user/{userId}/richmenu":
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: "User ID. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE."
     get:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month
+        url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-id-of-user
       tags:
         - messaging-api
-      operationId: getAggregationUnitUsage
-      description: "Get number of units used this month"
+      operationId: getRichMenuIdOfUser
+      description: "Get rich menu ID of user"
       responses:
         "200":
           description: "OK"
           content:
             "application/json":
               schema:
-                "$ref": "#/components/schemas/GetAggregationUnitUsageResponse"
+                "$ref": "#/components/schemas/RichMenuIdResponse"
               example:
-                numOfCustomAggregationUnits: 22
-
-  "/v2/bot/message/aggregation/list":
-    get:
+                "richMenuId": "{richMenuId}"
+    delete:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month
+        url: https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-user
       tags:
         - messaging-api
-      operationId: getAggregationUnitNameList
-      description: "Get name list of units used this month"
+      operationId: unlinkRichMenuIdFromUser
+      description: "Unlink rich menu from user"
+      responses:
+        "200":
+          description: "OK"
+
+  "/v2/bot/user/{userId}/richmenu/{richMenuId}":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-user
+      tags:
+        - messaging-api
+      operationId: linkRichMenuIdToUser
+      description: "Link rich menu to user."
       parameters:
-        - name: limit
-          in: query
-          required: false
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: "User ID. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE."
+        - name: richMenuId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: "ID of a rich menu"
+      responses:
+        "200":
+          description: "OK"
+
+  "/v2/bot/richmenu/bulk/link":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users
+      tags:
+        - messaging-api
+      operationId: linkRichMenuIdToUsers
+      description: "Link rich menu to multiple users"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RichMenuBulkLinkRequest"
+        required: true
+      responses:
+        "202":
+          description: "Accepted"
+
+  "/v2/bot/richmenu/bulk/unlink":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users
+      tags:
+        - messaging-api
+      operationId: unlinkRichMenuIdFromUsers
+      description: "Unlink rich menus from multiple users"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RichMenuBulkUnlinkRequest"
+        required: true
+      responses:
+        "202":
+          description: "Accepted"
+
+  # Account link
+  "/v2/bot/user/{userId}/linkToken":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#issue-link-token
+      tags:
+        - messaging-api
+      operationId: issueLinkToken
+      description: "Issue link token"
+      parameters:
+        - name: userId
+          in: path
+          required: true
           schema:
             type: string
           description: |+
-            The maximum number of aggregation units you can get per request.
-        - name: start
-          in: query
-          required: false
-          schema:
-            type: string
-          description: |+
-            Value of the continuation token found in the next property of the JSON object returned in the response.
-            If you can't get all the aggregation units in one request, include this parameter to get the remaining array.
+            User ID for the LINE account to be linked.
+            Found in the `source` object of account link event objects. Do not use the LINE ID used in LINE.
       responses:
         "200":
           description: "OK"
           content:
             "application/json":
               schema:
-                "$ref": "#/components/schemas/GetAggregationUnitNameListResponse"
+                "$ref": "#/components/schemas/IssueLinkTokenResponse"
               example:
-                customAggregationUnits:
-                  - promotion_a
-                  - promotion_b
-                next: jxEWCEEP...
+                linkToken: NMZTNuVrPTqlr2IF8Bnymkb7rXfYv5EY
 
-  "/v2/bot/message/validate/reply":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-reply-message
-      tags:
-        - messaging-api
-      operationId: validateReply
-      description: "Validate message objects of a reply message"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/ValidateMessageRequest"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-
-  "/v2/bot/message/validate/push":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-push-message
-      tags:
-        - messaging-api
-      operationId: validatePush
-      description: "Validate message objects of a push message"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/ValidateMessageRequest"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-
-  "/v2/bot/message/validate/multicast":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-multicast-message
-      tags:
-        - messaging-api
-      operationId: validateMulticast
-      description: "Validate message objects of a multicast message"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/ValidateMessageRequest"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-
-  "/v2/bot/message/validate/narrowcast":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-narrowcast-message
-      tags:
-        - messaging-api
-      operationId: validateNarrowcast
-      description: "Validate message objects of a narrowcast message"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/ValidateMessageRequest"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-
-  "/v2/bot/message/validate/broadcast":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-broadcast-message
-      tags:
-        - messaging-api
-      operationId: validateBroadcast
-      description: "Validate message objects of a broadcast message"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/ValidateMessageRequest"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-
+  # Optional APIs
   "/v2/bot/message/markAsRead":
     post:
       externalDocs:
@@ -1585,143 +1737,6 @@ paths:
                   summary: "Example response when status is `unavailable_for_privacy`"
                   value:
                     status: unavailable_for_privacy
-
-  "/v2/bot/message/{messageId}/content":
-    get:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-content
-      servers:
-        - url: "https://api-data.line.me"
-      tags:
-        - messaging-api-blob
-      operationId: getMessageContent
-      description: "Download image, video, and audio data sent from users."
-      parameters:
-        - name: messageId
-          in: path
-          required: true
-          description: "Message ID of video or audio"
-          schema:
-            type: string
-      responses:
-        "200":
-          description: "OK"
-          content:
-            "*/*":
-              schema:
-                description: "blob response"
-                type: string
-                format: binary
-
-  "/v2/bot/message/{messageId}/content/preview":
-    get:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview
-      servers:
-        - url: "https://api-data.line.me"
-      tags:
-        - messaging-api-blob
-      operationId: getMessageContentPreview
-      description: "Get a preview image of the image or video"
-      parameters:
-        - name: messageId
-          in: path
-          required: true
-          description: "Message ID of image or video"
-          schema:
-            type: string
-      responses:
-        "200":
-          description: "OK"
-          content:
-            "*/*":
-              schema:
-                type: string
-                format: binary
-                description: "blob response"
-
-  "/v2/bot/richmenu/{richMenuId}/content":
-    get:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image
-      servers:
-        - url: "https://api-data.line.me"
-      tags:
-        - messaging-api-blob
-      operationId: getRichMenuImage
-      description: "Download rich menu image."
-      parameters:
-        - name: richMenuId
-          in: path
-          required: true
-          description: "ID of the rich menu with the image to be downloaded"
-          schema:
-            type: string
-      responses:
-        "200":
-          description: "OK"
-          content:
-            # TODO check the content-type of the actual implementation and replace here.
-            "*/*":
-              schema:
-                type: string
-                format: binary
-                description: "blob response"
-
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image
-      servers:
-        - url: "https://api-data.line.me"
-      tags:
-        - messaging-api-blob
-      operationId: setRichMenuImage
-      description: "Upload rich menu image"
-      parameters:
-        - name: richMenuId
-          in: path
-          required: true
-          description: "The ID of the rich menu to attach the image to"
-          schema:
-            type: string
-      requestBody:
-        content:
-          "*/*":
-            schema:
-              description: "blob request"
-              type: string
-              format: binary
-      responses:
-        "200":
-          description: "OK"
-
-  "/v2/bot/message/{messageId}/content/transcoding":
-    get:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status
-      servers:
-        - url: "https://api-data.line.me"
-      tags:
-        - messaging-api-blob
-      operationId: getMessageContentTranscodingByMessageId
-      description: "Verify the preparation status of a video or audio for getting"
-      parameters:
-        - name: messageId
-          in: path
-          required: true
-          description: "Message ID of video or audio"
-          schema:
-            type: string
-      responses:
-        "200":
-          description: "OK"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/GetMessageContentTranscodingResponse"
-              example:
-                status: processing
-
 
 components:
   securitySchemes:
