@@ -65,6 +65,106 @@ paths:
           description: "OK"
           # empty JSON object
 
+  "/v2/bot/audienceGroup/upload/byFile":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file
+      servers:
+        - url: "https://api-data.line.me"
+      tags:
+        - manage-audience-blob
+      operationId: createAudienceForUploadingUserIds
+      description: "Create audience for uploading user IDs (by file)."
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              description: "Request for createAudienceForUploadingUserIds"
+              type: object
+              required:
+                - file
+              properties:
+                description:
+                  type: string
+                  maxLength: 120
+                  description: |+
+                    The audience's name. This is case-insensitive, meaning AUDIENCE and audience are considered identical.
+                    Max character limit: 120
+                isIfaAudience:
+                  type: boolean
+                  description: |+
+                    To specify recipients by IFAs: set `true`.
+                    To specify recipients by user IDs: set `false` or omit isIfaAudience property.
+                uploadDescription:
+                  type: string
+                  description: |+
+                    The description to register for the job (in `jobs[].description`).
+                file:
+                  type: string
+                  format: binary
+                  description: |+
+                    A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1
+                    Max number: 1,500,000
+            encoding:
+              file:
+                contentType: text/plain
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/CreateAudienceGroupResponse"
+              example:
+                audienceGroupId: 1234567890123
+                createRoute: MESSAGING_API
+                type: UPLOAD
+                description: "audienceGroupName_01"
+                created: 1613700237
+                permission: READ_WRITE
+                expireTimestamp: 1629252237
+                isIfaAudience: false
+    put:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file
+      servers:
+        - url: "https://api-data.line.me"
+      tags:
+        - manage-audience-blob
+      operationId: addUserIdsToAudience
+      description: "Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file)."
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              description: "Request of the addUserIdsToAudience"
+              type: object
+              required:
+                - file
+              properties:
+                audienceGroupId:
+                  type: integer
+                  format: int64
+                  description: "The audience ID."
+                uploadDescription:
+                  type: string
+                  description: "The description to register with the job"
+                file:
+                  type: string
+                  format: binary
+                  description: |+
+                    A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1
+                    Max number: 1,500,000
+            encoding:
+              file:
+                contentType: text/plain
+      responses:
+        "202":
+          description: "OK"
+          # empty response
+
   "/v2/bot/audienceGroup/click":
     post:
       externalDocs:
@@ -395,7 +495,6 @@ paths:
                     size: 40
                     page: 1
 
-
   "/v2/bot/audienceGroup/authorityLevel":
     get:
       externalDocs:
@@ -430,106 +529,6 @@ paths:
         "200":
           description: "OK"
           # empty json response
-
-  "/v2/bot/audienceGroup/upload/byFile":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file
-      servers:
-        - url: "https://api-data.line.me"
-      tags:
-        - manage-audience-blob
-      operationId: createAudienceForUploadingUserIds
-      description: "Create audience for uploading user IDs (by file)."
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              description: "Request for createAudienceForUploadingUserIds"
-              type: object
-              required:
-                - file
-              properties:
-                description:
-                  type: string
-                  maxLength: 120
-                  description: |+
-                    The audience's name. This is case-insensitive, meaning AUDIENCE and audience are considered identical.
-                    Max character limit: 120
-                isIfaAudience:
-                  type: boolean
-                  description: |+
-                    To specify recipients by IFAs: set `true`.
-                    To specify recipients by user IDs: set `false` or omit isIfaAudience property.
-                uploadDescription:
-                  type: string
-                  description: |+
-                    The description to register for the job (in `jobs[].description`).
-                file:
-                  type: string
-                  format: binary
-                  description: |+
-                    A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1
-                    Max number: 1,500,000
-            encoding:
-              file:
-                contentType: text/plain
-        required: true
-      responses:
-        "200":
-          description: "OK"
-          content:
-            "application/json":
-              schema:
-                $ref: "#/components/schemas/CreateAudienceForUploadingResponse"
-              example:
-                audienceGroupId: 1234567890123
-                createRoute: MESSAGING_API
-                type: UPLOAD
-                description: "audienceGroupName_01"
-                created: 1613700237
-                permission: READ_WRITE
-                expireTimestamp: 1629252237
-                isIfaAudience: false
-    put:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file
-      servers:
-        - url: "https://api-data.line.me"
-      tags:
-        - manage-audience-blob
-      operationId: addUserIdsToAudience
-      description: "Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file)."
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              description: "Request of the addUserIdsToAudience"
-              type: object
-              required:
-                - file
-              properties:
-                audienceGroupId:
-                  type: integer
-                  format: int64
-                  description: "The audience ID."
-                uploadDescription:
-                  type: string
-                  description: "The description to register with the job"
-                file:
-                  type: string
-                  format: binary
-                  description: |+
-                    A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1
-                    Max number: 1,500,000
-            encoding:
-              file:
-                contentType: text/plain
-      responses:
-        "202":
-          description: "OK"
-          # empty response
 
 components:
   securitySchemes:
@@ -996,28 +995,6 @@ components:
       properties:
         authorityLevel:
           "$ref": "#/components/schemas/AudienceGroupAuthorityLevel"
-
-
-    CreateAudienceForUploadingResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file
-      type: object
-      description: "Create audience for uploading user IDs (by file)"
-      properties:
-        audienceGroupId:
-          type: integer
-          format: int64
-          description: "The audience ID."
-        type:
-          type: string
-          description: "Constant. `UPLOAD`."
-        description:
-          type: string
-          description: "The audience's name."
-        created:
-          type: integer
-          format: int64
-          description: "When the audience was created (in UNIX time)."
 
     ErrorResponse:
       externalDocs:
