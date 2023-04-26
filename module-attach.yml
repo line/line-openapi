@@ -89,7 +89,7 @@ components:
       scheme: basic
 
   schemas:
-    GetFriendsDemographicsResponse:
+    AttachModuleResponse:
       description: "Attach by operation of the module channel provider"
       required:
         - bot_id
