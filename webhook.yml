@@ -805,7 +805,7 @@ components:
           type: string
           description: "Scenario ID executed"
         revision:
-          type: string
+          type: integer
           description: "Revision number of the scenario set containing the executed scenario"
         startTime:
           type: integer
