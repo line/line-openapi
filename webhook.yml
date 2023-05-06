@@ -625,7 +625,6 @@ components:
       type: object
       required:
         - data
-        - params
       properties:
         data:
           type: string
