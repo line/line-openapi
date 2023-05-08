@@ -1,4 +1,4 @@
-# line-openapi
+# LINE OpenAPI
 
 ## What's this?
 
