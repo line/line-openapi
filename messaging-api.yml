@@ -1173,7 +1173,6 @@ paths:
         "200":
           description: "OK"
           content:
-            # TODO check the content-type of the actual implementation and replace here.
             "*/*":
               schema:
                 type: string
@@ -3955,24 +3954,6 @@ components:
               type: string
             color:
               type: string
-    # TODO: Delete FlexSpacer. It's obsolete.
-    FlexSpacer:
-      type: object
-      allOf:
-        - "$ref": "#/components/schemas/FlexComponent"
-        - type: object
-          properties:
-            size:
-              type: string
-              enum:
-                - default
-                - none
-                - xs
-                - sm
-                - md
-                - lg
-                - xl
-                - xxl
     FlexFiller:
       type: object
       allOf:
