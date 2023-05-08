@@ -869,7 +869,7 @@ paths:
           content:
             "application/json":
               schema:
-                "$ref": "#/components/schemas/UserProfileResponse"
+                "$ref": "#/components/schemas/GroupUserProfileResponse"
               example:
                   "displayName": "LINE taro"
                   "userId": "U4af4980629..."
@@ -902,7 +902,7 @@ paths:
           content:
             "application/json":
               schema:
-                "$ref": "#/components/schemas/UserProfileResponse"
+                "$ref": "#/components/schemas/RoomUserProfileResponse"
               example:
                 displayName: LINE taro
                 userId: U4af4980629...
@@ -2602,10 +2602,8 @@ components:
 
     # Users
     UserProfileResponse:
-      # TODO: Don't use it in group/room API. group/room profile doesn't contain statusMessage and language.
-      # https://developers.line.biz/en/reference/messaging-api/#get-profile
-      # https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile
-      # https://developers.line.biz/en/reference/messaging-api/#get-room-member-profile
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-profile
       required:
         - displayName
         - userId
@@ -2699,7 +2697,43 @@ components:
             `auto`: Auto read setting is enabled.
             `manual`: Auto read setting is disabled.
 
-    # Group
+    # Group/Room
+    GroupUserProfileResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile
+      required:
+        - displayName
+        - userId
+      type: object
+      properties:
+        displayName:
+          type: string
+          description: "User's display name"
+        userId:
+          type: string
+          description: "User ID"
+        pictureUrl:
+          type: string
+          format: uri
+          description: "Profile image URL. `https` image URL. Not included in the response if the user doesn't have a profile image."
+    RoomUserProfileResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-room-member-profile
+      required:
+        - displayName
+        - userId
+      type: object
+      properties:
+        displayName:
+          type: string
+          description: "User's display name"
+        userId:
+          type: string
+          description: "User ID"
+        pictureUrl:
+          type: string
+          format: uri
+          description: "Profile image URL. `https` image URL. Not included in the response if the user doesn't have a profile image."
     MembersIdsResponse:
       # https://developers.line.biz/en/reference/messaging-api/#get-group-member-user-ids
       # https://developers.line.biz/en/reference/messaging-api/#get-room-member-user-ids
@@ -3757,7 +3791,7 @@ components:
               description: |+
                 When this is `true`, an animated image (APNG) plays.
                 You can specify a value of true up to 10 images in a single message.
-                You can't send messages that exceed this limit. 
+                You can't send messages that exceed this limit.
                 This is `false` by default.
                 Animated images larger than 300 KB aren't played back.
     FlexVideo:
