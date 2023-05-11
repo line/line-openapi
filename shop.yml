@@ -68,3 +68,15 @@ components:
           type: boolean
           description: "`false`"
           example: false
+
+    ErrorResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: "Message containing information about the error."
+
