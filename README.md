@@ -11,12 +11,6 @@ If you have an interesting use case for these files or have a request, please cr
 1. This repository provides OpenAPI spec of the APIs, that listed on https://developers.line.biz/en/docs/.
 2. This repository covers APIs on `api.line.me`, `api-data.line.me` and `manager.line.biz`.
 
-## Project Status
-
-This project is currently under construction.
-
-**MAINTAINERS WILL DO THE BREAKING CHANGE WITHOUT NOTICE.**
-
 ## Project Files
 
 | File                     | OpenAPI Version | API EndPoint                                                                              | Description              |
