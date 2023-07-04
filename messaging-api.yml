@@ -871,9 +871,9 @@ paths:
               schema:
                 "$ref": "#/components/schemas/GroupUserProfileResponse"
               example:
-                  "displayName": "LINE taro"
-                  "userId": "U4af4980629..."
-                  "pictureUrl": "https://obs.line-apps.com/..."
+                "displayName": "LINE taro"
+                "userId": "U4af4980629..."
+                "pictureUrl": "https://obs.line-apps.com/..."
 
   "/v2/bot/room/{roomId}/member/{userId}":
     get:
@@ -1566,6 +1566,74 @@ paths:
       responses:
         "202":
           description: "Accepted"
+
+  "/v2/bot/richmenu/batch":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#batch-control-rich-menus-of-users
+      tags:
+        - messaging-api
+      operationId: richMenuBatch
+      description: |+
+        You can use this endpoint to batch control the rich menu linked to the users using the endpoint such as Link rich menu to user. 
+        The following operations are available:
+        
+        1. Replace a rich menu with another rich menu for all users linked to a specific rich menu
+        2. Unlink a rich menu for all users linked to a specific rich menu
+        3. Unlink a rich menu for all users linked the rich menu
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RichMenuBatchRequest"
+        required: true
+      responses:
+        "202":
+          description: "Accepted"
+
+  "/v2/bot/richmenu/validate/batch":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#validate-batch-control-rich-menus-request
+      tags:
+        - messaging-api
+      operationId: validateRichMenuBatchRequest
+      description: "Validate a request body of the Replace or unlink the linked rich menus in batches endpoint."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RichMenuBatchRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+
+  "/v2/bot/richmenu/progress/batch":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status
+      tags:
+        - messaging-api
+      operationId: getRichMenuBatchProgress
+      description: "Get the status of Replace or unlink a linked rich menus in batches."
+      parameters:
+        - name: requestId
+          in: query
+          required: true
+          schema:
+            type: string
+          description: "A request ID used to batch control the rich menu linked to the user. Each Messaging API request has a request ID."
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/RichMenuBatchProgressResponse"
+              example:
+                phase: ongoing
+                acceptedTime: 2023-07-04T10:15:30.121Z
 
   # Account link
   "/v2/bot/user/{userId}/linkToken":
@@ -2466,7 +2534,7 @@ components:
           description: |+
             Narrowcast message request accepted time in milliseconds.
 
-            Format: ISO 8601 (opens new window)(e.g. 2020-12-03T10:15:30.121Z)
+            Format: ISO 8601 (e.g. 2020-12-03T10:15:30.121Z)
             Timezone: UTC
         completedTime:
           type: string
@@ -2474,7 +2542,7 @@ components:
           description: |+
             Processing of narrowcast message request completion time in milliseconds. Returned when the phase property is succeeded or failed.
 
-            Format: ISO 8601 (opens new window)(e.g. 2020-12-03T10:15:30.121Z)
+            Format: ISO 8601 (e.g. 2020-12-03T10:15:30.121Z)
             Timezone: UTC
     BroadcastRequest:
       externalDocs:
@@ -2623,7 +2691,7 @@ components:
           description: "User's status message. Not included in the response if the user doesn't have a status message."
         language:
           type: string
-          description: "User's language, as a BCP 47 (opens new window)language tag. Not included in the response if the user hasn't yet consented to the LINE Privacy Policy."
+          description: "User's language, as a BCP 47 language tag. Not included in the response if the user hasn't yet consented to the LINE Privacy Policy."
           example: en
     GetFollowersResponse:
       externalDocs:
@@ -2681,7 +2749,7 @@ components:
             - chat
             - bot
           description: |+
-            Chat settings set in the LINE Official Account Manager (opens new window). One of:
+            Chat settings set in the LINE Official Account Manager. One of:
 
             `chat`: Chat is set to "On".
             `bot`: Chat is set to "Off".
@@ -3012,6 +3080,107 @@ components:
           items:
             type: string
           description: "Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE."
+    RichMenuBatchRequest:
+      type: object
+      required:
+        - operations
+      properties:
+        operations:
+          type: array
+          items:
+            "$ref": "#/components/schemas/RichMenuBatchOperation"
+          description: "Array of Rich menu operation object..."
+          maxItems: 1000
+        resumeRequestKey:
+          type: string
+          description: "Key for retry. Key value is a string matching the regular expression pattern"
+          maxLength: 100
+          minLength: 1
+          pattern: "^[a-zA-Z0-9_-]{1,100}$"
+    RichMenuBatchOperation:
+      required:
+        - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: "Rich menu operation object represents the batch operation to the rich menu linked to the user."
+      discriminator:
+        propertyName: type
+        mapping:
+          link: "#/components/schemas/RichMenuBatchLinkOperation"
+          unlink: "#/components/schemas/RichMenuBatchUnlinkOperation"
+          unlinkAll: "#/components/schemas/RichMenuBatchUnlinkAllOperation"
+    RichMenuBatchLinkOperation:
+      description: Replace the rich menu with the rich menu specified in the `to` property for all users linked to the rich menu specified in the `from` property.
+      type: object
+      required:
+        - from
+        - to
+      allOf:
+        - "$ref": "#/components/schemas/RichMenuBatchOperation"
+        - type: object
+          properties:
+            from:
+              type: string
+            to:
+              type: string
+    RichMenuBatchUnlinkOperation:
+      description: Unlink the rich menu for all users linked to the rich menu specified in the `from` property.
+      type: object
+      required:
+        - from
+      allOf:
+        - "$ref": "#/components/schemas/RichMenuBatchOperation"
+        - type: object
+          properties:
+            from:
+              type: string
+    RichMenuBatchUnlinkAllOperation:
+      description: Unlink the rich menu from all users linked to the rich menu.
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/RichMenuBatchOperation"
+    RichMenuBatchProgressResponse:
+      externalDocs:
+        url: https://developers.line.biz/ja/reference/messaging-api/#get-batch-control-rich-menus-progress-status-response
+      required:
+        - phase
+        - acceptedTime
+      type: object
+      properties:
+        phase:
+          "$ref": "#/components/schemas/RichMenuBatchProgressPhase"
+        acceptedTime:
+          type: string
+          format: date-time
+          description: |+
+            The accepted time in milliseconds of the request of batch control the rich menu.
+            
+            Format: ISO 8601 (e.g. 2023-06-08T10:15:30.121Z)
+            Timezone: UTC
+        completedTime:
+          type: string
+          format: date-time
+          description: |+
+            The completed time in milliseconds of rich menu batch control. Returned when the phase property is succeeded or failed.
+
+            Format: ISO 8601 (e.g. 2023-06-08T10:15:30.121Z)
+            Timezone: UTC
+    RichMenuBatchProgressPhase:
+      type: string
+      description: |+
+        The current status. One of:
+        
+        `ongoing`: Rich menu batch control is in progress.
+        `succeeded`: Rich menu batch control is complete.
+        `failed`: Rich menu batch control failed.
+                  This means that the rich menu for one or more users couldn't be controlled. 
+                  There may also be users whose operations have been successfully completed.
+      enum:
+        - ongoing
+        - succeeded
+        - failed
 
     # Account link
     IssueLinkTokenResponse:
