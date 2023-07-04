@@ -3511,6 +3511,8 @@ components:
               enum:
                 - nano
                 - micro
+                - deca
+                - hecto
                 - kilo
                 - mega
                 - giga
@@ -3694,6 +3696,8 @@ components:
               type: string
               enum:
                 - shrink-to-fit
+            scaling:
+              type: boolean
     FlexImage:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#f-image
@@ -3841,6 +3845,8 @@ components:
               type: string
             offsetEnd:
               type: string
+            scaling:
+              type: boolean
     FlexText:
       type: object
       allOf:
@@ -3916,6 +3922,8 @@ components:
               type: string
               enum:
                 - shrink-to-fit
+            scaling:
+              type: boolean
     FlexSpan:
       type: object
       allOf:
