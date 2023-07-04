@@ -3143,7 +3143,7 @@ components:
         - "$ref": "#/components/schemas/RichMenuBatchOperation"
     RichMenuBatchProgressResponse:
       externalDocs:
-        url: https://developers.line.biz/ja/reference/messaging-api/#get-batch-control-rich-menus-progress-status-response
+        url: https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status-response
       required:
         - phase
         - acceptedTime
