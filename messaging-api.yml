@@ -3098,13 +3098,16 @@ components:
           minLength: 1
           pattern: "^[a-zA-Z0-9_-]{1,100}$"
     RichMenuBatchOperation:
+      description: "Rich menu operation object represents the batch operation to the rich menu linked to the user."
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#batch-control-rich-menus-of-users-operations
       required:
         - type
       type: object
       properties:
         type:
           type: string
-          description: "Rich menu operation object represents the batch operation to the rich menu linked to the user."
+          description: "The type of operation to the rich menu linked to the user. One of link, unlink, or unlinkAll."
       discriminator:
         propertyName: type
         mapping:
