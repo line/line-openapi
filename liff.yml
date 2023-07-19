@@ -16,6 +16,7 @@ tags:
 paths:
   "/liff/v1/apps":
     post:
+      operationId: addLIFFApp
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
       tags:
@@ -39,7 +40,7 @@ paths:
         "400":
           description: |+
             This status code means one of the following:
-            
+
             - The request contains an invalid value.
             - The maximum number of LIFF apps that can be added to the channel has been reached.
         "401":
@@ -47,6 +48,7 @@ paths:
             Authentication failed.
 
     get:
+      operationId: getAllLIFFApps
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
       summary: "Get all LIFF apps"
@@ -98,6 +100,7 @@ paths:
         schema:
           type: string
     put:
+      operationId: updateLIFFApp
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#update-liff-app
       description: "Update LIFF app settings"
@@ -124,6 +127,7 @@ paths:
             - The specified LIFF app does not exist.
             - The specified LIFF app has been added to another channel.
     delete:
+      operationId: deleteLIFFApp
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#delete-liff-app
       summary: "Delete LIFF app from a channel"
@@ -182,7 +186,7 @@ components:
       type: string
       description: |+
         Specify the setting for bot link feature with one of the following values:
-        
+
         `normal`: Display the option to add the LINE Official Account as a friend in the channel consent screen.
         `aggressive`: Display a screen with the option to add the LINE Official Account as a friend after the channel consent screen.
         `none`: Don't display the option to add the LINE Official Account as a friend.
@@ -311,13 +315,3 @@ components:
             $ref: "#/components/schemas/LiffScope"
         botPrompt:
           $ref: "#/components/schemas/LiffBotPrompt"
-
-
-
-
-
-
-
-
-
-
