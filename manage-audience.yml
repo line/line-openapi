@@ -331,7 +331,7 @@ paths:
                         description: "audience_list.txt"
                         type: DIFF_ADD
                         status: FINISHED
-                        failedType: ~
+                        failedType: AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT
                         audienceCount: 0
                         created: 1608617472
                         jobStatus: FINISHED
