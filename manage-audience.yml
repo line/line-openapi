@@ -400,7 +400,7 @@ paths:
           description: "The page to return when getting (paginated) results. Must be 1 or higher."
         - name: description
           in: query
-          required: true
+          required: false
           schema:
             type: string
           description: |+
@@ -410,14 +410,14 @@ paths:
             If omitted, the name of the audience(s) will not be used as a search criterion.
         - name: status
           in: query
-          required: true
+          required: false
           schema:
             "$ref": "#/components/schemas/AudienceGroupStatus"
           description: |+
             The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
         - name: size
           in: query
-          required: true
+          required: false
           schema:
             type: integer
             format: int64
@@ -428,7 +428,7 @@ paths:
             Max: 40
         - name: includesExternalPublicGroups
           in: query
-          required: true
+          required: false
           schema:
             type: boolean
             example: true
@@ -437,7 +437,7 @@ paths:
             false: Get audiences created in the same channel.
         - name: createRoute
           in: query
-          required: true
+          required: false
           schema:
             "$ref": "#/components/schemas/AudienceGroupCreateRoute"
           description: |+
