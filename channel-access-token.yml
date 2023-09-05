@@ -33,39 +33,8 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               oneOf:
-                - description: "Request body to issue a new token with JWT assertion"
-                  type: object
-                  properties:
-                    grant_type:
-                      type: string
-                      required: true
-                      enum: [ client_credentials ]
-                      description: "client_credentials"
-                    client_assertion_type:
-                      type: string
-                      required: true
-                      enum: [ urn:ietf:params:oauth:client-assertion-type:jwt-bearer ]
-                      description: "URL-encoded value of `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`"
-                    client_assertion:
-                      type: string
-                      required: true
-                      description: "A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key."
-                - description: "Request body to issue a new token with `client_id` and `client_secret`"
-                  type: object
-                  properties:
-                    grant_type:
-                      type: string
-                      required: true
-                      enum: [ client_credentials ]
-                      description: "`client_credentials`"
-                    client_id:
-                      type: string
-                      required: true
-                      description: "Channel ID."
-                    client_secret:
-                      type: string
-                      required: true
-                      description: "Channel secret."
+                - $ref: '#/components/schemas/IssueChannelTokenByJWTAssertionRequest'
+                - $ref: '#/components/schemas/IssueChannelTokenByClientSecretRequest'
       responses:
         "200":
           description: "OK"
@@ -318,6 +287,71 @@ components:
       description: "Channel access token"
 
   schemas:
+    IssueChannelTokenByJWTAssertionRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
+      description: "Request body to issue a new token with JWT assertion"
+      type: object
+      required:
+        - grant_type
+        - client_assertion
+        - client_assertion_type
+      properties:
+        grant_type:
+          type: string
+          enum: [ client_credentials ]
+          description: "client_credentials"
+        client_assertion_type:
+          type: string
+          enum: [ urn:ietf:params:oauth:client-assertion-type:jwt-bearer ]
+          description: "URL-encoded value of `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`"
+        client_assertion:
+          type: string
+          description: "A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key."
+    IssueChannelTokenByClientSecretRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
+      description: "Request body to issue a new token with `client_id` and `client_secret`"
+      type: object
+      required:
+        - grant_type
+        - client_id
+        - client_secrete
+      properties:
+        grant_type:
+          type: string
+          enum: [ client_credentials ]
+          description: "`client_credentials`"
+        client_id:
+          type: string
+          description: "Channel ID."
+        client_secret:
+          type: string
+          description: "Channel secret."
+    IssueStatelessChannelAccessTokenResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
+      description: "Issued stateless channel access token"
+      required:
+        - access_token
+        - expires_in
+        - token_type
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: |+
+            A stateless channel access token.
+            The token is an opaque string which means its format is an implementation detail
+            and the consumer of this token should never try to use the data parsed from the token.
+        expires_in:
+          type: integer
+          format: int32
+          description: "Duration in seconds after which the issued access token expires"
+        token_type:
+          type: string
+          default: Bearer
+          description: "Token type. The value is always `Bearer`."
     ChannelAccessTokenKeyIdsResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1
@@ -350,30 +384,6 @@ components:
           type: integer
           format: int32
           description: "Time until channel access token expires in seconds from time the token is issued."
-        token_type:
-          type: string
-          default: Bearer
-          description: "Token type. The value is always `Bearer`."
-    IssueStatelessChannelAccessTokenResponse:
-      externalDocs:
-        url: ...
-      description: "Issued stateless channel access token"
-      required:
-        - access_token
-        - expires_in
-        - token_type
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: |+
-            A stateless channel access token.
-            The token is an opaque string which means its format is an implementation detail
-            and the consumer of this token should never try to use the data parsed from the token.
-        expires_in:
-          type: integer
-          format: int32
-          description: "Duration in seconds after which the issued access token expires"
         token_type:
           type: string
           default: Bearer
