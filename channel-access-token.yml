@@ -316,7 +316,7 @@ components:
       required:
         - grant_type
         - client_id
-        - client_secrete
+        - client_secret
       properties:
         grant_type:
           type: string
