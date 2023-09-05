@@ -16,6 +16,68 @@ tags:
   - name: channel-access-token
 
 paths:
+  "/oauth2/v3/token":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
+      tags:
+        - channel-access-token
+      operationId: issueStatelessChannelToken
+      description: |
+        Issues a new stateless channel access token, which doesn't have max active token limit
+        unlike the other token types.
+        The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              oneOf:
+                - description: "Request body to issue a new token with JWT assertion"
+                  type: object
+                  properties:
+                    grant_type:
+                      type: string
+                      required: true
+                      enum: [ client_credentials ]
+                      description: "client_credentials"
+                    client_assertion_type:
+                      type: string
+                      required: true
+                      enum: [ urn:ietf:params:oauth:client-assertion-type:jwt-bearer ]
+                      description: "URL-encoded value of `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`"
+                    client_assertion:
+                      type: string
+                      required: true
+                      description: "A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key."
+                - description: "Request body to issue a new token with `client_id` and `client_secret`"
+                  type: object
+                  properties:
+                    grant_type:
+                      type: string
+                      required: true
+                      enum: [ client_credentials ]
+                      description: "`client_credentials`"
+                    client_id:
+                      type: string
+                      required: true
+                      description: "Channel ID."
+                    client_secret:
+                      type: string
+                      required: true
+                      description: "Channel secret."
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/IssueStatelessChannelAccessTokenResponse"
+              example:
+                token_type: Bearer
+                access_token: eyJhbGciOiJIUz.....
+                expires_in: 899
+
   "/oauth2/v2.1/tokens/kid":
     get:
       externalDocs:
@@ -291,7 +353,31 @@ components:
         token_type:
           type: string
           default: Bearer
-          description: "A token type. `Bearer`"
+          description: "Token type. The value is always `Bearer`."
+    IssueStatelessChannelAccessTokenResponse:
+      externalDocs:
+        url: ...
+      description: "Issued stateless channel access token"
+      required:
+        - access_token
+        - expires_in
+        - token_type
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: |+
+            A stateless channel access token.
+            The token is an opaque string which means its format is an implementation detail
+            and the consumer of this token should never try to use the data parsed from the token.
+        expires_in:
+          type: integer
+          format: int32
+          description: "Duration in seconds after which the issued access token expires"
+        token_type:
+          type: string
+          default: Bearer
+          description: "Token type. The value is always `Bearer`."
     IssueChannelAccessTokenResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1
@@ -346,4 +432,3 @@ components:
         error_description:
           description: "Details of the error. Not returned in certain situations."
           type: string
-
