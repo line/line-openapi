@@ -291,6 +291,10 @@ paths:
       responses:
         "200":
           description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/MulticastResponse"
         "400":
           description: "Bad Request"
           content:
@@ -344,6 +348,10 @@ paths:
       responses:
         "202":
           description: "Accepted"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/NarrowcastResponse"
         "400":
           description: "Bad Request"
           content:
@@ -423,6 +431,10 @@ paths:
       responses:
         "200":
           description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/BroadcastResponse"
         "400":
           description: "Bad Request"
           content:
@@ -2044,6 +2056,10 @@ components:
             maxLength: 30
             minLength: 1
             pattern: "^[a-zA-Z0-9_]{1,30}$"
+    MulticastResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#send-multicast-response
+      type: object
     NarrowcastRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message
@@ -2066,6 +2082,10 @@ components:
           "$ref": "#/components/schemas/Limit"
         notificationDisabled:
           "$ref": "#/components/schemas/NotificationDisabled"
+    NarrowcastResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-response
+      type: object
     Recipient:
       type: object
       description: "Recipient"
@@ -2608,6 +2628,10 @@ components:
           description: "List of Message objects."
         notificationDisabled:
           "$ref": "#/components/schemas/NotificationDisabled"
+    BroadcastResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#send-broadcast-response
+      type: object
 
     # Quota
     MessageQuotaResponse:
