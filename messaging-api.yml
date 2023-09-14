@@ -189,6 +189,10 @@ paths:
       responses:
         "200":
           description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ReplyMessageResponse"
         "400":
           description: "Bad request"
           content:
@@ -230,6 +234,10 @@ paths:
       responses:
         "200":
           description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/PushMessageResponse"
         "400":
           description: "Bad Request"
           content:
@@ -1929,6 +1937,32 @@ components:
             "$ref": "#/components/schemas/Message"
         notificationDisabled:
           "$ref": "#/components/schemas/NotificationDisabled"
+    ReplyMessageResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#send-reply-message-response
+      required:
+        - sentMessages
+      type: object
+      properties:
+        sentMessages:
+          description: "Array of sent messages."
+          maxItems: 5
+          minItems: 1
+          type: array
+          items:
+            "$ref": "#/components/schemas/SentMessage"
+    SentMessage:
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: "ID of the sent message."
+        quoteToken:
+          type: string
+          description: |+
+            Quote token of the message. Only included when a message object that can be specified as a quote target was sent as a push message.
     PushMessageRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-push-message
@@ -1963,6 +1997,20 @@ components:
         `true`: The user doesn’t receive a push notification when a message is sent.
         `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device).
         The default value is false.
+    PushMessageResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#send-push-message-response
+      required:
+        - sentMessages
+      type: object
+      properties:
+        sentMessages:
+          description: "Array of sent messages."
+          maxItems: 5
+          minItems: 1
+          type: array
+          items:
+            "$ref": "#/components/schemas/SentMessage"
     MulticastRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-multicast-message
@@ -3345,6 +3393,9 @@ components:
               type: array
               items:
                 "$ref": "#/components/schemas/Emoji"
+            quoteToken:
+              type: string
+              description: "Quote token of the message you want to quote."
     Emoji:
       type: object
       properties:
@@ -3365,6 +3416,9 @@ components:
               type: string
             stickerId:
               type: string
+            quoteToken:
+              type: string
+              description: "Quote token of the message you want to quote."
     ImageMessage:
       type: object
       allOf:
@@ -4311,6 +4365,13 @@ components:
           items:
             $ref: "#/components/schemas/ErrorDetail"
           description: "An array of error details. If the array is empty, this property will not be included in the response."
+        sentMessages:
+          description: "Array of sent messages."
+          maxItems: 5
+          minItems: 1
+          type: array
+          items:
+            "$ref": "#/components/schemas/SentMessage"
     ErrorDetail:
       type: object
       properties:
