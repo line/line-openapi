@@ -242,6 +242,7 @@ components:
           required:
             - id
             - text
+            - quoteToken
           properties:
             id:
               type: string
@@ -256,6 +257,13 @@ components:
                 $ref: "#/components/schemas/Emoji"
             mention:
               $ref: "#/components/schemas/Mention"
+            quoteToken:
+              type: string
+              description: |+
+                Quote token to quote this message.
+            quotedMessageId:
+              type: string
+              description: "Message ID of a quoted message. Only included when the received message quotes a past message."
     Emoji:
       required:
         - index
@@ -331,6 +339,7 @@ components:
           required:
             - id
             - contentProvider
+            - quoteToken
           properties:
             id:
               type: string
@@ -339,6 +348,10 @@ components:
               $ref: "#/components/schemas/ContentProvider"
             imageSet:
               $ref: "#/components/schemas/ImageSet"
+            quoteToken:
+              type: string
+              description: |+
+                Quote token to quote this message.
     ImageSet:
       type: object
       properties:
@@ -359,6 +372,7 @@ components:
           required:
             - id
             - contentProvider
+            - quoteToken
           description: "Message object which contains the video content sent from the source. The preview image is displayed in the chat and the video is played when the image is tapped."
           properties:
             id:
@@ -370,6 +384,10 @@ components:
               description: "Length of video file (milliseconds)"
             contentProvider:
               $ref: "#/components/schemas/ContentProvider"
+            quoteToken:
+              type: string
+              description: |+
+                Quote token to quote this message.
     AudioMessageContent:
       allOf:
         - $ref: "#/components/schemas/MessageContent"
@@ -445,6 +463,7 @@ components:
             - packageId
             - stickerId
             - stickerResourceType
+            - quoteToken
           description: "Message object which contains the sticker data sent from the source."
           properties:
             id:
@@ -485,6 +504,14 @@ components:
                 Any text entered by the user. This property is only included for message stickers.
                 Max character limit: 100
               maxLength: 100
+            quoteToken:
+              type: string
+              description: |+
+                Quote token to quote this message.
+            quotedMessageId:
+              type: string
+              description: |+
+                Message ID of a quoted message. Only included when the received message quotes a past message.
 
     # https://developers.line.biz/en/reference/messaging-api/#unsend-event
     UnsendEvent:
