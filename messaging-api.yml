@@ -1974,7 +1974,7 @@ components:
         quoteToken:
           type: string
           description: |+
-            Quote token of the message. Only included when a message object that can be specified as a quote target was sent as a push message.
+            Quote token of the message. Only included when a message object that can be specified as a quote target was sent as a push or reply message.
     PushMessageRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-push-message

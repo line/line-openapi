@@ -260,7 +260,7 @@ components:
             quoteToken:
               type: string
               description: |+
-                Quote token of the message. Only included when a message object that can be specified as a quote target was sent as a push message.
+                Quote token to quote this message.
             quotedMessageId:
               type: string
               description: "Message ID of a quoted message. Only included when the received message quotes a past message."
@@ -351,7 +351,7 @@ components:
             quoteToken:
               type: string
               description: |+
-                Quote token of the message. Only included when a message object that can be specified as a quote target was sent as a push message.
+                Quote token to quote this message.
     ImageSet:
       type: object
       properties:
@@ -387,7 +387,7 @@ components:
             quoteToken:
               type: string
               description: |+
-                Quote token of the message. Only included when a message object that can be specified as a quote target was sent as a push message.
+                Quote token to quote this message.
     AudioMessageContent:
       allOf:
         - $ref: "#/components/schemas/MessageContent"
@@ -507,7 +507,7 @@ components:
             quoteToken:
               type: string
               description: |+
-                Quote token of the message. Only included when a message object that can be specified as a quote target was sent as a push message.
+                Quote token to quote this message.
             quotedMessageId:
               type: string
               description: |+
