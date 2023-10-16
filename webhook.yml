@@ -201,10 +201,15 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#message-event
       type: object
+      required:
+        - id
       properties:
         type:
           type: string
           description: "Type"
+        id:
+          type: string
+          description: Message ID
       discriminator:
         propertyName: type
         mapping:
@@ -240,13 +245,9 @@ components:
         - $ref: "#/components/schemas/MessageContent"
         - type: object
           required:
-            - id
             - text
             - quoteToken
           properties:
-            id:
-              type: string
-              description: "Message ID"
             text:
               type: string
               description: "Message text."
@@ -337,13 +338,9 @@ components:
         - $ref: "#/components/schemas/MessageContent"
         - type: object
           required:
-            - id
             - contentProvider
             - quoteToken
           properties:
-            id:
-              type: string
-              description: "Message ID"
             contentProvider:
               $ref: "#/components/schemas/ContentProvider"
             imageSet:
@@ -370,14 +367,10 @@ components:
         - $ref: "#/components/schemas/MessageContent"
         - type: object
           required:
-            - id
             - contentProvider
             - quoteToken
           description: "Message object which contains the video content sent from the source. The preview image is displayed in the chat and the video is played when the image is tapped."
           properties:
-            id:
-              type: string
-              description: "Message ID"
             duration:
               type: integer
               format: int64
@@ -393,13 +386,9 @@ components:
         - $ref: "#/components/schemas/MessageContent"
         - type: object
           required:
-            - id
             - contentProvider
           description: "Message object which contains the audio content sent from the source."
           properties:
-            id:
-              type: string
-              description: "Message ID"
             contentProvider:
               $ref: "#/components/schemas/ContentProvider"
             duration:
@@ -411,14 +400,10 @@ components:
         - $ref: "#/components/schemas/MessageContent"
         - type: object
           required:
-            - id
             - fileName
             - fileSize
           description: "Message object which contains the file sent from the source."
           properties:
-            id:
-              type: string
-              description: "Message ID"
             fileName:
               type: string
               description: "File name"
@@ -430,14 +415,10 @@ components:
         - $ref: "#/components/schemas/MessageContent"
         - type: object
           required:
-            - id
             - latitude
             - longitude
           description: "Message object which contains the location data sent from the source."
           properties:
-            id:
-              type: string
-              description: "Message ID"
             title:
               type: string
               description: "Title"
@@ -459,16 +440,12 @@ components:
         - $ref: "#/components/schemas/MessageContent"
         - type: object
           required:
-            - id
             - packageId
             - stickerId
             - stickerResourceType
             - quoteToken
           description: "Message object which contains the sticker data sent from the source."
           properties:
-            id:
-              type: string
-              description: "Message ID"
             packageId:
               type: string
               description: "Package ID"
