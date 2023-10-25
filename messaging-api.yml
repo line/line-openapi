@@ -3406,7 +3406,11 @@ components:
           description: "URL of the image to display as an icon when sending a message"
           maxLength: 2000
     TextMessage:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#text-message
       type: object
+      required:
+        - text
       allOf:
         - "$ref": "#/components/schemas/Message"
         - type: object
@@ -3431,7 +3435,12 @@ components:
         emojiId:
           type: string
     StickerMessage:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#sticker-message
       type: object
+      required:
+        - packageId
+        - stickerId
       allOf:
         - "$ref": "#/components/schemas/Message"
         - type: object
@@ -3444,6 +3453,11 @@ components:
               type: string
               description: "Quote token of the message you want to quote."
     ImageMessage:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#image-message
+      required:
+        - originalContentUrl
+        - previewImageUrl
       type: object
       allOf:
         - "$ref": "#/components/schemas/Message"
@@ -3456,7 +3470,12 @@ components:
               type: string
               format: uri
     VideoMessage:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#video-message
       type: object
+      required:
+        - originalContentUrl
+        - previewImageUrl
       allOf:
         - "$ref": "#/components/schemas/Message"
         - type: object
@@ -3470,7 +3489,12 @@ components:
             trackingId:
               type: string
     AudioMessage:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#audio-message
       type: object
+      required:
+        - originalContentUrl
+        - duration
       allOf:
         - "$ref": "#/components/schemas/Message"
         - type: object
@@ -3482,6 +3506,13 @@ components:
               type: integer
               format: int64
     LocationMessage:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#location-message
+      required:
+        - title
+        - address
+        - latitude
+        - longitude
       type: object
       allOf:
         - "$ref": "#/components/schemas/Message"
@@ -3501,6 +3532,11 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#imagemap-message
       type: object
+      required:
+        - baseUrl
+        - altText
+        - baseSize
+        - actions
       allOf:
         - "$ref": "#/components/schemas/Message"
         - type: object
@@ -3520,6 +3556,9 @@ components:
               "$ref": "#/components/schemas/ImagemapVideo"
     ImagemapBaseSize:
       type: object
+      required:
+        - width
+        - height
       properties:
         height:
           type: integer
@@ -3532,6 +3571,7 @@ components:
         url: https://developers.line.biz/en/reference/messaging-api/#imagemap-action-objects
       required:
         - type
+        - area
       type: object
       properties:
         type:
@@ -3545,6 +3585,8 @@ components:
           uri: "#/components/schemas/URIImagemapAction"
     MessageImagemapAction:
       type: object
+      required:
+        - text
       allOf:
         - "$ref": "#/components/schemas/ImagemapAction"
         - type: object
@@ -3555,6 +3597,8 @@ components:
               type: string
     URIImagemapAction:
       type: object
+      required:
+        - linkUri
       allOf:
         - "$ref": "#/components/schemas/ImagemapAction"
         - type: object
@@ -3565,6 +3609,11 @@ components:
               type: string
     ImagemapArea:
       type: object
+      required:
+        - x
+        - y
+        - width
+        - height
       properties:
         x:
           type: integer
@@ -3600,7 +3649,12 @@ components:
         label:
           type: string
     TemplateMessage:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#template-messages
       type: object
+      required:
+        - altText
+        - template
       allOf:
         - "$ref": "#/components/schemas/Message"
         - type: object
@@ -3625,6 +3679,9 @@ components:
           image_carousel: "#/components/schemas/ImageCarouselTemplate"
     ButtonsTemplate:
       type: object
+      required:
+        - text
+        - actions
       allOf:
         - "$ref": "#/components/schemas/Template"
         - type: object
@@ -3650,6 +3707,9 @@ components:
                 "$ref": "#/components/schemas/Action"
     ConfirmTemplate:
       type: object
+      required:
+        - text
+        - actions
       allOf:
         - "$ref": "#/components/schemas/Template"
         - type: object
@@ -3662,6 +3722,8 @@ components:
                 "$ref": "#/components/schemas/Action"
     CarouselTemplate:
       type: object
+      required:
+        - columns
       allOf:
         - "$ref": "#/components/schemas/Template"
         - type: object
@@ -3677,6 +3739,9 @@ components:
     CarouselColumn:
       description: "Column object for carousel template."
       type: object
+      required:
+        - text
+        - actions
       properties:
         thumbnailImageUrl:
           type: string
@@ -3695,6 +3760,8 @@ components:
             "$ref": "#/components/schemas/Action"
     ImageCarouselTemplate:
       type: object
+      required:
+        - columns
       allOf:
         - "$ref": "#/components/schemas/Template"
         - type: object
@@ -3705,6 +3772,9 @@ components:
                 "$ref": "#/components/schemas/ImageCarouselColumn"
     ImageCarouselColumn:
       type: object
+      required:
+        - imageUrl
+        - action
       properties:
         imageUrl:
           type: string
@@ -3715,6 +3785,9 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#flex-message
       type: object
+      required:
+        - altText
+        - contents
       allOf:
         - "$ref": "#/components/schemas/Message"
         - type: object
@@ -3770,6 +3843,8 @@ components:
               "$ref": "#/components/schemas/Action"
     FlexCarousel:
       type: object
+      required:
+        - contents
       allOf:
         - "$ref": "#/components/schemas/FlexContainer"
         - type: object
@@ -3819,6 +3894,9 @@ components:
           filler: "#/components/schemas/FlexFiller"
     FlexBox:
       type: object
+      required:
+        - layout
+        - contents
       allOf:
         - "$ref": "#/components/schemas/FlexComponent"
         - properties:
@@ -3899,6 +3977,8 @@ components:
               "$ref": "#/components/schemas/FlexBoxBackground"
     FlexButton:
       type: object
+      required:
+        - action
       allOf:
         - "$ref": "#/components/schemas/FlexComponent"
         - type: object
@@ -4049,6 +4129,10 @@ components:
                 Animated images larger than 300 KB aren't played back.
     FlexVideo:
       type: object
+      required:
+        - url
+        - previewUrl
+        - altContent
       allOf:
         - "$ref": "#/components/schemas/FlexComponent"
         - type: object
@@ -4069,6 +4153,8 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#icon
       type: object
+      required:
+        - url
       allOf:
         - "$ref": "#/components/schemas/FlexComponent"
         - type: object
