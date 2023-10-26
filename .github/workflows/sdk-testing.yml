@@ -1,0 +1,36 @@
+name: SDK Test Automation
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+    test-java:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout SDK repo
+              uses: actions/checkout@v2
+              with:
+                repository: 'line/line-bot-sdk-java'
+                submodules: recursive
+
+            - name: Setup Java
+              uses: actions/setup-java@v3
+              with:
+                distribution: 'temurin'
+                java-version: '17'
+
+            - name: Update line-openapi submodule
+              run: |
+                cd line-openapi
+                git remote add pr-source ${{ github.event.pull_request.head.repo.clone_url }}
+                git fetch pr-source ${{ github.event.pull_request.head.ref }}
+                git checkout FETCH_HEAD
+
+            - name: Generate code
+              run: python3 generate-code.py
+
+            - name: Execute Java SDK test
+              run: ./gradlew build
