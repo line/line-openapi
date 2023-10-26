@@ -25,7 +25,8 @@ jobs:
             - name: Update line-openapi submodule
               run: |
                 cd line-openapi
-                git fetch origin ${{ github.event.pull_request.head.ref }}
+                git remote add pr-source ${{ github.event.pull_request.head.repo.clone_url }}
+                git fetch pr-source ${{ github.event.pull_request.head.ref }}
                 git checkout FETCH_HEAD
 
             - name: Generate code
