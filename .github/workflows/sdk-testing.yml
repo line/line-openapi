@@ -1,0 +1,35 @@
+name: SDK Test Automation
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - repo: 'line/line-bot-sdk-java'
+            test_command: './gradlew build'
+            generate_command: 'python3 generate-code.py'
+
+    steps:
+      - name: Checkout SDK repo
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ matrix.repo }}
+          submodules: recursive
+
+      - name: Update line-openapi submodule
+        run: |
+          cd line-openapi
+          git fetch origin ${{ github.event.pull_request.head.ref }}
+          git checkout FETCH_HEAD
+
+      - name: Generate code
+        run: ${{ matrix.generate_command }}
+
+      - name: Execute SDK test
+        run: ${{ matrix.test_command }}
