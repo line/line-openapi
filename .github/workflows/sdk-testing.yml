@@ -6,30 +6,30 @@ on:
       - main
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - repo: 'line/line-bot-sdk-java'
-            test_command: './gradlew build'
-            generate_command: 'python3 generate-code.py'
+    test-java:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout SDK repo
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ matrix.repo }}
-          submodules: recursive
+        steps:
+            - name: Checkout SDK repo
+              uses: actions/checkout@v2
+              with:
+                repository: 'line/line-bot-sdk-java'
+                submodules: recursive
 
-      - name: Update line-openapi submodule
-        run: |
-          cd line-openapi
-          git fetch origin ${{ github.event.pull_request.head.ref }}
-          git checkout FETCH_HEAD
+            - name: Setup Java
+              uses: actions/setup-java@v3
+              with:
+                distribution: 'temurin'
+                java-version: '11'
 
-      - name: Generate code
-        run: ${{ matrix.generate_command }}
+            - name: Update line-openapi submodule
+              run: |
+                cd line-openapi
+                git fetch origin ${{ github.event.pull_request.head.ref }}
+                git checkout FETCH_HEAD
 
-      - name: Execute SDK test
-        run: ${{ matrix.test_command }}
+            - name: Generate code
+              run: python3 generate-code.py
+
+            - name: Execute Java SDK test
+              run: ./gradlew build
