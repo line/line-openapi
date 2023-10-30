@@ -46,6 +46,9 @@ components:
       description: |+
         The request body contains a JSON object with the user ID of a bot that should receive webhook events and an array of webhook event objects.
       type: object
+      required:
+        - destination
+        - events
       properties:
         destination:
           type: string
@@ -66,6 +69,7 @@ components:
     Event:
       description: "Webhook event"
       required:
+        - type
         - timestamp
         - mode
         - webhookEventId
@@ -191,6 +195,7 @@ components:
         - type: object
           required:
             - type
+            - message
           properties:
             replyToken:
               type: string
@@ -202,6 +207,7 @@ components:
         url: https://developers.line.biz/en/reference/messaging-api/#message-event
       type: object
       required:
+        - type
         - id
       properties:
         type:
@@ -299,6 +305,7 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#wh-text
       required:
+        - type
         - index
         - length
       type: object
@@ -351,6 +358,8 @@ components:
                 Quote token to quote this message.
     ImageSet:
       type: object
+      required:
+        - id
       properties:
         id:
           type: string
@@ -497,7 +506,7 @@ components:
         - $ref: "#/components/schemas/Event"
         - type: object
           required:
-            - type
+            - unsend
           properties:
             unsend:
               "$ref": "#/components/schemas/UnsendDetail"
@@ -518,7 +527,6 @@ components:
         - $ref: "#/components/schemas/Event"
         - type: object
           required:
-            - type
             - replyToken
           properties:
             replyToken:
@@ -541,7 +549,6 @@ components:
         - $ref: "#/components/schemas/Event"
         - type: object
           required:
-            - type
             - replyToken
           properties:
             replyToken:
@@ -555,8 +562,6 @@ components:
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
-          required:
-            - type
 
 
     # https://developers.line.biz/en/reference/messaging-api/#member-joined-event
@@ -566,7 +571,6 @@ components:
         - $ref: "#/components/schemas/Event"
         - type: object
           required:
-            - type
             - replyToken
             - joined
           properties:
@@ -594,7 +598,6 @@ components:
         - $ref: "#/components/schemas/Event"
         - type: object
           required:
-            - type
             - left
           properties:
             left:
@@ -618,7 +621,7 @@ components:
         - $ref: "#/components/schemas/Event"
         - type: object
           required:
-            - type
+            - postback
           properties:
             replyToken:
               type: string
@@ -646,7 +649,6 @@ components:
         - $ref: "#/components/schemas/Event"
         - type: object
           required:
-            - type
             - replyToken
             - videoPlayComplete
           properties:
@@ -672,7 +674,6 @@ components:
         - $ref: "#/components/schemas/Event"
         - type: object
           required:
-            - type
             - replyToken
             - beacon
           properties:
@@ -706,7 +707,6 @@ components:
         - $ref: "#/components/schemas/Event"
         - type: object
           required:
-            - type
             - link
           properties:
             replyToken:
@@ -737,7 +737,6 @@ components:
         - $ref: "#/components/schemas/Event"
         - type: object
           required:
-            - type
             - replyToken
             - things
           properties:
@@ -749,6 +748,8 @@ components:
 
     ThingsContent:
       type: object
+      required:
+        - type
       properties:
         type:
           type: string
@@ -852,13 +853,14 @@ components:
         - $ref: "#/components/schemas/Event"
         - type: object
           required:
-            - type
             - module
           properties:
             module:
               $ref: "#/components/schemas/ModuleContent"
     ModuleContent:
       type: object
+      required:
+        - type
       properties:
         type:
           type: string
@@ -908,7 +910,6 @@ components:
         - $ref: "#/components/schemas/Event"
         - type: object
           required:
-            - type
             - chatControl
           properties:
             chatControl:
@@ -928,8 +929,6 @@ components:
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
-          required:
-            - type
 
     # https://developers.line.biz/en/reference/partner-docs/#botsuspend-event
     BotSuspendedEvent:
@@ -937,8 +936,6 @@ components:
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
-          required:
-            - type
 
     # https://developers.line.biz/en/reference/partner-docs/#botresumed-event
     BotResumedEvent:
@@ -946,5 +943,3 @@ components:
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
-          required:
-            - type
