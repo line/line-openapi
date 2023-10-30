@@ -6,31 +6,186 @@ on:
       - main
 
 jobs:
-    test-java:
-        runs-on: ubuntu-latest
+  test-java:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout SDK repo
-              uses: actions/checkout@v2
-              with:
-                repository: 'line/line-bot-sdk-java'
-                submodules: recursive
+    steps:
+      - name: Checkout SDK repo
+        uses: actions/checkout@v4
+        with:
+          repository: 'line/line-bot-sdk-java'
+          submodules: recursive
 
-            - name: Setup Java
-              uses: actions/setup-java@v3
-              with:
-                distribution: 'temurin'
-                java-version: '17'
+      - name: Update line-openapi submodule
+        run: |
+          cd line-openapi
+          git remote add pr-source ${{ github.event.pull_request.head.repo.clone_url }}
+          git fetch pr-source ${{ github.event.pull_request.head.ref }}
+          git checkout FETCH_HEAD
 
-            - name: Update line-openapi submodule
-              run: |
-                cd line-openapi
-                git remote add pr-source ${{ github.event.pull_request.head.repo.clone_url }}
-                git fetch pr-source ${{ github.event.pull_request.head.ref }}
-                git checkout FETCH_HEAD
+      # https://github.com/line/line-bot-sdk-java/blob/master/.github/workflows/gradle.yml
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-            - name: Generate code
-              run: python3 generate-code.py
+      - name: Generate code
+        run: python3 generate-code.py
 
-            - name: Execute Java SDK test
-              run: ./gradlew build
+      - name: Show diff
+        run: git diff --color=always
+
+      - name: Execute Java SDK test
+        run: ./gradlew build
+
+  test-python:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout SDK repo
+        uses: actions/checkout@v4
+        with:
+          repository: 'line/line-bot-sdk-python'
+          submodules: recursive
+
+      - name: Update line-openapi submodule
+        run: |
+          cd line-openapi
+          git remote add pr-source ${{ github.event.pull_request.head.repo.clone_url }}
+          git fetch pr-source ${{ github.event.pull_request.head.ref }}
+          git checkout FETCH_HEAD
+
+      # https://github.com/line/line-bot-sdk-python/blob/master/.github/workflows/auto-testing.yml
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          distribution: 'temurin'
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements-dev.txt ]; then python -m pip install -r requirements-dev.txt; fi
+
+      - name: Generate code
+        run: python3 generate-code.py
+
+      - name: Show diff
+        run: git diff --color=always
+
+      - name: Update version in linebot/__about__.py
+        run: |
+          sed -i 's/__version__ = "__LINE_BOT_SDK_PYTHON_VERSION__"/__version__ = "12.34.5"/g' linebot/__about__.py
+
+      - name: Test with pytest
+        run: tox
+
+  test-php:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout SDK repo
+        uses: actions/checkout@v4
+        with:
+          repository: 'line/line-bot-sdk-php'
+          submodules: recursive
+
+      - name: Update line-openapi submodule
+        run: |
+          cd line-openapi
+          git remote add pr-source ${{ github.event.pull_request.head.repo.clone_url }}
+          git fetch pr-source ${{ github.event.pull_request.head.ref }}
+          git checkout FETCH_HEAD
+
+      # https://github.com/line/line-bot-sdk-php/blob/master/.github/workflows/php-checks.yml
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          distribution: 'temurin'
+          php-version: '8.2'
+
+      - name: Install openapi-generator-cli
+        run: echo "OPENAPI_GENERATOR_VERSION=6.6.0" >> $GITHUB_ENV
+      - uses: actions/cache@v3
+        id: openapi-generator-cache
+        env:
+          cache-name: openapi-generator-cache
+        with:
+          path: ~/bin/openapitools
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.OPENAPI_GENERATOR_VERSION }}
+      - if: steps.openapi-generator-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/bin/openapitools
+          curl https://raw.githubusercontent.com/OpenAPITools/openapi-generator/master/bin/utils/openapi-generator-cli.sh > ~/bin/openapitools/openapi-generator-cli
+          chmod u+x ~/bin/openapitools/openapi-generator-cli
+          export PATH=$PATH:~/bin/openapitools/
+          OPENAPI_GENERATOR_VERSION=${{ env.OPENAPI_GENERATOR_VERSION }} openapi-generator-cli version
+
+      - name: Generate code
+        run: |
+          export PATH=$PATH:~/bin/openapitools/
+          bash tools/gen-oas-client.sh
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php }}-
+
+      - name: Install dependencies with Composer
+        uses: ramsey/composer-install@v2
+
+      - name: Show diff
+        run: git diff --color=always
+
+      - name: Run unit tests
+        run: ./vendor/bin/phpunit --test-suffix=Test.php
+
+  test-nodejs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout SDK repo
+        uses: actions/checkout@v4
+        with:
+          repository: 'line/line-bot-sdk-nodejs'
+          submodules: recursive
+
+      - name: Update line-openapi submodule
+        run: |
+          cd line-openapi
+          git remote add pr-source ${{ github.event.pull_request.head.repo.clone_url }}
+          git fetch pr-source ${{ github.event.pull_request.head.ref }}
+          git checkout FETCH_HEAD
+
+      # https://github.com/line/line-bot-sdk-nodejs/blob/master/.github/workflows/test.yml
+      - name: actions/setup-java@v3
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          architecture: x64
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependency
+        run: npm ci
+
+      - name: Generate code
+        run: python3 generate-code.py
+
+      - name: Show diff
+        run: git diff --color=always
+
+      - name: Test Project
+        run: export NODE_OPTIONS=--max-old-space-size=6144; npm test
