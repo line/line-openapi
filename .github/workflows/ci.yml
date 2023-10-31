@@ -34,7 +34,7 @@ jobs:
         cache: 'npm'
     - run: npm install -g zx
     - run: npm install -g @openapitools/openapi-generator-cli
-    - run: openapi-generator-cli version-manager set 6.4.0
+    - run: openapi-generator-cli version-manager set 7.0.1
     - run: sed -i -e 's/openapi-generator/openapi-generator-cli/g' ./tools/generate-test.mjs
     - name: actions/setup-java@v3 (JDK 17)
       uses: actions/setup-java@v3
