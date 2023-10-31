@@ -231,6 +231,9 @@ jobs:
       - name: Generate code
         run: python generate-code.py
   
+      - name: Show diff
+        run: git diff --color=always
+
       - name: run tests
         run: go test ./...
   
