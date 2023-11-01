@@ -9,9 +9,6 @@ info:
 servers:
   - url: "https://api.line.me"
 
-security:
-  - Bearer: []
-
 tags:
   - name: channel-access-token
 
