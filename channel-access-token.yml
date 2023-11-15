@@ -9,9 +9,6 @@ info:
 servers:
   - url: "https://api.line.me"
 
-security:
-  - Bearer: []
-
 tags:
   - name: channel-access-token
 
@@ -280,12 +277,6 @@ paths:
           description: "OK"
 
 components:
-  securitySchemes:
-    Bearer:
-      type: http
-      scheme: bearer
-      description: "Channel access token"
-
   schemas:
     IssueStatelessChannelTokenByJWTAssertionRequest:
       externalDocs:
