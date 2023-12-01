@@ -113,6 +113,7 @@ components:
           deactivated: "#/components/schemas/DeactivatedEvent"
           botSuspended: "#/components/schemas/BotSuspendedEvent"
           botResumed: "#/components/schemas/BotResumedEvent"
+          delivery: "#/components/schemas/PnpMessageDeliveryEvent"
 
     EventMode:
       type: string
@@ -943,3 +944,25 @@ components:
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
+
+    # https://developers.line.biz/en/docs/partner-docs/line-notification-messages/message-sending-complete-webhook-event/#overview-delivery-webhook-event
+    PnpMessageDeliveryEvent:
+      description: "When a request is made to the LINE notification messages API and delivery of the LINE notification message to the user is completed, a dedicated webhook event (delivery completion event) is sent from the LINE Platform to the webhook URL of the bot server."
+      allOf:
+        - $ref: "#/components/schemas/Event"
+        - type: object
+          required:
+            - delivery
+          properties:
+            delivery:
+              $ref: "#/components/schemas/PnpDelivery"
+
+    PnpDelivery:
+      description: "A delivery object containing a hashed phone number string or a string specified by `X-Line-Delivery-Tag` header"
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: string
+          description: "A hashed phone number string or a string specified by `X-Line-Delivery-Tag` header"
