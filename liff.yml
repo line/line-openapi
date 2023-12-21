@@ -1,7 +1,7 @@
 openapi: "3.0.2"
 info:
   title: LIFF server API
-  version: "1.0"
+  version: "1.0.0"
   description: "LIFF Server API."
 
 servers:
