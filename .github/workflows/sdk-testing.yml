@@ -34,9 +34,7 @@ jobs:
         run: python3 generate-code.py
 
       - name: Show diff
-        run: |
-          git add .
-          git diff --color=always --staged
+        run: git diff --color=always
 
       - name: Execute Java SDK test
         run: ./gradlew build
@@ -74,9 +72,7 @@ jobs:
         run: python3 generate-code.py
 
       - name: Show diff
-        run: |
-          git add .
-          git diff --color=always --staged
+        run: git diff --color=always
 
       - name: Update version in linebot/__about__.py
         run: |
@@ -147,9 +143,7 @@ jobs:
         uses: ramsey/composer-install@v2
 
       - name: Show diff
-        run: |
-          git add .
-          git diff --color=always --staged
+        run: git diff --color=always
 
       - name: Run unit tests
         run: ./vendor/bin/phpunit --test-suffix=Test.php
@@ -191,9 +185,7 @@ jobs:
         run: python3 generate-code.py
 
       - name: Show diff
-        run: |
-          git add .
-          git diff --color=always --staged
+        run: git diff --color=always
 
       - name: Test Project
         run: export NODE_OPTIONS=--max-old-space-size=6144; npm test
@@ -240,9 +232,8 @@ jobs:
         run: python generate-code.py
   
       - name: Show diff
-        run: |
-          git add .
-          git diff --color=always --staged
+        run: git diff --color=always
+
       - name: run tests
         run: go test ./...
   
