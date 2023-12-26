@@ -433,3 +433,7 @@ components:
         error_description:
           description: "Details of the error. Not returned in certain situations."
           type: string
+
+ curl -v -X POST https://api.line.me/v2/oauth/revoke \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'refresh_token={refresh token}'         
