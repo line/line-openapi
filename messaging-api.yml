@@ -3583,6 +3583,7 @@ components:
         mapping:
           message: "#/components/schemas/MessageImagemapAction"
           uri: "#/components/schemas/URIImagemapAction"
+          clipboard: "#/components/schemas/ClipboardImagemapAction"
     MessageImagemapAction:
       type: object
       required:
@@ -3604,6 +3605,25 @@ components:
         - type: object
           properties:
             linkUri:
+              type: string
+            label:
+              type: string
+    ClipboardImagemapAction:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#imagemap-clipboard-action-object
+      type: object
+      required:
+        - clipboardText
+      allOf:
+        - "$ref": "#/components/schemas/ImagemapAction"
+        - type: object
+          properties:
+            clipboardText:
+              description: |+
+                Text that is copied to the clipboard.
+                Max character limit: 1000
+              maxLength: 1000
+              minLength: 1
               type: string
             label:
               type: string
@@ -4520,6 +4540,7 @@ components:
         mapping:
           camera: "#/components/schemas/CameraAction"
           cameraRoll: "#/components/schemas/CameraRollAction"
+          clipboard: "#/components/schemas/ClipboardAction"
           datetimepicker: "#/components/schemas/DatetimePickerAction"
           location: "#/components/schemas/LocationAction"
           message: "#/components/schemas/MessageAction"
@@ -4534,6 +4555,23 @@ components:
       type: object
       allOf:
         - "$ref": "#/components/schemas/Action"
+    ClipboardAction:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#clipboard-action
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/Action"
+        - type: object
+          required:
+            - clipboardText
+          properties:
+            clipboardText:
+              description: |+
+                Text that is copied to the clipboard.
+                Max character limit: 1000
+              maxLength: 1000
+              minLength: 1
+              type: string
     DatetimePickerAction:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action
