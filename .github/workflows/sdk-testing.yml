@@ -34,7 +34,9 @@ jobs:
         run: python3 generate-code.py
 
       - name: Show diff
-        run: git diff --color=always
+        run: |
+          git add .
+          git diff --color=always --staged
 
       - name: Execute Java SDK test
         run: ./gradlew build
