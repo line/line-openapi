@@ -529,10 +529,21 @@ components:
         - type: object
           required:
             - replyToken
+            - follow
           properties:
             replyToken:
               type: string
               description: "Reply token used to send reply message to this event"
+            follow:
+              "$ref": "#/components/schemas/FollowDetail"
+    FollowDetail:
+      type: object
+      required:
+        - isUnblocked
+      properties:
+        isUnblocked:
+          type: boolean
+          description: "Whether a user has added your LINE Official Account as a friend or unblocked."
 
 
     # https://developers.line.biz/en/reference/messaging-api/#unfollow-event
