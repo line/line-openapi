@@ -131,7 +131,6 @@ components:
       properties:
         subscriptions:
           type: array
-          maxItems: 5
           minItems: 0
           description: "List of subscription information"
           items:
@@ -145,7 +144,6 @@ components:
       properties:
         memberships:
           type: array
-          maxItems: 5
           minItems: 0
           description: "List of membership information"
           items:
