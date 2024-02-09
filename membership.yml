@@ -3,8 +3,7 @@ openapi: 3.0.0
 info:
   title: Membership API
   version: "0.0.1"
-  description:
-    This document describes LINE Official Account Membership API.
+  description: This document describes LINE Official Account Membership API.
 
 servers:
   - url: "https://api.line.me"
@@ -44,7 +43,7 @@ paths:
                       membershipId: 3189
                       title: "Basic Plan"
                       description: "You will receive messages and photos every Saturday."
-                      benefits: 
+                      benefits:
                         - "Members Only Messages"
                         - "Members Only Photos"
                       price: 500.00
@@ -60,13 +59,13 @@ paths:
           content:
             application/json:
               schema:
-                  "$ref": "#/components/schemas/MembershipListResponse"
+                "$ref": "#/components/schemas/MembershipListResponse"
         "404":
           description: "Unable to get information about the membership to which the user subscribes."
           content:
             application/json:
               schema:
-                  "$ref": "#/components/schemas/MembershipListResponse"
+                "$ref": "#/components/schemas/MembershipListResponse"
   "/membership/v1/list":
     get:
       tags:
@@ -85,7 +84,7 @@ paths:
                   - membershipId: 3189
                     title: "Basic Plan"
                     description: "You will receive messages and photos every Saturday."
-                    benefits: 
+                    benefits:
                       - "Members Only Messages"
                       - "Members Only Photos"
                     price: 500.00
@@ -97,7 +96,7 @@ paths:
                   - membershipId: 3213
                     title: "Premium Plan"
                     description: "Invitation to a special party."
-                    benefits: 
+                    benefits:
                       - "Members Only Party"
                     price: 1500.00
                     currency: "JPY"
@@ -227,7 +226,6 @@ components:
         totalSubscriptionMonths:
           type: integer
           description: "The period of time in months that the user has been subscribed to a membership plan. If a user previously canceled and then re-subscribed to the same membership plan, only the period after the re-subscription will be counted."
-    
 
     Membership:
       required:
