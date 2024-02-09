@@ -68,6 +68,8 @@ paths:
                 "$ref": "#/components/schemas/ErrorResponse"
   "/membership/v1/list":
     get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-membership-plans
       tags:
         - membership
       operationId: getMembershipList
