@@ -3312,6 +3312,14 @@ components:
           description: "Message destination. Specify a phone number that has been normalized to E.164 format and hashed with SHA256."
         notificationDisabled:
           "$ref": "#/components/schemas/NotificationDisabled"
+        currency:
+          type: string
+          description: "The currency of membership.price."
+          enum:
+            - JPY
+            - TWD
+            - THB
+            - IDR
     AudienceMatchMessagesRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#phone-audience-match
