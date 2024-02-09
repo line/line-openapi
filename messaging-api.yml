@@ -2002,6 +2002,14 @@ components:
           type: array
           items:
             type: string
+        currency:
+          type: string
+          description: "The currency of membership.price."
+          enum:
+            - JPY
+            - TWD
+            - THB
+            - IDR
     NotificationDisabled:
       type: boolean
       default: false
