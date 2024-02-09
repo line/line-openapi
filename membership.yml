@@ -202,7 +202,6 @@ components:
             - JPY
             - TWD
             - THB
-            - IDR
 
     MembershipUser:
       description: "Object containing user membership subscription information."
@@ -271,7 +270,6 @@ components:
             - JPY
             - TWD
             - THB
-            - IDR
         memberCount:
           type: integer
           example: 100
