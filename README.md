@@ -23,6 +23,7 @@ If you have an interesting use case for these files or have a request, please cr
 | module.yml               | 3.0.0           | https://api.line.me/v2/bot/                                                               | Messaging API            |
 | module-attach.yml        | 3.0.0           | https://manager.line.biz/module/auth/v1/token                                             | Messaging API            |
 | shop.yml                 | 3.0.0           | https://api.line.me/shop/                                                                 | Mission Stickers API     |
+| membership.yml           | 3.0.0           | https://api.line.me/membership                                                            | Membership API            |
 |                          |                 |                                                                                           |                          |
 | webhook.yml              | 3.0.3           |                                                                                           | Webhook Event Objects    |
 
