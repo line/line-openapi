@@ -59,13 +59,13 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/MembershipListResponse"
+                "$ref": "#/components/schemas/ErrorResponse"
         "404":
           description: "Unable to get information about the membership to which the user subscribes."
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/MembershipListResponse"
+                "$ref": "#/components/schemas/ErrorResponse"
   "/membership/v1/list":
     get:
       tags:
