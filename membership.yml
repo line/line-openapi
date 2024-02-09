@@ -186,7 +186,6 @@ components:
         benefits:
           type: array
           minItems: 1
-          maxItems: 5
           items:
             type: string
           description: "List of membership plan perks."
