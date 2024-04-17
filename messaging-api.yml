@@ -4955,7 +4955,7 @@ components:
 
     ShowLoadingAnimationRequest:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator
+        url: https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator-request-body
       required:
         - chatId
       type: object
