@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  swagger-ui:
+    image: swaggerapi/swagger-ui:latest
+    environment:
+      - SWAGGER_JSON=/openapi/messaging-api.yml
+    volumes:
+      - ./messaging-api.yml:/openapi/messaging-api.yml
+      - ./liff.yml:/openapi/liff.yml
+      - ./channel-access-token.yml:/openapi/channel-access-token.yml
+      - ./manage-audience.yml:/openapi/manage-audience.yml
+      - ./module.yml:/openapi/module.yml
+      - ./insight.yml:/openapi/insight.yml
+      - ./shop.yml:/openapi/shop.yml
+      - ./module-attach.yml:/openapi/module-attach.yml
+      - ./webhook.yml:/openapi/webhook.yml
+    ports:
+      - "3031:8080"
+  redoc:
+    image: redocly/redoc
+    environment:
+      - SPEC_URL=/openapi/messaging-api.yml
+    volumes:
+      - ./messaging-api.yml:/usr/share/nginx/html/openapi/messaging-api.yml
+    ports:
+      - "3032:80"
