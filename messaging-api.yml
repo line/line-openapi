@@ -13,8 +13,23 @@ security:
   - Bearer: []
 
 tags:
-  - name: messaging-api
-  - name: messaging-api-blob
+  - name: webhook
+  - name: webhook-content
+  - name: messaging
+  - name: quota
+  - name: delivery
+  - name: message-validation
+  - name: aggregation
+  - name: users
+  - name: bot
+  - name: group
+  - name: rich-menu
+  - name: rich-menu-content
+  - name: rich-menu-alias
+  - name: account-link
+  - name: optional-api
+  - name: membership
+  - name: opitonal-api
 
 paths:
   # Webhook
@@ -23,7 +38,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information
       tags:
-        - messaging-api
+        - webhook
       operationId: getWebhookEndpoint
       description: "Get webhook endpoint information"
       responses:
@@ -49,7 +64,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url
       tags:
-        - messaging-api
+        - webhook
       operationId: setWebhookEndpoint
       description: "Set webhook endpoint URL"
       requestBody:
@@ -67,7 +82,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint
       tags:
-        - messaging-api
+        - webhook
       operationId: testWebhookEndpoint
       description: "Test webhook endpoint"
       requestBody:
@@ -97,7 +112,7 @@ paths:
       servers:
         - url: "https://api-data.line.me"
       tags:
-        - messaging-api-blob
+        - webhook-content
       operationId: getMessageContent
       description: "Download image, video, and audio data sent from users."
       parameters:
@@ -124,7 +139,7 @@ paths:
       servers:
         - url: "https://api-data.line.me"
       tags:
-        - messaging-api-blob
+        - webhook-content
       operationId: getMessageContentPreview
       description: "Get a preview image of the image or video"
       parameters:
@@ -151,7 +166,7 @@ paths:
       servers:
         - url: "https://api-data.line.me"
       tags:
-        - messaging-api-blob
+        - webhook-content
       operationId: getMessageContentTranscodingByMessageId
       description: "Verify the preparation status of a video or audio for getting"
       parameters:
@@ -177,7 +192,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-reply-message
       tags:
-        - messaging-api
+        - messaging
       operationId: replyMessage
       description: "Send reply message"
       requestBody:
@@ -211,7 +226,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-push-message
       tags:
-        - messaging-api
+        - messaging
       operationId: pushMessage
       description: "Sends a message to a user, group chat, or multi-person chat at any time."
       parameters:
@@ -268,7 +283,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-multicast-message
       tags:
-        - messaging-api
+        - messaging
       operationId: multicast
       description: "An API that efficiently sends the same message to multiple user IDs. You can't send messages to group chats or multi-person chats."
       parameters:
@@ -325,7 +340,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message
       tags:
-        - messaging-api
+        - messaging
       operationId: narrowcast
       description: "Send narrowcast message"
       parameters:
@@ -382,7 +397,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status
       tags:
-        - messaging-api
+        - messaging
       operationId: getNarrowcastProgress
       description: "Gets the status of a narrowcast message."
       parameters:
@@ -408,7 +423,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-broadcast-message
       tags:
-        - messaging-api
+        - messaging
       operationId: broadcast
       description: "Sends a message to multiple users at any time."
       parameters:
@@ -466,7 +481,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-quota
       tags:
-        - messaging-api
+        - quota
       operationId: getMessageQuota
       description: "Gets the target limit for sending messages in the current month. The total number of the free messages and the additional messages is returned."
       responses:
@@ -485,7 +500,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-consumption
       tags:
-        - messaging-api
+        - quota
       operationId: getMessageQuotaConsumption
       description: "Gets the number of messages sent in the current month."
       responses:
@@ -504,7 +519,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-reply-messages
       tags:
-        - messaging-api
+        - delivery
       operationId: getNumberOfSentReplyMessages
       description: "Get number of sent reply messages"
       parameters:
@@ -534,7 +549,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-push-messages
       tags:
-        - messaging-api
+        - delivery
       operationId: getNumberOfSentPushMessages
       description: "Get number of sent push messages"
       parameters:
@@ -564,7 +579,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-multicast-messages
       tags:
-        - messaging-api
+        - delivery
       operationId: getNumberOfSentMulticastMessages
       description: "Get number of sent multicast messages"
       parameters:
@@ -594,7 +609,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-broadcast-messages
       tags:
-        - messaging-api
+        - delivery
       operationId: getNumberOfSentBroadcastMessages
       description: "Get number of sent broadcast messages"
       parameters:
@@ -626,7 +641,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-reply-message
       tags:
-        - messaging-api
+        - message-validation
       operationId: validateReply
       description: "Validate message objects of a reply message"
       requestBody:
@@ -644,7 +659,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-push-message
       tags:
-        - messaging-api
+        - message-validation
       operationId: validatePush
       description: "Validate message objects of a push message"
       requestBody:
@@ -662,7 +677,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-multicast-message
       tags:
-        - messaging-api
+        - message-validation
       operationId: validateMulticast
       description: "Validate message objects of a multicast message"
       requestBody:
@@ -680,7 +695,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-narrowcast-message
       tags:
-        - messaging-api
+        - message-validation
       operationId: validateNarrowcast
       description: "Validate message objects of a narrowcast message"
       requestBody:
@@ -698,7 +713,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-broadcast-message
       tags:
-        - messaging-api
+        - message-validation
       operationId: validateBroadcast
       description: "Validate message objects of a broadcast message"
       requestBody:
@@ -717,7 +732,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month
       tags:
-        - messaging-api
+        - aggregation
       operationId: getAggregationUnitUsage
       description: "Get number of units used this month"
       responses:
@@ -735,7 +750,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month
       tags:
-        - messaging-api
+        - aggregation
       operationId: getAggregationUnitNameList
       description: "Get name list of units used this month"
       parameters:
@@ -773,7 +788,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-profile
       tags:
-        - messaging-api
+        - users
       operationId: getProfile
       description: "Get profile"
       parameters:
@@ -802,7 +817,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-follower-ids
       tags:
-        - messaging-api
+        - users
       operationId: getFollowers
       description: "Get a list of users who added your LINE Official Account as a friend"
       parameters:
@@ -843,7 +858,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-bot-info
       tags:
-        - messaging-api
+        - bot
       operationId: getBotInfo
       description: "Get bot info"
       responses:
@@ -867,7 +882,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile
       tags:
-        - messaging-api
+        - group
       operationId: getGroupMemberProfile
       description: "Get group chat member profile"
       parameters:
@@ -900,7 +915,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-room-member-profile
       tags:
-        - messaging-api
+        - group
       operationId: getRoomMemberProfile
       description: "Get multi-person chat member profile"
       parameters:
@@ -933,7 +948,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-group-member-user-ids
       tags:
-        - messaging-api
+        - group
       operationId: getGroupMembersIds
       description: "Get group chat member user IDs"
       parameters:
@@ -970,7 +985,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-room-member-user-ids
       tags:
-        - messaging-api
+        - group
       operationId: getRoomMembersIds
       description: "Get multi-person chat member user IDs"
       parameters:
@@ -1007,7 +1022,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#leave-group
       tags:
-        - messaging-api
+        - group
       operationId: leaveGroup
       description: "Leave group chat"
       parameters:
@@ -1038,7 +1053,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#leave-room
       tags:
-        - messaging-api
+        - group
       operationId: leaveRoom
       description: "Leave multi-person chat"
       parameters:
@@ -1057,7 +1072,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-group-summary
       tags:
-        - messaging-api
+        - group
       operationId: getGroupSummary
       description: "Get group chat summary"
       parameters:
@@ -1084,7 +1099,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-members-group-count
       tags:
-        - messaging-api
+        - group
       operationId: getGroupMemberCount
       description: "Get number of users in a group chat"
       parameters:
@@ -1109,7 +1124,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-members-room-count
       tags:
-        - messaging-api
+        - group
       operationId: getRoomMemberCount
       description: "Get number of users in a multi-person chat"
       parameters:
@@ -1135,7 +1150,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-rich-menu
       tags:
-        - messaging-api
+        - rich-menu
       operationId: createRichMenu
       description: "Create rich menu"
       requestBody:
@@ -1159,7 +1174,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#validate-rich-menu-object
       tags:
-        - messaging-api
+        - rich-menu
       operationId: validateRichMenuObject
       description: "Validate rich menu object"
       requestBody:
@@ -1179,7 +1194,7 @@ paths:
       servers:
         - url: "https://api-data.line.me"
       tags:
-        - messaging-api-blob
+        - rich-menu-content
       operationId: getRichMenuImage
       description: "Download rich menu image."
       parameters:
@@ -1205,7 +1220,7 @@ paths:
       servers:
         - url: "https://api-data.line.me"
       tags:
-        - messaging-api-blob
+        - rich-menu-content
       operationId: setRichMenuImage
       description: "Upload rich menu image"
       parameters:
@@ -1238,7 +1253,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu
       tags:
-        - messaging-api
+        - rich-menu
       operationId: getRichMenu
       description: "Gets a rich menu via a rich menu ID."
       responses:
@@ -1269,7 +1284,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#delete-rich-menu
       tags:
-        - messaging-api
+        - rich-menu
       operationId: deleteRichMenu
       description: "Deletes a rich menu."
       responses:
@@ -1281,7 +1296,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list
       tags:
-        - messaging-api
+        - rich-menu
       operationId: getRichMenuList
       description: "Get rich menu list"
       responses:
@@ -1316,7 +1331,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#set-default-rich-menu
       tags:
-        - messaging-api
+        - rich-menu
       operationId: setDefaultRichMenu
       description: "Set default rich menu"
       parameters:
@@ -1335,7 +1350,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-default-rich-menu-id
       tags:
-        - messaging-api
+        - rich-menu
       operationId: getDefaultRichMenuId
       description: "Gets the ID of the default rich menu set with the Messaging API."
       responses:
@@ -1351,7 +1366,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#cancel-default-rich-menu
       tags:
-        - messaging-api
+        - rich-menu
       operationId: cancelDefaultRichMenu
       description: "Cancel default rich menu"
       responses:
@@ -1364,7 +1379,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias
       tags:
-        - messaging-api
+        - rich-menu-alias
       operationId: createRichMenuAlias
       description: "Create rich menu alias"
       requestBody:
@@ -1388,7 +1403,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-by-id
       tags:
-        - messaging-api
+        - rich-menu-alias
       operationId: getRichMenuAlias
       description: "Get rich menu alias information"
       parameters:
@@ -1412,7 +1427,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#update-rich-menu-alias
       tags:
-        - messaging-api
+        - rich-menu-alias
       operationId: updateRichMenuAlias
       description: "Update rich menu alias"
       parameters:
@@ -1441,7 +1456,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#delete-rich-menu-alias
       tags:
-        - messaging-api
+        - rich-menu-alias
       operationId: deleteRichMenuAlias
       description: "Delete rich menu alias"
       parameters:
@@ -1466,7 +1481,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list
       tags:
-        - messaging-api
+        - rich-menu-alias
       operationId: getRichMenuAliasList
       description: "Get list of rich menu alias"
       responses:
@@ -1503,7 +1518,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-id-of-user
       tags:
-        - messaging-api
+        - rich-menu
       operationId: getRichMenuIdOfUser
       description: "Get rich menu ID of user"
       responses:
@@ -1519,7 +1534,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-user
       tags:
-        - messaging-api
+        - rich-menu
       operationId: unlinkRichMenuIdFromUser
       description: "Unlink rich menu from user"
       responses:
@@ -1531,7 +1546,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-user
       tags:
-        - messaging-api
+        - rich-menu
       operationId: linkRichMenuIdToUser
       description: "Link rich menu to user."
       parameters:
@@ -1556,7 +1571,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users
       tags:
-        - messaging-api
+        - rich-menu
       operationId: linkRichMenuIdToUsers
       description: "Link rich menu to multiple users"
       requestBody:
@@ -1574,7 +1589,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users
       tags:
-        - messaging-api
+        - rich-menu
       operationId: unlinkRichMenuIdFromUsers
       description: "Unlink rich menus from multiple users"
       requestBody:
@@ -1592,7 +1607,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#batch-control-rich-menus-of-users
       tags:
-        - messaging-api
+        - rich-menu
       operationId: richMenuBatch
       description: |+
         You can use this endpoint to batch control the rich menu linked to the users using the endpoint such as Link rich menu to user. 
@@ -1616,7 +1631,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#validate-batch-control-rich-menus-request
       tags:
-        - messaging-api
+        - rich-menu
       operationId: validateRichMenuBatchRequest
       description: "Validate a request body of the Replace or unlink the linked rich menus in batches endpoint."
       requestBody:
@@ -1634,7 +1649,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status
       tags:
-        - messaging-api
+        - rich-menu
       operationId: getRichMenuBatchProgress
       description: "Get the status of Replace or unlink a linked rich menus in batches."
       parameters:
@@ -1661,7 +1676,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#issue-link-token
       tags:
-        - messaging-api
+        - account-link
       operationId: issueLinkToken
       description: "Issue link token"
       parameters:
@@ -1689,7 +1704,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read
       tags:
-        - messaging-api
+        - optional-api
       operationId: markMessagesAsRead
       description: "Mark messages from users as read"
       requestBody:
@@ -1710,7 +1725,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#send-line-notification-message
       tags:
-        - messaging-api
+        - optional-api
       operationId: pushMessagesByPhone
       description: "Send LINE notification message"
       parameters:
@@ -1743,7 +1758,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#phone-audience-match
       tags:
-        - messaging-api
+        - optional-api
       operationId: audienceMatch
       description: "Send a message using phone number"
       requestBody:
@@ -1762,7 +1777,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#get-number-of-sent-line-notification-messages
       tags:
-        - messaging-api
+        - optional-api
       operationId: getPNPMessageStatistics
       description: "Get number of sent LINE notification messages　"
       parameters:
@@ -1793,7 +1808,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#get-phone-audience-match
       tags:
-        - messaging-api
+        - optional-api
       operationId: getAdPhoneMessageStatistics
       description: "Get result of message delivery using phone number"
       parameters:
@@ -1831,7 +1846,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status
       tags:
-        - messaging-api
+        - membership
       operationId: getMembershipSubscription
       description: "Get a user's membership subscription."
       parameters:
@@ -1883,7 +1898,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-membership-plans
       tags:
-        - messaging-api
+        - membership
       operationId: getMembershipList
       description: "Get a list of memberships."
       responses:
@@ -1930,7 +1945,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator
       tags:
-        - messaging-api
+        - optional-api
       operationId: showLoadingAnimation
       description: "Display a loading animation in one-on-one chats between users and LINE Official Accounts."
       requestBody:
