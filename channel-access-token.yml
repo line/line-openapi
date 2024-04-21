@@ -122,7 +122,7 @@ paths:
   "/oauth2/v2.1/verify":
     get:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token-v2-1
+        url: https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1
       tags:
         - channel-access-token
       operationId: verifyChannelTokenByJWT
@@ -225,7 +225,7 @@ paths:
   "/v2/oauth/verify":
     post:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token
+        url: https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token
       tags:
         - channel-access-token
       operationId: verifyChannelToken
