@@ -13,18 +13,16 @@ If you have an interesting use case for these files or have a request, please cr
 
 ## Project Files
 
-| File                     | OpenAPI Version | API EndPoint                                                                              | Description              |
-|--------------------------|-----------------|-------------------------------------------------------------------------------------------|--------------------------|
-| channel-access-token.yml | 3.0.0           | https://api.line.me/                                                                      | Channel Access Token API |
-| insight.yml              | 3.0.0           | https://api.line.me/v2/bot/insight/                                                       | Insight API              |
-| liff.yml                 | 3.0.2           | https://api.line.me/liff/                                                                 | LIFF API                 |
-| manage-audience.yml      | 3.0.0           | https://api.line.me/v2/bot/audienceGroup/, https://api-data.line.me/v2/bot/audienceGroup/ | Audience Group API       |
-| messaging-api.yml        | 3.0.0           | https://api.line.me/v2/bot/, https://api-data.line.me/v2/bot/                             | Messaging API            |
-| module.yml               | 3.0.0           | https://api.line.me/v2/bot/                                                               | Messaging API            |
-| module-attach.yml        | 3.0.0           | https://manager.line.biz/module/auth/v1/token                                             | Messaging API            |
-| shop.yml                 | 3.0.0           | https://api.line.me/shop/                                                                 | Mission Stickers API     |
-|                          |                 |                                                                                           |                          |
-| webhook.yml              | 3.0.3           |                                                                                           | Webhook Event Objects    |
+| File                     | OpenAPI Version | API EndPoint                                                                                          | Description                         |
+|--------------------------|-----------------|-------------------------------------------------------------------------------------------------------|-------------------------------------|
+| channel-access-token.yml | 3.0.0           | https://api.line.me/                                                                                  | Channel Access Token API            |
+| insight.yml              | 3.0.0           | https://api.line.me/v2/bot/insight/                                                                   | Insight API                         |
+| liff.yml                 | 3.0.2           | https://api.line.me/liff/                                                                             | LIFF API                            |
+| manage-audience.yml      | 3.0.0           | https://api.line.me/v2/bot/audienceGroup/, https://api-data.line.me/v2/bot/audienceGroup/             | Audience Group API                  |
+| messaging-api.yml        | 3.0.0           | https://api.line.me/v2/bot/, https://api-data.line.me/v2/bot/                                         | Messaging API                       |
+| partner-docs.yml         | 3.0.0           | https://api.line.me/v2/, https://manager.line.biz/module/auth/v1/, https://api.line.me/shop/tokenbot/ | Messaging API, Mission Stickers API |
+|                          |                 |                                                                                                       |                                     |
+| webhook.yml              | 3.0.3           |                                                                                                       | Webhook Event Objects               |
 
 
 ## Known issues
