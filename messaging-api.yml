@@ -1684,60 +1684,6 @@ paths:
                 linkToken: NMZTNuVrPTqlr2IF8Bnymkb7rXfYv5EY
 
   # Optional APIs
-  "/v2/bot/message/markAsRead":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read
-      tags:
-        - messaging-api
-      operationId: markMessagesAsRead
-      description: "Mark messages from users as read"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/MarkMessagesAsReadRequest"
-            example:
-              chat:
-                userId: Uxxxxxxxxxxxxxxxxxx
-        required: true
-      responses:
-        "200":
-          description: "OK"
-
-  "/bot/pnp/push":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/partner-docs/#send-line-notification-message
-      tags:
-        - messaging-api
-      operationId: pushMessagesByPhone
-      description: "Send LINE notification message"
-      parameters:
-        - name: X-Line-Delivery-Tag
-          in: header
-          required: false
-          schema:
-            type: string
-            minLength: 16
-            maxLength: 100
-          description: "String returned in the delivery.data property of the delivery completion event via Webhook."
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/PnpMessagesRequest"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-        "422":
-          description: "Unprocessable Entity"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-
   "/bot/ad/multicast/phone":
     post:
       externalDocs:
@@ -1756,37 +1702,6 @@ paths:
         "200":
           description: "OK"
           # empty JSON response
-
-  "/v2/bot/message/delivery/pnp":
-    get:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/partner-docs/#get-number-of-sent-line-notification-messages
-      tags:
-        - messaging-api
-      operationId: getPNPMessageStatistics
-      description: "Get number of sent LINE notification messages　"
-      parameters:
-        - name: date
-          in: query
-          required: true
-          schema:
-            type: string
-            pattern: "^[0-9]{8}$"
-          description: |+
-            Date the message was sent
-
-            Format: `yyyyMMdd` (Example:`20211231`)
-            Time zone: UTC+9
-      responses:
-        "200":
-          description: "OK"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/NumberOfMessagesResponse"
-              example:
-                status: ready
-                success: 3
 
   "/v2/bot/message/delivery/ad_phone":
     get:
@@ -3400,46 +3315,6 @@ components:
             Link tokens are valid for 10 minutes and can only be used once.
 
     # Optional APIs
-    MarkMessagesAsReadRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read
-      required:
-        - chat
-      type: object
-      properties:
-        chat:
-          "$ref": "#/components/schemas/ChatReference"
-    ChatReference:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read
-      required:
-        - userId
-      type: object
-      description: "Chat reference"
-      properties:
-        userId:
-          type: string
-          description: "The target user ID"
-    PnpMessagesRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/partner-docs/#send-line-notification-message
-      required:
-        - messages
-        - to
-      type: object
-      properties:
-        messages:
-          maxItems: 5
-          minItems: 1
-          type: array
-          items:
-            "$ref": "#/components/schemas/Message"
-          description: "Message to be sent."
-        to:
-          type: string
-          description: "Message destination. Specify a phone number that has been normalized to E.164 format and hashed with SHA256."
-        notificationDisabled:
-          "$ref": "#/components/schemas/NotificationDisabled"
     AudienceMatchMessagesRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#phone-audience-match

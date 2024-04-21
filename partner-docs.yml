@@ -1,0 +1,505 @@
+---
+openapi: 3.0.0
+info:
+  title: Partner API
+  version: "0.0.1"
+  description: |-
+    This document describes LINE Mission Stickers API. <br />
+    <a href="https://developers.line.biz/en/reference/partner-docs/">https://developers.line.biz/en/reference/partner-docs/</a>
+
+servers:
+  - url: "https://api.line.me"
+
+security:
+  - Bearer: []
+
+tags:
+  - name: shop
+  - name: mark-messages
+  - name: pnp
+  - name: module
+
+paths:
+  "/shop/v3/mission":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3
+      tags:
+        - shop
+      operationId: missionStickerV3
+      description: "Sends a mission sticker."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MissionStickerRequest"
+        required: true
+      responses:
+        "200":
+          description: "Returns status code 200 and an empty response body."
+          # TODO content-type?
+  "/v2/bot/message/markAsRead":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read
+      tags:
+        - mark-messages
+      operationId: markMessagesAsRead
+      description: "Mark messages from users as read"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MarkMessagesAsReadRequest"
+            example:
+              chat:
+                userId: Uxxxxxxxxxxxxxxxxxx
+        required: true
+      responses:
+        "200":
+          description: "OK"
+  "/bot/pnp/push":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#send-line-notification-message
+      tags:
+        - pnp
+      operationId: pushMessagesByPhone
+      description: "Send LINE notification message"
+      parameters:
+        - name: X-Line-Delivery-Tag
+          in: header
+          required: false
+          schema:
+            type: string
+            minLength: 16
+            maxLength: 100
+          description: "String returned in the delivery.data property of the delivery completion event via Webhook."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PnpMessagesRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+        "422":
+          description: "Unprocessable Entity"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+  "/v2/bot/message/delivery/pnp":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#get-number-of-sent-line-notification-messages
+      tags:
+        - pnp
+      operationId: getPNPMessageStatistics
+      description: "Get number of sent LINE notification messages　"
+      parameters:
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: "^[0-9]{8}$"
+          description: |+
+            Date the message was sent
+
+            Format: `yyyyMMdd` (Example:`20211231`)
+            Time zone: UTC+9
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/NumberOfMessagesResponse"
+              example:
+                status: ready
+                success: 3
+  "/module/auth/v1/token":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider
+      tags:
+        - module
+      operationId: attachModule
+      description: "Attach by operation of the module channel provider"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              description: "request of the attachModule"
+              type: object
+              properties:
+                grant_type:
+                  type: string
+                  description: "authorization_code"
+                  example: authorization_code
+                code:
+                  type: string
+                  description: "Authorization code received from the LINE Platform."
+                redirect_uri:
+                  type: string
+                  description: "Specify the redirect_uri specified in the URL for authentication and authorization."
+                code_verifier:
+                  type: string
+                  description: "Specify when using PKCE (Proof Key for Code Exchange) defined in the OAuth 2.0 extension specification as a countermeasure against authorization code interception attacks."
+                client_id:
+                  type: string
+                  description: |+
+                    Instead of using Authorization header, you can use this parameter to specify the channel ID of the module channel.
+                    You can find the channel ID of the module channel in the LINE Developers Console.
+                client_secret:
+                  type: string
+                  description: |+
+                    Instead of using Authorization header, you can use this parameter to specify the channel secret of the module channel.
+                    You can find the channel secret of the module channel in the LINE Developers Console.
+                region:
+                  type: string
+                  description: |+
+                    If you specified a value for region in the URL for authentication and authorization, specify the same value.
+                basic_search_id:
+                  type: string
+                  description: "If you specified a value for basic_search_id in the URL for authentication and authorization, specify the same value."
+                scope:
+                  type: string
+                  description: "If you specified a value for scope in the URL for authentication and authorization, specify the same value."
+                brand_type:
+                  type: string
+                  description: "If you specified a value for brand_type in the URL for authentication and authorization, specify the same value."
+      responses:
+        "200":
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/AttachModuleResponse"
+              example:
+                bot_id: U45c5c51f0050ef0f0ee7261d57fd3c56
+                scopes:
+                  - message:send
+                  - message:receive
+          description: "OK"
+  "/v2/bot/channel/detach":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin
+      tags:
+        - module
+      operationId: detachModule
+      description: "The module channel admin calls the Detach API to detach the module channel from a LINE Official Account."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DetachModuleRequest"
+      responses:
+        "200":
+          description: "OK"
+  "/v2/bot/chat/{chatId}/control/acquire":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#acquire-control-api
+      tags:
+        - module
+      operationId: acquireChatControl
+      description: |+
+        If the Standby Channel wants to take the initiative (Chat Control), it calls the Acquire Control API.
+        The channel that was previously an Active Channel will automatically switch to a Standby Channel.
+      parameters:
+        - name: chatId
+          in: path
+          required: true
+          description: "The `userId`, `roomId`, or `groupId`"
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/AcquireChatControlRequest"
+      responses:
+        "200":
+          description: "OK"
+  "/v2/bot/chat/{chatId}/control/release":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#release-control-api
+      tags:
+        - module
+      operationId: releaseChatControl
+      description: |+
+        To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API.
+      parameters:
+        - name: chatId
+          in: path
+          required: true
+          description: "The `userId`, `roomId`, or `groupId`"
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+  "/v2/bot/list":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
+      tags:
+        - module
+      operationId: getModules
+      description: "Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels."
+      parameters:
+        - name: start
+          in: query
+          required: false
+          description: |+
+            Value of the continuation token found in the next property of the JSON object returned in the response.
+            If you can't get all basic information about the bots in one request, include this parameter to get the remaining array.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          description: |+
+            Specify the maximum number of bots that you get basic information from. The default value is 100.
+            Max value: 100
+          schema:
+            type: integer
+            format: int32
+            default: 100
+            maximum: 100
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/GetModulesResponse"
+              example:
+                bots:
+                  - userId: Uf2dd6e8b081d2ff9c05c98a8a8b269c9
+                    basicId: "@628..."
+                    displayName: Test01
+                    pictureUrl: https://profile.line-scdn.net/0hyxytJNAlJldEDQzlatVZAHhIKDoz...
+                  - userId: Ua831d37bfe8232808202b85127663f70
+                    basicId: "@076lu..."
+                    displayName: Test02
+                    pictureUrl: https://profile.line-scdn.net/0hohnizdyzMEdTECbnVo9PEG9VPiok...
+                  - userId: Ub77ea431fba86f7c159a0c0f5be43d9f
+                    basicId: "@290n..."
+                    displayName: Test03
+                  - userId: Ub8ec80a14e879e9c6833fb4cee0e632b
+                    basicId: "@793j..."
+                    displayName: Test04
+
+components:
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      description: "Channel access token"
+  schemas:
+    MissionStickerRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3
+      description: "Send mission stickers (v3)"
+      required:
+        - to
+        - productId
+        - productType
+        - sendPresentMessage
+      type: object
+      properties:
+        to:
+          type: string
+          description: "Destination user ID"
+        productId:
+          type: string
+          description: "Package ID for a set of stickers"
+        productType:
+          type: string
+          description: "`STICKER`"
+          example: STICKER
+        sendPresentMessage:
+          type: boolean
+          description: "`false`"
+          example: false
+
+    ErrorResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: "Message containing information about the error."
+
+    MarkMessagesAsReadRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read
+      required:
+        - chat
+      type: object
+      properties:
+        chat:
+          "$ref": "#/components/schemas/ChatReference"
+
+    ChatReference:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read
+      required:
+        - userId
+      type: object
+      description: "Chat reference"
+      properties:
+        userId:
+          type: string
+          description: "The target user ID"
+
+    PnpMessagesRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#send-line-notification-message
+      required:
+        - messages
+        - to
+      type: object
+      properties:
+        messages:
+          maxItems: 5
+          minItems: 1
+          type: array
+          items:
+            "$ref": "#/components/schemas/Message"
+          description: "Message to be sent."
+        to:
+          type: string
+          description: "Message destination. Specify a phone number that has been normalized to E.164 format and hashed with SHA256."
+        notificationDisabled:
+          "$ref": "#/components/schemas/NotificationDisabled"
+
+    NumberOfMessagesResponse:
+      required:
+        - status
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - ready
+            - unready
+            - unavailable_for_privacy
+            - out_of_service
+          description: |+
+            Aggregation process status. One of:
+
+            `ready`: The number of messages can be obtained.
+            `unready`: We haven't finished calculating the number of sent messages for the specified in date. For example, this property is returned when the delivery date or a future date is specified. Calculation usually takes about a day.
+            `unavailable_for_privacy`: The total number of messages on the specified day is less than 20.
+            `out_of_service`: The specified date is earlier than the date on which we first started calculating sent messages (March 31, 2018).
+        success:
+          type: integer
+          format: int64
+          description: |+
+            The number of messages delivered using the phone number on the date specified in `date`.
+            The response has this property only when the value of `status` is `ready`.
+
+    AttachModuleResponse:
+      description: "Attach by operation of the module channel provider"
+      required:
+        - bot_id
+        - scopes
+      properties:
+        bot_id:
+          type: string
+          description: "User ID of the bot on the LINE Official Account."
+        scopes:
+          type: array
+          description: "Permissions (scope) granted by the LINE Official Account admin."
+          items:
+            type: string
+
+    DetachModuleRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin
+      type: object
+      description: "Unlink (detach) the module channel by the operation of the module channel administrator"
+      properties:
+        botId:
+          description: "User ID of the LINE Official Account bot attached to the module channel."
+          type: string
+
+    AcquireChatControlRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#acquire-control-api
+      description: "Request entity of the Acquire Control API"
+      type: object
+      properties:
+        expired:
+          type: boolean
+          description: |+
+            `True`: After the time limit (ttl) has passed, the initiative (Chat Control) will return to the Primary Channel. (Default)
+            `False`: There's no time limit and the initiative (Chat Control) doesn't change over time.
+          example: true
+        ttl:
+          type: integer
+          format: int32
+          # one year = 3600*24*365
+          maximum: 31536000
+          description: |+
+            The time it takes for initiative (Chat Control) to return to the Primary Channel (the time that the module channel stays on the Active Channel).
+            The value is specified in seconds. The maximum value is one year (3600 * 24 * 365).
+            The default value is 3600 (1 hour).
+  
+            * Ignored if the value of expired is false.
+          example: 3600
+
+    GetModulesResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
+      description: "List of bots to which the module is attached"
+      required:
+        - bots
+      type: object
+      properties:
+        bots:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ModuleBot"
+          description: "Array of Bot list Item objects representing basic information about the bot."
+        next:
+          type: string
+          description: |+
+            Continuation token.
+            Used to get the next array of basic bot information.
+            This property is only returned if there are more unreturned results.
+    ModuleBot:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
+      description: "basic information about the bot."
+      required:
+        - userId
+        - basicId
+        - displayName
+      type: object
+      properties:
+        userId:
+          type: string
+          description: "Bot's user ID"
+        basicId:
+          type: string
+          description: "Bot's basic ID"
+        premiumId:
+          type: string
+          description: "Bot's premium ID. Not included in the response if the premium ID isn't set."
+        displayName:
+          type: string
+          description: "Bot's display name"
+        pictureUrl:
+          type: string
+          description: "Profile image URL. Image URL starting with `https://`. Not included in the response if the bot doesn't have a profile image."
