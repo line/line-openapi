@@ -19,6 +19,7 @@ paths:
       operationId: addLIFFApp
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
+      summary: "Create LIFF app"
       tags:
         - liff
       description: "Adding the LIFF app to a channel"
@@ -40,7 +41,6 @@ paths:
         "400":
           description: |+
             This status code means one of the following:
-
             - The request contains an invalid value.
             - The maximum number of LIFF apps that can be added to the channel has been reached.
         "401":
@@ -103,6 +103,7 @@ paths:
       operationId: updateLIFFApp
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#update-liff-app
+      summary: "Update LIFF app from a channel"
       description: "Update LIFF app settings"
       tags:
         - liff
