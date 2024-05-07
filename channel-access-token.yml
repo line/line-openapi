@@ -106,6 +106,10 @@ paths:
                 client_assertion:
                   type: string
                   description: "A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key."
+              required:
+                - grant_type
+                - client_assertion_type
+                - client_assertion
       responses:
         "200":
           description: "OK"
@@ -122,7 +126,7 @@ paths:
   "/oauth2/v2.1/verify":
     get:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token-v2-1
+        url: https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1
       tags:
         - channel-access-token
       operationId: verifyChannelTokenByJWT
@@ -171,6 +175,10 @@ paths:
                 access_token:
                   type: string
                   description: "Channel access token"
+              required:
+                - client_id
+                - client_secret
+                - access_token
       responses:
         "200":
           description: "OK"
@@ -201,6 +209,10 @@ paths:
                 client_secret:
                   type: string
                   description: "Channel secret."
+              required:
+                - grant_type
+                - client_id
+                - client_secret
       responses:
         "200":
           description: "OK"
@@ -225,7 +237,7 @@ paths:
   "/v2/oauth/verify":
     post:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token
+        url: https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token
       tags:
         - channel-access-token
       operationId: verifyChannelToken
@@ -241,6 +253,8 @@ paths:
                 access_token:
                   description: "A short-lived or long-lived channel access token."
                   type: string
+              required:
+                - access_token
       responses:
         "200":
           description: "OK"
@@ -272,6 +286,8 @@ paths:
                 access_token:
                   description: "Channel access token"
                   type: string
+              required:
+                - access_token
       responses:
         "200":
           description: "OK"
