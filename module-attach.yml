@@ -68,6 +68,10 @@ paths:
                 brand_type:
                   type: string
                   description: "If you specified a value for brand_type in the URL for authentication and authorization, specify the same value."
+              required:
+                - grant_type
+                - code
+                - redirect_uri
       responses:
         "200":
           content:
