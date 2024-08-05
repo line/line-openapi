@@ -2665,6 +2665,7 @@ components:
         max:
           minimum: 1
           type: integer
+          nullable: true
           format: int32
           description: |+
             The maximum number of narrowcast messages to send.
