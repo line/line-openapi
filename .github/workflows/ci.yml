@@ -16,7 +16,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         cache: 'npm'
-    - run: npm install -g zx
+#    - run: npm install -g zx
     - run: npm install -g @stoplight/spectral-cli
     - run: npm install .
     - run: zx ./tools/validate-all.mjs
@@ -32,7 +32,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         cache: 'npm'
-    - run: npm install -g zx
+#    - run: npm install -g zx
     - run: npm install -g @openapitools/openapi-generator-cli
     - run: openapi-generator-cli version-manager set 7.0.1
     - run: sed -i -e 's/openapi-generator/openapi-generator-cli/g' ./tools/generate-test.mjs
