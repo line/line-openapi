@@ -299,10 +299,15 @@ components:
         url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
       description: "Request body to issue a new token with JWT assertion"
       type: object
-      required:
-        - grant_type
-        - client_assertion
-        - client_assertion_type
+      # We are customizing the generator to receive each parameter as an argument directly,
+      # rather than using a struct for the request body.
+      # As a result, specifying the response with `oneOf` causes the required parameters to interfere with each other.
+      # Therefore, we will temporarily define these as optional parameters.
+      # Ref: https://github.com/line/line-bot-sdk-go/issues/464
+      # required:
+      #   - grant_type
+      #   - client_assertion
+      #   - client_assertion_type
       properties:
         grant_type:
           type: string
@@ -320,10 +325,15 @@ components:
         url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
       description: "Request body to issue a new token with `client_id` and `client_secret`"
       type: object
-      required:
-        - grant_type
-        - client_id
-        - client_secret
+      # We are customizing the generator to receive each parameter as an argument directly,
+      # rather than using a struct for the request body.
+      # As a result, specifying the response with `oneOf` causes the required parameters to interfere with each other.
+      # Therefore, we will temporarily define these as optional parameters.
+      # Ref: https://github.com/line/line-bot-sdk-go/issues/464
+      # required:
+      #   - grant_type
+      #   - client_id
+      #   - client_secret
       properties:
         grant_type:
           type: string
