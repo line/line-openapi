@@ -3488,6 +3488,7 @@ components:
         propertyName: type
         mapping:
           text: "#/components/schemas/TextMessage"
+          textV2: "#/components/schemas/TextMessageV2"
           sticker: "#/components/schemas/StickerMessage"
           image: "#/components/schemas/ImageMessage"
           video: "#/components/schemas/VideoMessage"
@@ -3566,6 +3567,86 @@ components:
           type: string
         emojiId:
           type: string
+    TextMessageV2:
+      externalDocs:
+        url: "TODO"
+      type: object
+      required:
+        - textV2
+      allOf:
+        - "$ref": "#/components/schemas/Message"
+        - type: object
+          properties:
+            text:
+              type: string
+            substitution:
+              type: object
+              additionalProperties:
+                $ref: "#/components/schemas/SubstitutionObject"
+              description: "A mapping that specifies substitutions for parts enclosed in {} within the 'text' field."
+            quoteToken:
+              type: string
+              description: "Quote token of the message you want to quote."
+    SubstitutionObject:
+      description: "An object that defines the replacement value for a placeholder in the text."
+      externalDocs:
+        url: "TODO"
+      type: object
+      properties:
+        type:
+          description: "Type of substitution object"
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          mention: "#/components/schemas/MentionSubstitutionObject"
+          emoji: "#/components/schemas/EmojiSubstitutionObject"
+      required:
+        - type
+    MentionSubstitutionObject:
+      description: "An object representing a mention substitution."
+      allOf:
+        - $ref: "#/components/schemas/SubstitutionObject"
+        - type: object
+          properties:
+            mentionee:
+              $ref: "#/components/schemas/MentionTarget"
+    MentionTarget:
+      type: object
+      properties:
+        type:
+          description: "Target to be mentioned"
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          user: "#/components/schemas/UserMentionTarget"
+          all: "#/components/schemas/AllMentionTarget"
+      required:
+        - type
+    UserMentionTarget:
+      allOf:
+        - $ref: "#/components/schemas/MentionTarget"
+        - type: object
+          properties:
+            userId:
+              type: string
+          required:
+            - userId
+    AllMentionTarget:
+      allOf:
+        - $ref: "#/components/schemas/MentionTarget"
+        - type: object
+    EmojiSubstitutionObject:
+      description: "An object representing a emoji substitution."
+      allOf:
+        - $ref: "#/components/schemas/SubstitutionObject"
+        - type: object
+          properties:
+            productId:
+              type: string
+            emojiId:
+              type: string
     StickerMessage:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#sticker-message

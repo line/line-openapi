@@ -336,6 +336,9 @@ components:
             userId:
               type: string
               description: "User ID of the mentioned user. Only included if mention.mentions[].type is user and the user consents to the LINE Official Account obtaining their user profile information."
+            isSelf:
+              type: boolean
+              description: "Whether the mentioned user is the bot that receives the webhook."
     AllMentionee:
       description: "Mentioned target is entire group"
       allOf:
