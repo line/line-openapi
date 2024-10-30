@@ -3572,7 +3572,7 @@ components:
         url: "https://developers.line.biz/en/reference/messaging-api/#text-message-v2"
       type: object
       required:
-        - textV2
+        - text
       allOf:
         - "$ref": "#/components/schemas/Message"
         - type: object
