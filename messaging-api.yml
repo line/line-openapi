@@ -3569,7 +3569,7 @@ components:
           type: string
     TextMessageV2:
       externalDocs:
-        url: "TODO"
+        url: "https://developers.line.biz/en/reference/messaging-api/#text-message-v2"
       type: object
       required:
         - textV2
@@ -3589,8 +3589,6 @@ components:
               description: "Quote token of the message you want to quote."
     SubstitutionObject:
       description: "An object that defines the replacement value for a placeholder in the text."
-      externalDocs:
-        url: "TODO"
       type: object
       properties:
         type:
@@ -3604,6 +3602,8 @@ components:
       required:
         - type
     MentionSubstitutionObject:
+      externalDocs:
+        url: "https://developers.line.biz/en/reference/messaging-api/#text-message-v2-mention-object"
       description: "An object representing a mention substitution."
       allOf:
         - $ref: "#/components/schemas/SubstitutionObject"
@@ -3625,6 +3625,8 @@ components:
       required:
         - type
     UserMentionTarget:
+      externalDocs:
+        url: "https://developers.line.biz/en/reference/messaging-api/#text-message-v2-mentionee-user"
       allOf:
         - $ref: "#/components/schemas/MentionTarget"
         - type: object
@@ -3634,10 +3636,14 @@ components:
           required:
             - userId
     AllMentionTarget:
+      externalDocs:
+        url: "https://developers.line.biz/en/reference/messaging-api/#text-message-v2-mentionee-all"
       allOf:
         - $ref: "#/components/schemas/MentionTarget"
         - type: object
     EmojiSubstitutionObject:
+      externalDocs:
+        url: "https://developers.line.biz/en/reference/messaging-api/#text-message-v2-emoji-object"
       description: "An object representing a emoji substitution."
       allOf:
         - $ref: "#/components/schemas/SubstitutionObject"
