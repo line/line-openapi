@@ -1595,9 +1595,9 @@ paths:
         - messaging-api
       operationId: richMenuBatch
       description: |+
-        You can use this endpoint to batch control the rich menu linked to the users using the endpoint such as Link rich menu to user. 
+        You can use this endpoint to batch control the rich menu linked to the users using the endpoint such as Link rich menu to user.
         The following operations are available:
-        
+
         1. Replace a rich menu with another rich menu for all users linked to a specific rich menu
         2. Unlink a rich menu for all users linked to a specific rich menu
         3. Unlink a rich menu for all users linked the rich menu
@@ -3363,7 +3363,7 @@ components:
           format: date-time
           description: |+
             The accepted time in milliseconds of the request of batch control the rich menu.
-            
+
             Format: ISO 8601 (e.g. 2023-06-08T10:15:30.121Z)
             Timezone: UTC
         completedTime:
@@ -3378,11 +3378,11 @@ components:
       type: string
       description: |+
         The current status. One of:
-        
+
         `ongoing`: Rich menu batch control is in progress.
         `succeeded`: Rich menu batch control is complete.
         `failed`: Rich menu batch control failed.
-                  This means that the rich menu for one or more users couldn't be controlled. 
+                  This means that the rich menu for one or more users couldn't be controlled.
                   There may also be users whose operations have been successfully completed.
       enum:
         - ongoing
@@ -3611,6 +3611,8 @@ components:
           properties:
             mentionee:
               $ref: "#/components/schemas/MentionTarget"
+          required:
+            - mentionee
     MentionTarget:
       type: object
       properties:
@@ -3640,7 +3642,6 @@ components:
         url: "https://developers.line.biz/en/reference/messaging-api/#text-message-v2-mentionee-all"
       allOf:
         - $ref: "#/components/schemas/MentionTarget"
-        - type: object
     EmojiSubstitutionObject:
       externalDocs:
         url: "https://developers.line.biz/en/reference/messaging-api/#text-message-v2-emoji-object"
@@ -3653,6 +3654,9 @@ components:
               type: string
             emojiId:
               type: string
+          required:
+            - productId
+            - emojiId
     StickerMessage:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#sticker-message
@@ -3949,7 +3953,7 @@ components:
       description: |+
         Aspect ratio of the image. This is only for the `imageAspectRatio` in ButtonsTemplate.
         Specify one of the following values:
-        
+
         `rectangle`: 1.51:1
         `square`: 1:1
       enum:
@@ -3960,7 +3964,7 @@ components:
       description: |+
         Size of the image.  This is only for the `imageSize` in ButtonsTemplate.
         Specify one of the following values:
-        
+
         `cover`: The image fills the entire image area. Parts of the image that do not fit in the area are not displayed.
         `contain`: The entire image is displayed in the image area. A background is displayed in the unused areas to the left and right of vertical images and in the areas above and below horizontal images.
       enum:
@@ -4264,7 +4268,7 @@ components:
     FlexBoxSpacing:
       type: string
       description: |+
-        You can specify the minimum space between two components with the `spacing` property of the parent box component, in pixels or with a keyword. 
+        You can specify the minimum space between two components with the `spacing` property of the parent box component, in pixels or with a keyword.
         FlexBoxSpacing just provides only keywords.
       enum:
         - none
@@ -4277,7 +4281,7 @@ components:
     FlexMargin:
       type: string
       description: |+
-        You can specify the minimum space before a child component with the `margin` property of the child component, in pixels or with a keyword. 
+        You can specify the minimum space before a child component with the `margin` property of the child component, in pixels or with a keyword.
         FlexMargin just provides only keywords.
       enum:
         - none
@@ -4337,7 +4341,7 @@ components:
       type: string
       description: |+
         Font size in the `size` property of the Flex text component.
-        You can specify the size in pixels or with a keyword. 
+        You can specify the size in pixels or with a keyword.
         FlexTextFontSize just provides only keywords.
       enum:
         - xxs
@@ -4354,7 +4358,7 @@ components:
       type: string
       description: |+
         Font size in the `size` property of the Flex span component.
-        You can specify the size in pixels or with a keyword. 
+        You can specify the size in pixels or with a keyword.
         FlexSpanSize just provides only keywords.
       enum:
         - xxs
