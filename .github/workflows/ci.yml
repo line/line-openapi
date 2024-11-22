@@ -51,4 +51,5 @@ jobs:
       with:
         cache: 'npm'
     - run: npx zx ./tools/reformat.mjs
-    - run: git diff --exit-code (Run ./tools/reformat.mjs to format the code)
+    - name: Check there is no diff (Run ./tools/reformat.mjs if there is a diff)
+      run: git diff --exit-code
