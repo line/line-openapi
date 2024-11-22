@@ -47,7 +47,7 @@ async function run() {
         // check language is one of ruby or php, if so, add comment "You may need to modify code when webhook event is added. Parser is not genareted automatically. Please add test and modify code manually in each repository."
         // check webhook event is added
         if (language === 'ruby' || language === 'php') {
-            const { data: { files } } = await octokit.rest.pulls.listFiles({
+            const { data: files } = await octokit.rest.pulls.listFiles({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: prNumber,
@@ -55,9 +55,10 @@ async function run() {
 
             const isWebhookEventAdded = files.some(file => file.filename.includes('webhook.yml'));
             if (isWebhookEventAdded) {
-                fullCommentBody += `\n\nYou may need to modify code when webhook event is added. Parser is not genareted automatically. Please add test and modify code manually in each repository before release.`;
+                fullCommentBody += `\n\nYou may need to modify code when a webhook event is added. Parser is not generated automatically. Please add tests and modify code manually in each repository before release.`;
             }
         }
+
 
 
         // Delete the previous comment if it exists
