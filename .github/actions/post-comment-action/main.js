@@ -41,7 +41,7 @@ async function run() {
 
         const stepNumber = currentJob.steps.indexOf(step) + 1;
 
-        const url = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${runId}/jobs/${jobId}?pr=${prNumber}#step:${stepNumber}:1`;
+        const url = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${runId}/job/${jobId}?pr=${prNumber}#step:${stepNumber}:1`;
 
         const fullCommentBody = `Generated code can be seen here(${language})\n\n[View logs here](${url})`;
 
