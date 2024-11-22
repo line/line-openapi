@@ -15,14 +15,6 @@ async function run() {
         const runId = context.runId;
         const jobName = context.job;
 
-        // Get the job ID and step number
-        const { data: { jobs } } = await octokit.rest.actions.listJobsForWorkflowRun({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            run_id: runId,
-        });
-
-
         // Delete the previous comment if it exists
         const { data: comments } = await octokit.rest.issues.listComments({
             owner: context.repo.owner,
@@ -46,6 +38,11 @@ async function run() {
         }
 
         // Post the new comment
+        const { data: { jobs } } = await octokit.rest.actions.listJobsForWorkflowRun({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            run_id: runId,
+        });
 
         const currentJob = jobs.find(job => job.name === jobName);
         if (!currentJob) {
@@ -91,6 +88,7 @@ async function run() {
             body: `${medadataForComment}\n${fullCommentBody}`,
         });
     } catch (error) {
+        console.error(error);
         core.setFailed(`Error in this script: ${error.message}`);
     }
 }
