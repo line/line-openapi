@@ -76,7 +76,9 @@ async function run() {
 
             const isWebhookEventAdded = files.some(file => file.filename.includes('webhook.yml'));
             if (isWebhookEventAdded) {
-                fullCommentBody += `\n\nYou may need to modify code when a webhook event is added. Parser is not generated automatically. Please add tests and modify code manually in each repository before release.`;
+                fullCommentBody += "\n\n⚠️You may need to modify code when a webhook event is added, even when tests are passed." +
+                `Parser in line - bot - sdk - ${ language } in not generated automatically.` +
+                "Please add tests and modify parser manually in each repository before release.";
             }
         }
 
