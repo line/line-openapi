@@ -23,6 +23,28 @@ async function run() {
         });
 
 
+        // Delete the previous comment if it exists
+        const { data: comments } = await octokit.rest.issues.listComments({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: prNumber,
+        });
+
+        for (const comment of comments) {
+            if (
+                comment.user.login === 'github-actions[bot]' &&
+                comment.body.includes(`<!-- ${jobName}-comment -->`)
+            ) {
+                await octokit.rest.issues.deleteComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    comment_id: comment.id,
+                });
+            }
+        }
+
+        // Post the new comment
+
         const currentJob = jobs.find(job => job.name === jobName);
         if (!currentJob) {
             throw new Error(`Job ${jobName} not found`);
@@ -40,12 +62,11 @@ async function run() {
         const url = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${runId}/job/${jobId}?pr=${prNumber}#step:${stepNumber}:1`;
 
         // Create comment as markdown
-        const fullCommentBody = `## ${language.toUpperCase()} \n` +
+        let fullCommentBody = `## ${language.toUpperCase()} \n` +
             `You can check generated code in ${language}\n\n` +
             `[Check the diff here](${url})`;
 
-        // check language is one of ruby or php, if so, add comment "You may need to modify code when webhook event is added. Parser is not genareted automatically. Please add test and modify code manually in each repository."
-        // check webhook event is added
+        // for warning
         if (language === 'ruby' || language === 'php') {
             const { data: files } = await octokit.rest.pulls.listFiles({
                 owner: context.repo.owner,
@@ -59,30 +80,6 @@ async function run() {
             }
         }
 
-
-
-        // Delete the previous comment if it exists
-        const { data: comments } = await octokit.rest.issues.listComments({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: prNumber,
-        });
-        console.log(`comments: ${JSON.stringify(comments, null, 2)}`);
-
-        for (const comment of comments) {
-            if (
-                comment.user.login === 'github-actions[bot]' &&
-                comment.body.includes(`<!-- ${jobName}-comment -->`)
-            ) {
-                await octokit.rest.issues.deleteComment({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    comment_id: comment.id,
-                });
-            }
-        }
-
-        // Post the new comment
         await octokit.rest.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
