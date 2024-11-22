@@ -223,7 +223,7 @@ jobs:
           git diff --color=always --staged
 
       - name: Post PR comment
-        uses: ./.github/actions/post-comment-action
+        uses: ./line-openapi/.github/actions/post-comment-action
         with:
           language: nodejs
 
