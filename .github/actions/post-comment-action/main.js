@@ -43,7 +43,10 @@ async function run() {
 
         const url = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${runId}/job/${jobId}?pr=${prNumber}#step:${stepNumber}:1`;
 
-        const fullCommentBody = `Generated code can be seen here(${language})\n\n[View logs here](${url})`;
+        const fullCommentBody = `
+        ## [$language] Code generation completed
+        Generated code can be seen here(${language})\n\n[View logs here](${url})
+        `;
 
         // 以前のコメントを削除
         const { data: comments } = await octokit.rest.issues.listComments({
