@@ -4,10 +4,11 @@ const core = require('@actions/core');
 async function run() {
     try {
         const token = process.env.GITHUB_TOKEN;
+        const language = process.env.LANGUAGE;
+
         const octokit = github.getOctokit(token);
         const context = github.context;
 
-        const commentBody = core.getInput('language');
         const stepName = 'Show diff'
 
         const prNumber = context.payload.pull_request.number;
@@ -37,7 +38,7 @@ async function run() {
 
         const url = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${runId}/jobs/${jobId}?pr=${prNumber}#step:${stepNumber}:1`;
 
-        const fullCommentBody = `Generated code can be seen here(${commentBody})\n\n[View logs here](${url})`;
+        const fullCommentBody = `Generated code can be seen here(${language})\n\n[View logs here](${url})`;
 
         // 以前のコメントを削除
         const { data: comments } = await octokit.rest.issues.listComments({

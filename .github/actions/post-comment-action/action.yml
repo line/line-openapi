@@ -18,12 +18,11 @@ runs:
     - name: Install dependencies
       run: npm ci
       shell: bash
-      # working-directory: ./.github/actions/post-comment-action
+      working-directory: ${{ github.action_path }}
 
     - name: Post PR comment
-      run: .github/actions/post-comment-action/main.js
+      run: node ${{ github.action_path }}/main.js
       shell: bash
-      working-directory: ${{ github.workspace }}
       env:
-        NODE_PATH: ${{ github.workspace }}/.github/actions/post-comment-action/node_modules
+        LANGUAGE: ${{ inputs.language }}
         GITHUB_TOKEN: ${{ inputs.github-token }}
