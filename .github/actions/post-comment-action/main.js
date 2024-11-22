@@ -24,6 +24,7 @@ async function run() {
             run_id: runId,
         });
 
+
         console.log(`jobs: ${JSON.stringify(jobs, null, 2)}`);
 
         const currentJob = jobs.find(job => job.name === jobName);
