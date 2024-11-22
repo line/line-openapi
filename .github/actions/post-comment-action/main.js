@@ -15,17 +15,13 @@ async function run() {
         const runId = context.runId;
         const jobName = context.job;
 
-        console.log(`context: ${JSON.stringify(context.repo, null, 2)}`);
-
-        // ジョブIDとステップ番号を取得
+        // Get the job ID and step number
         const { data: { jobs } } = await octokit.rest.actions.listJobsForWorkflowRun({
             owner: context.repo.owner,
             repo: context.repo.repo,
             run_id: runId,
         });
 
-
-        console.log(`jobs: ${JSON.stringify(jobs, null, 2)}`);
 
         const currentJob = jobs.find(job => job.name === jobName);
         if (!currentJob) {
@@ -48,7 +44,7 @@ async function run() {
         Generated code can be seen here(${language})\n\n[View logs here](${url})
         `;
 
-        // 以前のコメントを削除
+        // Delete the previous comment if it exists
         const { data: comments } = await octokit.rest.issues.listComments({
             owner: context.repo.owner,
             repo: context.repo.repo,
@@ -69,7 +65,7 @@ async function run() {
             }
         }
 
-        // 新しいコメントを投稿
+        // Post the new comment
         await octokit.rest.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
