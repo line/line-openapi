@@ -30,10 +30,12 @@ async function run() {
             issue_number: prNumber,
         });
 
+        const medadataForComment = `<!-- ${jobName}-comment -->`;
+
         for (const comment of comments) {
             if (
                 comment.user.login === 'github-actions[bot]' &&
-                comment.body.includes(`<!-- ${jobName}-comment -->`)
+                comment.body.includes(medadataForComment)
             ) {
                 await octokit.rest.issues.deleteComment({
                     owner: context.repo.owner,
@@ -77,7 +79,7 @@ async function run() {
             const isWebhookEventAdded = files.some(file => file.filename.includes('webhook.yml'));
             if (isWebhookEventAdded) {
                 fullCommentBody += "\n\n⚠️You may need to modify code when a webhook event is added, even when tests are passed." +
-                `Parser in line - bot - sdk - ${ language } in not generated automatically.` +
+                `Parser in line-bot-sdk-${ language } in not generated automatically.` +
                 "Please add tests and modify parser manually in each repository before release.";
             }
         }
@@ -86,7 +88,7 @@ async function run() {
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: prNumber,
-            body: `<!-- ${jobName}-comment -->\n${fullCommentBody}`,
+            body: `${medadataForComment}\n${fullCommentBody}`,
         });
     } catch (error) {
         core.setFailed(`Error in this script: ${error.message}`);
