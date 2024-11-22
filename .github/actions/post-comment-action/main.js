@@ -15,6 +15,8 @@ async function run() {
         const runId = context.runId;
         const jobName = context.job;
 
+        console.log(`context: ${JSON.stringify(context.repo, null, 2)}`);
+
         // ジョブIDとステップ番号を取得
         const { data: { jobs } } = await octokit.rest.actions.listJobsForWorkflowRun({
             owner: context.repo.owner,
@@ -68,7 +70,7 @@ async function run() {
             body: `<!-- ${jobName}-comment -->\n${fullCommentBody}`,
         });
     } catch (error) {
-        core.setFailed(error.message);
+        core.setFailed(`Error in this script: ${error.message}`);
     }
 }
 
