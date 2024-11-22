@@ -39,10 +39,10 @@ async function run() {
 
         const url = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${runId}/job/${jobId}?pr=${prNumber}#step:${stepNumber}:1`;
 
-        const fullCommentBody = `
-        ## [$language] Code generation completed
-        Generated code can be seen here(${language})\n\n[View logs here](${url})
-        `;
+        // Create comment as markdown
+        const fullCommentBody = `### ${language.toUpperCase()} \n` +
+            `You can check generated code in ${language}\n\n` +
+            `[Check the diff here](${ url })`;
 
         // Delete the previous comment if it exists
         const { data: comments } = await octokit.rest.issues.listComments({
