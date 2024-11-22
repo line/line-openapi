@@ -24,6 +24,8 @@ async function run() {
             run_id: runId,
         });
 
+        console.log(`jobs: ${JSON.stringify(jobs, null, 2)}`);
+
         const currentJob = jobs.find(job => job.name === jobName);
         if (!currentJob) {
             throw new Error(`Job ${jobName} not found`);
@@ -48,6 +50,7 @@ async function run() {
             repo: context.repo.repo,
             issue_number: prNumber,
         });
+        console.log(`comments: ${JSON.stringify(comments, null, 2)}`);
 
         for (const comment of comments) {
             if (
