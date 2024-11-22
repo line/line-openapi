@@ -1,5 +1,5 @@
-name: 'Post and Manage PR Comment'
-description: 'Posts a comment to PR and deletes previous ones for the same job'
+name: 'Post and Manage PR Comments'
+description: 'Posts comments to PR and deletes previous ones for the same job'
 inputs:
   language:
     description: 'The language of the SDK'
@@ -9,12 +9,10 @@ inputs:
     required: true
 
 outputs: {}
+
 runs:
   using: 'composite'
   steps:
-    - name: Show current path
-      run: pwd
-      shell: bash
     - name: Install dependencies
       run: npm ci
       shell: bash

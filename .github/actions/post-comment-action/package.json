@@ -1,7 +1,7 @@
 {
     "name": "post-comment-action",
     "version": "1.0.0",
-    "description": "Post a comment on a pull request",
+    "description": "Post comments on a pull request",
     "main": "main.js",
     "dependencies": {
         "@actions/core": "^1.2.4",
