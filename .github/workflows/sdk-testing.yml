@@ -197,7 +197,8 @@ jobs:
         env:
           PR_REPO_URL: ${{ github.event.pull_request.head.repo.clone_url }}
           PR_REF: ${{ github.event.pull_request.head.ref }}
-      - run: |
+      - name: a
+        run: |
           ls -a
           ls line-openapi -a
           ls line-openapi/.github/actions
