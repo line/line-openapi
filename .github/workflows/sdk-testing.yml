@@ -41,6 +41,11 @@ jobs:
           git add .
           git diff --color=always --staged
 
+      - name: Post PR comment
+        uses: ./.github/actions/post-comment-action
+        with:
+          language: java
+
       - name: Execute Java SDK test
         run: ./gradlew build
 
@@ -83,6 +88,11 @@ jobs:
         run: |
           git add .
           git diff --color=always --staged
+
+      - name: Post PR comment
+        uses: ./.github/actions/post-comment-action
+        with:
+          language: python
 
       - name: Update version in linebot/__about__.py
         run: |
@@ -160,6 +170,11 @@ jobs:
           git add .
           git diff --color=always --staged
 
+      - name: Post PR comment
+        uses: ./.github/actions/post-comment-action
+        with:
+          language: php
+
       - name: Run unit tests
         run: ./vendor/bin/phpunit --test-suffix=Test.php
 
@@ -207,6 +222,11 @@ jobs:
           git add .
           git diff --color=always --staged
 
+      - name: Post PR comment
+        uses: ./.github/actions/post-comment-action
+        with:
+          language: nodejs
+
       - name: Test Project
         run: export NODE_OPTIONS=--max-old-space-size=6144; npm test
 
@@ -247,10 +267,10 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: 1.21
-  
+
       - name: Install goimports
         run: go install golang.org/x/tools/cmd/goimports@latest
-  
+
       - name: Generate code
         run: python generate-code.py
 
@@ -259,12 +279,17 @@ jobs:
           git add .
           git diff --color=always --staged
 
+      - name: Post PR comment
+        uses: ./.github/actions/post-comment-action
+        with:
+          language: go
+
       - name: run tests
         run: go test ./...
-  
+
       - name: go vet
         run: go vet $(go list ./... | grep -v /examples/)
-  
+
       - name: Compile example scripts
         run: |
           for file in $(find ./examples/ -name '*.go'); do

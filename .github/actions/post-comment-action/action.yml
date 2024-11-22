@@ -1,0 +1,10 @@
+name: 'Post and Manage PR Comment'
+description: 'Posts a comment to PR and deletes previous ones for the same job'
+inputs:
+  language:
+    description: 'The language of the SDK'
+    required: true
+outputs: {}
+runs:
+  using: 'node16'
+  main: 'main.js'
