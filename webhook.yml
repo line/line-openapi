@@ -27,6 +27,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/CallbackRequest"
+
       responses:
         "200":
           description: "OK"
