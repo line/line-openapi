@@ -42,9 +42,10 @@ jobs:
           git diff --color=always --staged
 
       - name: Post PR comment
-        uses: ./.github/actions/post-comment-action
+        uses: ./line-openapi/.github/actions/post-comment-action
         with:
           language: java
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Execute Java SDK test
         run: ./gradlew build
@@ -90,9 +91,10 @@ jobs:
           git diff --color=always --staged
 
       - name: Post PR comment
-        uses: ./.github/actions/post-comment-action
+        uses: ./line-openapi/.github/actions/post-comment-action
         with:
           language: python
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update version in linebot/__about__.py
         run: |
@@ -171,9 +173,10 @@ jobs:
           git diff --color=always --staged
 
       - name: Post PR comment
-        uses: ./.github/actions/post-comment-action
+        uses: ./line-openapi/.github/actions/post-comment-action
         with:
           language: php
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run unit tests
         run: ./vendor/bin/phpunit --test-suffix=Test.php
@@ -233,6 +236,7 @@ jobs:
         uses: ./line-openapi/.github/actions/post-comment-action
         with:
           language: nodejs
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Test Project
         run: export NODE_OPTIONS=--max-old-space-size=6144; npm test
@@ -287,9 +291,10 @@ jobs:
           git diff --color=always --staged
 
       - name: Post PR comment
-        uses: ./.github/actions/post-comment-action
+        uses: ./line-openapi/.github/actions/post-comment-action
         with:
           language: go
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: run tests
         run: go test ./...
