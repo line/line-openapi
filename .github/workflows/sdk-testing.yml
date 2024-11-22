@@ -200,13 +200,6 @@ jobs:
         env:
           PR_REPO_URL: ${{ github.event.pull_request.head.repo.clone_url }}
           PR_REF: ${{ github.event.pull_request.head.ref }}
-      - name: a
-        run: |
-          ls -a
-          ls line-openapi -a
-          ls line-openapi/.github/actions
-          ls line-openapi/.github/actions/post-comment-action
-
 
       # https://github.com/line/line-bot-sdk-nodejs/blob/master/.github/workflows/test.yml
       - name: actions/setup-java@v3

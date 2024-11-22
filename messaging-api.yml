@@ -3789,9 +3789,6 @@ components:
         width:
           type: integer
           format: int32
-        a:
-          type: integer
-          format: int32
     ImagemapAction:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#imagemap-action-objects
