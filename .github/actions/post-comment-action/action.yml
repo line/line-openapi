@@ -13,9 +13,6 @@ outputs: {}
 runs:
   using: 'composite'
   steps:
-    - name: check current directory
-      run: pwd
-      shell: bash
     - name: Install dependencies
       run: npm ci
       shell: bash
