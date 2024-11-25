@@ -30,8 +30,8 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/IssueStatelessChannelTokenByJWTAssertionRequest'
-                - $ref: '#/components/schemas/IssueStatelessChannelTokenByClientSecretRequest'
+                - $ref: "#/components/schemas/IssueStatelessChannelTokenByJWTAssertionRequest"
+                - $ref: "#/components/schemas/IssueStatelessChannelTokenByClientSecretRequest"
       responses:
         "200":
           description: "OK"
