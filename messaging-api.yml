@@ -3319,7 +3319,7 @@ components:
           unlink: "#/components/schemas/RichMenuBatchUnlinkOperation"
           unlinkAll: "#/components/schemas/RichMenuBatchUnlinkAllOperation"
     RichMenuBatchLinkOperation:
-      description: Replace the rich menu with the rich menu specified in the `to` property for all users linked to the rich menu specified in the `from` property.
+      description: "Replace the rich menu with the rich menu specified in the `to` property for all users linked to the rich menu specified in the `from` property."
       type: object
       required:
         - from
@@ -3333,7 +3333,7 @@ components:
             to:
               type: string
     RichMenuBatchUnlinkOperation:
-      description: Unlink the rich menu for all users linked to the rich menu specified in the `from` property.
+      description: "Unlink the rich menu for all users linked to the rich menu specified in the `from` property."
       type: object
       required:
         - from
@@ -3344,7 +3344,7 @@ components:
             from:
               type: string
     RichMenuBatchUnlinkAllOperation:
-      description: Unlink the rich menu from all users linked to the rich menu.
+      description: "Unlink the rich menu from all users linked to the rich menu."
       type: object
       allOf:
         - "$ref": "#/components/schemas/RichMenuBatchOperation"
@@ -3583,7 +3583,7 @@ components:
               type: object
               additionalProperties:
                 $ref: "#/components/schemas/SubstitutionObject"
-              description: "A mapping that specifies substitutions for parts enclosed in {} within the 'text' field."
+              description: "A mapping that specifies substitutions for parts enclosed in {} within the `text` field."
             quoteToken:
               type: string
               description: "Quote token of the message you want to quote."
