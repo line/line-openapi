@@ -216,7 +216,7 @@ components:
           description: "Type"
         id:
           type: string
-          description: Message ID
+          description: "Message ID"
       discriminator:
         propertyName: type
         mapping:
