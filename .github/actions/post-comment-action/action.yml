@@ -1,0 +1,29 @@
+name: 'Post and Manage PR Comments'
+description: 'Posts comments to PR and deletes previous ones for the same job'
+inputs:
+  language:
+    description: 'The language of the SDK'
+    required: true
+  github-token:
+    description: 'The GitHub token'
+    required: true
+
+outputs: {}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: check current directory
+      run: pwd
+      shell: bash
+    - name: Install dependencies
+      run: npm ci
+      shell: bash
+      working-directory: ${{ github.action_path }}
+
+    - name: Post PR comment
+      run: node ${{ github.action_path }}/main.js
+      shell: bash
+      env:
+        LANGUAGE: ${{ inputs.language }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
