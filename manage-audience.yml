@@ -442,7 +442,7 @@ paths:
             "$ref": "#/components/schemas/AudienceGroupCreateRoute"
           description: |+
             How the audience was created. If omitted, all audiences are included.
-            
+
             `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window).
             `MESSAGING_API`: Return only audiences created with Messaging API.
       responses:
