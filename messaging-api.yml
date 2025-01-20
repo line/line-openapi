@@ -1738,25 +1738,6 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
 
-  "/bot/ad/multicast/phone":
-    post:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/partner-docs/#phone-audience-match
-      tags:
-        - messaging-api
-      operationId: audienceMatch
-      description: "Send a message using phone number"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/AudienceMatchMessagesRequest"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-          # empty JSON response
-
   "/v2/bot/message/delivery/pnp":
     get:
       externalDocs:
@@ -3443,30 +3424,6 @@ components:
         to:
           type: string
           description: "Message destination. Specify a phone number that has been normalized to E.164 format and hashed with SHA256."
-        notificationDisabled:
-          "$ref": "#/components/schemas/NotificationDisabled"
-    AudienceMatchMessagesRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/partner-docs/#phone-audience-match
-      required:
-        - messages
-        - to
-      type: object
-      properties:
-        messages:
-          description: "Destination of the message (A value obtained by hashing the telephone number, which is another value normalized to E.164 format, with SHA256)."
-          maxItems: 5
-          minItems: 1
-          type: array
-          items:
-            "$ref": "#/components/schemas/Message"
-        to:
-          description: "Message to send."
-          maxItems: 500
-          minItems: 1
-          type: array
-          items:
-            type: string
         notificationDisabled:
           "$ref": "#/components/schemas/NotificationDisabled"
 
