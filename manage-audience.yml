@@ -530,6 +530,207 @@ paths:
           description: "OK"
           # empty json response
 
+  "/v2/bot/audienceGroup/shared/{audienceGroupId}":
+    parameters:
+      - name: audienceGroupId
+        in: path
+        required: true
+        description: "The audience ID."
+        schema:
+          type: integer
+          format: int64
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-shared-audience
+      tags:
+        - manage-audience
+      operationId: getSharedAudienceData
+      description: "Gets audience data."
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/GetSharedAudienceDataResponse"
+              examples:
+                UPLOADING_USER_IDS:
+                  summary: "Example of an audience used for uploading user IDs"
+                  value:
+                    audienceGroup:
+                      audienceGroupId: 1234567890123
+                      createRoute: OA_MANAGER
+                      type: UPLOAD
+                      description: "audienceGroupName_01"
+                      status: READY
+                      audienceCount: 1887
+                      created: 1608617466
+                      permission: READ
+                      isIfaAudience: false
+                      expireTimestamp: 1624342266
+                    jobs:
+                      - audienceGroupJobId: 12345678
+                        audienceGroupId: 1234567890123
+                        description: "audience_list.txt"
+                        type: DIFF_ADD
+                        status: FINISHED
+                        failedType: AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT
+                        audienceCount: 0
+                        created: 1608617472
+                        jobStatus: FINISHED
+                CLICK_BASED:
+                  summary: "Example of an audience used for click-based retargeting"
+                  value:
+                    audienceGroup:
+                      audienceGroupId: 1234567890987
+                      createRoute: OA_MANAGER
+                      type: CLICK
+                      description: "audienceGroupName_02"
+                      status: IN_PROGRESS
+                      audienceCount: 8619
+                      created: 1611114828
+                      permission: READ
+                      isIfaAudience: false
+                      expireTimestamp: 1626753228
+                      requestId: c10c3d86-f565-...
+                      clickUrl: https://example.com/
+                    jobs: [ ]
+                APP_EVENTS:
+                  summary: "Example of an audience used for app events"
+                  value:
+                    audienceGroup:
+                      audienceGroupId: 2345678909876
+                      createRoute: AD_MANAGER
+                      type: APP_EVENT
+                      description: "audienceGroupName_03"
+                      status: READY
+                      audienceCount: 8619
+                      created: 1608619802
+                      permission: READ
+                      activated: 1610068515
+                      inactiveTimestamp: 1625620516
+                      isIfaAudience: false
+                    jobs: [ ]
+                    owner:
+                      serviceType: lap
+                      id: A012345678
+                      name: Ad Account Name
+        "400":
+          description: "Bad request"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                message: audience group not found
+                details:
+                  - message: AUDIENCE_GROUP_NOT_FOUND
+
+  "/v2/bot/audienceGroup/shared/list":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list
+      tags:
+        - manage-audience
+      operationId: getSharedAudienceGroups
+      description: "Gets data for more than one audience, including those shared by the Business Manager."
+      parameters:
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+          description: "The page to return when getting (paginated) results. Must be 1 or higher."
+        - name: description
+          in: query
+          required: false
+          schema:
+            type: string
+          description: |+
+            The name of the audience(s) to return.
+            You can search for partial matches.
+            This is case-insensitive, meaning AUDIENCE and audience are considered identical.
+            If omitted, the name of the audience(s) will not be used as a search criterion.
+        - name: status
+          in: query
+          required: false
+          schema:
+            "$ref": "#/components/schemas/AudienceGroupStatus"
+          description: |+
+            The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+            example: 20
+            maximum: 40
+          description: |+
+            The number of audiences per page. Default: 20
+            Max: 40
+        - name: createRoute
+          in: query
+          required: false
+          schema:
+            "$ref": "#/components/schemas/AudienceGroupCreateRoute"
+          description: |+
+            How the audience was created. If omitted, all audiences are included.
+
+            `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window).
+            `MESSAGING_API`: Return only audiences created with Messaging API.
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/GetSharedAudienceGroupsResponse"
+              examples:
+                TWO_AUDIENCES:
+                  summary: "Example of when there are two audiences that match the specified filter"
+                  value:
+                    audienceGroups:
+                      - audienceGroupId: 1234567890123
+                        createRoute: OA_MANAGER
+                        type: CLICK
+                        description: "audienceGroupName_01"
+                        status: IN_PROGRESS
+                        audienceCount: 8619
+                        created: 1611114828
+                        permission: READ
+                        isIfaAudience: false
+                        expireTimestamp: 1626753228
+                        requestId: c10c3d86-f565-...
+                        clickUrl: https://example.com/
+                      - audienceGroupId: 2345678901234
+                        createRoute: AD_MANAGER
+                        type: APP_EVENT
+                        description: "audienceGroupName_02"
+                        status: READY
+                        audienceCount: 3368
+                        created: 1608619802
+                        permission: READ
+                        activated: 1610068515
+                        inactiveTimestamp: 1625620516
+                        isIfaAudience: false
+                    hasNextPage: false
+                    totalCount: 2
+                    readWriteAudienceGroupTotalCount: 0
+                    size: 40
+                    page: 1
+                NO_AUDIENCE:
+                  summary: "Example of when there is no audience that matches the specified filter"
+                  value:
+                    audienceGroups: []
+                    hasNextPage: false
+                    totalCount: 0
+                    readWriteAudienceGroupTotalCount: 0
+                    size: 40
+                    page: 1
+
 components:
   securitySchemes:
     Bearer:
@@ -809,6 +1010,28 @@ components:
           maxItems: 50
           items:
             "$ref": "#/components/schemas/AudienceGroupJob"
+        adaccount:
+          "$ref": "#/components/schemas/Adaccount"
+    GetSharedAudienceDataResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-audience-group
+      type: object
+      description: "Get audience data"
+      properties:
+        audienceGroup:
+          "$ref": "#/components/schemas/AudienceGroup"
+        jobs:
+          type: array
+          description: |+
+            An array of jobs.
+            This array is used to keep track of each attempt to add new user IDs or IFAs to an audience for uploading user IDs.
+            Empty array is returned for any other type of audience.
+            Max: 50
+          maxItems: 50
+          items:
+            "$ref": "#/components/schemas/AudienceGroupJob"
+        owner:
+          "$ref": "#/components/schemas/DetailedOwner"
     AudienceGroup:
       # https://developers.line.biz/en/reference/messaging-api/#get-audience-groups
       # https://developers.line.biz/en/reference/messaging-api/#get-audience-group
@@ -886,6 +1109,29 @@ components:
           type: integer
           format: int64
           description: "When the job was created (in UNIX time)."
+    Adaccount:
+      description: "Adaccount"
+      type: object
+      properties:
+        name:
+          type: string
+          description: "Ad account name."
+    DetailedOwner:
+      description: "Owner of this audience group."
+      type: object
+      properties:
+        serviceType:
+          type: string
+          description: "Service name where the audience group has been created."
+          example: lap
+        id:
+          type: string
+          description: |-
+            Owner ID in the service.
+          example: A012345678
+        name:
+          type: string
+          description: "Owner account name."
     AudienceGroupStatus:
       # https://developers.line.biz/en/reference/messaging-api/#get-audience-groups
       # https://developers.line.biz/en/reference/messaging-api/#get-audience-group
@@ -946,6 +1192,36 @@ components:
         - INTERNAL_ERROR
         - AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT
     GetAudienceGroupsResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-audience-groups
+      type: object
+      description: "Gets data for more than one audience."
+      properties:
+        audienceGroups:
+          description: "An array of audience data. If there are no audiences that match the specified filter, an empty array will be returned."
+          type: array
+          items:
+            "$ref": "#/components/schemas/AudienceGroup"
+        hasNextPage:
+          type: boolean
+          description: "true when this is not the last page."
+        totalCount:
+          type: integer
+          format: int64
+          description: "The total number of audiences that can be returned with the specified filter."
+        readWriteAudienceGroupTotalCount:
+          type: integer
+          format: int64
+          description: "Of the audiences you can get with the specified filter, the number of audiences with the update permission set to READ_WRITE."
+        page:
+          type: integer
+          format: int64
+          description: "The current page number."
+        size:
+          type: integer
+          format: int64
+          description: "The maximum number of audiences on the current page."
+    GetSharedAudienceGroupsResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-audience-groups
       type: object
