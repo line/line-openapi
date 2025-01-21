@@ -1769,43 +1769,6 @@ paths:
                 status: ready
                 success: 3
 
-  "/v2/bot/message/delivery/ad_phone":
-    get:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/partner-docs/#get-phone-audience-match
-      tags:
-        - messaging-api
-      operationId: getAdPhoneMessageStatistics
-      description: "Get result of message delivery using phone number"
-      parameters:
-        - name: date
-          in: query
-          required: true
-          schema:
-            type: string
-          description: |+
-            Date the message was sent
-
-            Format: `yyyyMMdd` (e.g. `20190831`)
-            Time Zone: UTC+9
-      responses:
-        "200":
-          description: "OK"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/NumberOfMessagesResponse"
-              examples:
-                READY:
-                  summary: "Example of response when status is `ready`"
-                  value:
-                    status: ready
-                    success: 10000
-                UNAVAILABLE_FOR_PRIVACY:
-                  summary: "Example response when status is `unavailable_for_privacy`"
-                  value:
-                    status: unavailable_for_privacy
-
   # Membership
   "/v2/bot/membership/subscription/{userId}":
     get:
