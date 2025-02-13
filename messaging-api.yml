@@ -1869,6 +1869,69 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
 
+  "/v2/bot/membership/{membershipId}/users/ids":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-membership-user-ids
+      tags:
+        - messaging-api
+      operationId: getJoinedMembershipUsers
+      description: "Get a list of user IDs who joined the membership."
+      parameters:
+        - name: start
+          in: query
+          required: false
+          description: |+
+            A continuation token to get next remaining membership user IDs.
+            Returned only when there are remaining user IDs that weren't returned in the userIds property in the previous request.
+            The continuation token expires in 24 hours (86,400 seconds).
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          description: |+
+            The max number of items to return for this API call.
+            The value is set to 300 by default, but the max acceptable value is 1000.
+          schema:
+            type: integer
+            format: int32
+            default: 300
+            maximum: 1000
+            minimum: 1
+        - name: membershipId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: "Membership plan ID."
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/GetJoinedMembershipUsersResponse"
+              example:
+                userIds:
+                  - U4af4980629...
+                  - U0c229f96c4...
+                  - U95afb1d4df...
+                next: jxEWCEEP...
+
+        "400":
+          description: "`start` is incorrect or expired, or `limit` is under 1 or over 1000."
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        "404":
+          description: "Membership ID is not owned by the bot or does not exist."
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+
   "/v2/bot/chat/loading/start":
     post:
       externalDocs:
@@ -4835,6 +4898,30 @@ components:
           description: "List of membership information"
           items:
             "$ref": "#/components/schemas/Membership"
+
+    GetJoinedMembershipUsersResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-membership-user-ids
+      description: "List of users who have joined the membership"
+      required:
+        - userIds
+      type: object
+      properties:
+        userIds:
+          type: array
+          maxItems: 1000
+          description: |+
+            A list of user IDs who joined the membership.
+            Users who have not agreed to the bot user agreement, are not following the bot, or are not active will be excluded.
+            If there are no users in the membership, an empty list will be returned.
+          items:
+            type: string
+        next:
+          type: string
+          description: |+
+            A continuation token to get next remaining membership user IDs.
+            Returned only when there are remaining user IDs that weren't returned in the userIds property in the previous request.
+            The continuation token expires in 24 hours (86,400 seconds).
 
     Subscription:
       description: "An array of memberships."

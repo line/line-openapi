@@ -108,6 +108,7 @@ components:
           beacon: "#/components/schemas/BeaconEvent"
           accountLink: "#/components/schemas/AccountLinkEvent"
           things: "#/components/schemas/ThingsEvent"
+          membership: "#/components/schemas/MembershipEvent"
           module: "#/components/schemas/ModuleEvent"
           activated: "#/components/schemas/ActivatedEvent"
           deactivated: "#/components/schemas/DeactivatedEvent"
@@ -860,6 +861,67 @@ components:
           description: "Base64-encoded binary data"
           type: string
 
+    # https://developers.line.biz/en/reference/messaging-api/#membership-event
+    MembershipEvent:
+      description: "This event indicates that a user has subscribed (joined), unsubscribed (left), or renewed the bot's membership."
+      allOf:
+        - $ref: "#/components/schemas/Event"
+        - type: object
+          required:
+            - replyToken
+            - membership
+          properties:
+            replyToken:
+              type: string
+              description: "Reply token used to send reply message to this event"
+            membership:
+              $ref: "#/components/schemas/MembershipContent"
+    MembershipContent:
+      description: "Content of the membership event."
+      required:
+        - type
+        - membershipId
+      type: object
+      properties:
+        type:
+          type: string
+          description: "Type of membership event."
+      discriminator:
+        propertyName: type
+        mapping:
+          joined: "#/components/schemas/JoinedMembershipContent"
+          left: "#/components/schemas/LeftMembershipContent"
+          renewed: "#/components/schemas/RenewedMembershipContent"
+    JoinedMembershipContent:
+      allOf:
+        - $ref: "#/components/schemas/MembershipContent"
+        - type: object
+          required:
+            - membershipId
+          properties:
+            membershipId:
+              type: integer
+              description: "The ID of the membership that the user joined. This is defined for each membership."
+    LeftMembershipContent:
+      allOf:
+        - $ref: "#/components/schemas/MembershipContent"
+        - type: object
+          required:
+            - membershipId
+          properties:
+            membershipId:
+              type: integer
+              description: "The ID of the membership that the user left. This is defined for each membership."
+    RenewedMembershipContent:
+      allOf:
+        - $ref: "#/components/schemas/MembershipContent"
+        - type: object
+          required:
+            - membershipId
+          properties:
+            membershipId:
+              type: integer
+              description: "The ID of the membership that the user renewed. This is defined for each membership."
 
     # https://developers.line.biz/en/reference/partner-docs/#module-webhook-event-object
     ModuleEvent:
