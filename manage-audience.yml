@@ -32,7 +32,7 @@ paths:
               "$ref": "#/components/schemas/CreateAudienceGroupRequest"
         required: true
       responses:
-        "200":
+        "202":
           description: "OK"
           content:
             "application/json":
@@ -61,7 +61,7 @@ paths:
               "$ref": "#/components/schemas/AddAudienceToAudienceGroupRequest"
         required: true
       responses:
-        "200":
+        "202":
           description: "OK"
           # empty JSON object
 
@@ -110,7 +110,7 @@ paths:
                 contentType: text/plain
         required: true
       responses:
-        "200":
+        "202":
           description: "OK"
           content:
             "application/json":
@@ -180,7 +180,7 @@ paths:
               "$ref": "#/components/schemas/CreateClickBasedAudienceGroupRequest"
         required: true
       responses:
-        "200":
+        "202":
           description: "OK"
           content:
             "application/json":
@@ -213,7 +213,7 @@ paths:
               "$ref": "#/components/schemas/CreateImpBasedAudienceGroupRequest"
         required: true
       responses:
-        "200":
+        "202":
           description: "OK"
           content:
             "application/json":
