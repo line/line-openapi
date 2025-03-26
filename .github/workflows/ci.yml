@@ -53,3 +53,12 @@ jobs:
     - run: npx zx ./tools/reformat.mjs
     - name: Check there is no diff (Run ./tools/reformat.mjs if there is a diff)
       run: git diff --exit-code
+
+  pinact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Run pinact
+        uses: suzuki-shunsuke/pinact-action@a6896d13d22e2bf108a78b0c52d3f867c1f41b34 # v0.2.1
+        with:
+          skip_push: "true"
