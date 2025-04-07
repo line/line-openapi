@@ -27,13 +27,11 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: |
           cd line-openapi
-          
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "This is a pull request event"
-            git remote add pr-source $PR_REPO_URL
-            git fetch pr-source $PR_REF
-            git checkout FETCH_HEAD
-          fi
+
+          echo "This is a pull request event"
+          git remote add pr-source $PR_REPO_URL
+          git fetch pr-source $PR_REF
+          git checkout FETCH_HEAD
         env:
           PR_REPO_URL: ${{ github.event.pull_request.head.repo.clone_url }}
           PR_REF: ${{ github.event.pull_request.head.ref }}
