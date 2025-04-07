@@ -1,9 +1,10 @@
 name: SDK Test Automation
 
 on:
+  push:
   pull_request:
-    branches:
-      - main
+  merge_group:
+  workflow_dispatch:
 
 jobs:
   test-java:
