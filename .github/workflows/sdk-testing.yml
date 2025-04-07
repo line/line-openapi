@@ -40,6 +40,7 @@ jobs:
           git diff --color=always --staged
 
       - name: Post PR comment
+        if : ${{ github.event_name == 'pull_request' }}
         uses: ./line-openapi/.github/actions/post-comment-action
         with:
           language: java
@@ -85,6 +86,7 @@ jobs:
           git diff --color=always --staged
 
       - name: Post PR comment
+        if : ${{ github.event_name == 'pull_request' }}
         uses: ./line-openapi/.github/actions/post-comment-action
         with:
           language: python
@@ -159,6 +161,7 @@ jobs:
           git diff --color=always --staged
 
       - name: Post PR comment
+        if : ${{ github.event_name == 'pull_request' }}
         uses: ./line-openapi/.github/actions/post-comment-action
         with:
           language: php
@@ -209,6 +212,7 @@ jobs:
           git diff --color=always --staged
 
       - name: Post PR comment
+        if : ${{ github.event_name == 'pull_request' }}
         uses: ./line-openapi/.github/actions/post-comment-action
         with:
           language: nodejs
@@ -264,6 +268,7 @@ jobs:
           git diff --color=always --staged
 
       - name: Post PR comment
+        if : ${{ github.event_name == 'pull_request' }}
         uses: ./line-openapi/.github/actions/post-comment-action
         with:
           language: go
