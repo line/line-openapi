@@ -1,14 +1,13 @@
 name: SDK Test Automation
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
-  merge_group:
-  workflow_dispatch:
+  ## This workflow is only for testing remote bot sdk repositories. We don't have to run this workflow for the main repository.
+  # merge_group:
+  # push:
+  # workflow_dispatch
 
 jobs:
   test-java:
