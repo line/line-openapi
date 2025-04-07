@@ -66,7 +66,7 @@ async function run() {
             `[Check the diff here](${url})`;
 
         // for warning
-        if (language === 'ruby' || language === 'php') {
+        if (language === 'ruby') {
             const { data: files } = await octokit.rest.pulls.listFiles({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
