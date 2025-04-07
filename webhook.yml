@@ -503,9 +503,6 @@ components:
               type: string
               description: |+
                 Message ID of a quoted message. Only included when the received message quotes a past message.
-            hello:
-              type: string
-              default: aaaa this is test.
 
     # https://developers.line.biz/en/reference/messaging-api/#unsend-event
     UnsendEvent:
