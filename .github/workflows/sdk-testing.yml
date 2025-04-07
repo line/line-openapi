@@ -1,13 +1,14 @@
 name: SDK Test Automation
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
-  ## This workflow is only for testing remote bot sdk repositories. We don't have to run this workflow for the main repository.
-  # merge_group:
-  # push:
-  # workflow_dispatch
+  merge_group:
+  workflow_dispatch:
 
 jobs:
   test-java:
@@ -22,15 +23,29 @@ jobs:
           repository: 'line/line-bot-sdk-java'
           submodules: recursive
 
-      - name: Update line-openapi submodule
+      - name: Update line-openapi submodule (only when pull request)
+        if: ${{ github.event_name == 'pull_request' }}
         run: |
           cd line-openapi
-          git remote add pr-source $PR_REPO_URL
-          git fetch pr-source $PR_REF
-          git checkout FETCH_HEAD
+          
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "This is a pull request event"
+            git remote add pr-source $PR_REPO_URL
+            git fetch pr-source $PR_REF
+            git checkout FETCH_HEAD
+          fi
         env:
           PR_REPO_URL: ${{ github.event.pull_request.head.repo.clone_url }}
           PR_REF: ${{ github.event.pull_request.head.ref }}
+
+      - name: Update line-openapi submodule (not when pull request)
+        if: ${{ github.event_name != 'pull_request' }}
+        run: |
+          cd line-openapi
+
+          echo "This is ${ github.event_name } event"
+          git checkout main
+          git pull origin main
 
       # https://github.com/line/line-bot-sdk-java/blob/master/.github/workflows/gradle.yml
       - name: Setup Java
