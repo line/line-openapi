@@ -23,27 +23,10 @@ jobs:
           repository: 'line/line-bot-sdk-java'
           submodules: recursive
 
-      - name: Update line-openapi submodule (only when pull request)
-        if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          cd line-openapi
-
-          echo "This is a pull request event"
-          git remote add pr-source $PR_REPO_URL
-          git fetch pr-source $PR_REF
-          git checkout FETCH_HEAD
-        env:
-          PR_REPO_URL: ${{ github.event.pull_request.head.repo.clone_url }}
-          PR_REF: ${{ github.event.pull_request.head.ref }}
-
-      - name: Update line-openapi submodule (not when pull request)
-        if: ${{ github.event_name != 'pull_request' }}
-        run: |
-          cd line-openapi
-
-          echo "This is ${ github.event_name } event"
-          git checkout main
-          git pull origin main
+      - name: Update line-openapi submodule
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          path: './line-openapi'
 
       # https://github.com/line/line-bot-sdk-java/blob/master/.github/workflows/gradle.yml
       - name: Setup Java
@@ -82,20 +65,9 @@ jobs:
           submodules: recursive
 
       - name: Update line-openapi submodule
-        run: |
-          cd line-openapi
-          git remote add pr-source $PR_REPO_URL
-          git fetch pr-source $PR_REF
-          git checkout FETCH_HEAD
-        env:
-          PR_REPO_URL: ${{ github.event.pull_request.head.repo.clone_url }}
-          PR_REF: ${{ github.event.pull_request.head.ref }}
-
-      # https://github.com/line/line-bot-sdk-python/blob/master/.github/workflows/auto-testing.yml
-      - name: Setup Python
-        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5.5.0
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          python-version: '3.11'
+          path: './line-openapi'
 
       - name: Install dependencies
         run: |
