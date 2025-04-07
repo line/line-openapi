@@ -104,14 +104,9 @@ jobs:
           submodules: recursive
 
       - name: Update line-openapi submodule
-        run: |
-          cd line-openapi
-          git remote add pr-source $PR_REPO_URL
-          git fetch pr-source $PR_REF
-          git checkout FETCH_HEAD
-        env:
-          PR_REPO_URL: ${{ github.event.pull_request.head.repo.clone_url }}
-          PR_REF: ${{ github.event.pull_request.head.ref }}
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          path: './line-openapi'
 
       # https://github.com/line/line-bot-sdk-php/blob/master/.github/workflows/php-checks.yml
       - name: Setup PHP
@@ -183,14 +178,9 @@ jobs:
           submodules: recursive
 
       - name: Update line-openapi submodule
-        run: |
-          cd line-openapi
-          git remote add pr-source $PR_REPO_URL
-          git fetch pr-source $PR_REF
-          git checkout FETCH_HEAD
-        env:
-          PR_REPO_URL: ${{ github.event.pull_request.head.repo.clone_url }}
-          PR_REF: ${{ github.event.pull_request.head.ref }}
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          path: './line-openapi'
 
       # https://github.com/line/line-bot-sdk-nodejs/blob/master/.github/workflows/test.yml
       - name: Setup Java
@@ -238,14 +228,9 @@ jobs:
           submodules: recursive
 
       - name: Update line-openapi submodule
-        run: |
-          cd line-openapi
-          git remote add pr-source $PR_REPO_URL
-          git fetch pr-source $PR_REF
-          git checkout FETCH_HEAD
-        env:
-          PR_REPO_URL: ${{ github.event.pull_request.head.repo.clone_url }}
-          PR_REF: ${{ github.event.pull_request.head.ref }}
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          path: './line-openapi'
 
       # https://github.com/line/line-bot-sdk-go/blob/master/.github/workflows/go.yml
       - name: Setup Java
