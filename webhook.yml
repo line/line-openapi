@@ -136,6 +136,8 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#source-user
       description: "the source of the event."
+      required:
+        - type
       type: object
       properties:
         type:
