@@ -681,6 +681,15 @@ paths:
 
             `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window).
             `MESSAGING_API`: Return only audiences created with Messaging API.
+        - name: includesOwnedAudienceGroups
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: |+
+            true: Include audienceGroups owned by the user
+            false: Respond only audienceGroups shared by BM
       responses:
         "200":
           description: "OK"
