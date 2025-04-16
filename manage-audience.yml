@@ -256,26 +256,6 @@ paths:
         "200":
           description: "OK"
 
-  "/v2/bot/audienceGroup/{audienceGroupId}/activate":
-    put:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#activate-audience-group
-      tags:
-        - manage-audience
-      operationId: activateAudienceGroup
-      description: "Activate audience"
-      parameters:
-        - name: audienceGroupId
-          in: path
-          required: true
-          description: "The audience ID."
-          schema:
-            type: integer
-            format: int64
-      responses:
-        "202":
-          description: "Accepted"
-
   "/v2/bot/audienceGroup/{audienceGroupId}":
     parameters:
       - name: audienceGroupId
@@ -494,41 +474,6 @@ paths:
                     readWriteAudienceGroupTotalCount: 0
                     size: 40
                     page: 1
-
-  "/v2/bot/audienceGroup/authorityLevel":
-    get:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-authority-level
-      tags:
-        - manage-audience
-      operationId: getAudienceGroupAuthorityLevel
-      description: "Get the authority level of the audience"
-      responses:
-        "200":
-          description: "OK"
-          content:
-            "application/json":
-              schema:
-                "$ref": "#/components/schemas/GetAudienceGroupAuthorityLevelResponse"
-              example:
-                authorityLevel: PUBLIC
-    put:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#change-authority-level
-      tags:
-        - manage-audience
-      operationId: updateAudienceGroupAuthorityLevel
-      description: "Change the authority level of the audience"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateAudienceGroupAuthorityLevelRequest"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-          # empty json response
 
   "/v2/bot/audienceGroup/shared/{audienceGroupId}":
     parameters:
@@ -1260,28 +1205,6 @@ components:
           type: integer
           format: int64
           description: "The maximum number of audiences on the current page."
-    GetAudienceGroupAuthorityLevelResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-authority-level
-      type: object
-      description: "Get the authority level of the audience"
-      properties:
-        authorityLevel:
-          "$ref": "#/components/schemas/AudienceGroupAuthorityLevel"
-    AudienceGroupAuthorityLevel:
-      description: "authority level"
-      type: string
-      enum:
-        - PUBLIC
-        - PRIVATE
-    UpdateAudienceGroupAuthorityLevelRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#change-authority-level
-      type: object
-      description: "Change the authority level of the audience"
-      properties:
-        authorityLevel:
-          "$ref": "#/components/schemas/AudienceGroupAuthorityLevel"
 
     ErrorResponse:
       externalDocs:
