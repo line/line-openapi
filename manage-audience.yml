@@ -633,8 +633,8 @@ paths:
             type: boolean
             default: false
           description: |+
-            true: Include audienceGroups owned by the user
-            false: Respond only audienceGroups shared by BM
+            true: Include audienceGroups owned by LINE Official Account Manager
+            false: Respond only audienceGroups shared by Business Manager
       responses:
         "200":
           description: "OK"
