@@ -331,5 +331,12 @@ jobs:
           git add .
           git diff --color=always --staged
 
+      - name: Post PR comment
+        if : ${{ github.event_name == 'pull_request' }}
+        uses: ./line-openapi/.github/actions/post-comment-action
+        with:
+          language: ruby
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run tests
         run: bundle exec rake ci
