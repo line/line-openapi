@@ -293,3 +293,43 @@ jobs:
             go build -o /dev/null
             popd
           done
+
+  test-ruby:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      actions: read
+    steps:
+      - name: Checkout SDK repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: 'line/line-bot-sdk-ruby'
+          submodules: recursive
+
+      - name: Update line-openapi submodule
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          path: './line-openapi'
+
+      # https://github.com/line/line-bot-sdk-ruby/blob/master/.github/workflows/pull_request.yml
+      - uses: ruby/setup-ruby@354a1ad156761f5ee2b7b13fa8e09943a5e8d252 # v1.229.0
+        with:
+          ruby-version: 3.4
+      - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          architecture: x64
+      - run: bundle install
+
+      - name: Generate code
+        run: python3 generate-code.py
+
+      - name: Show diff
+        run: |
+          git add .
+          git diff --color=always --staged
+
+      - name: Run tests
+        run: bundle exec rake ci
