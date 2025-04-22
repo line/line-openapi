@@ -65,22 +65,6 @@ async function run() {
             `You can check generated code in ${language}\n\n` +
             `[Check the diff here](${url})`;
 
-        // for warning
-        if (language === 'ruby') {
-            const { data: files } = await octokit.rest.pulls.listFiles({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: prNumber,
-            });
-
-            const isWebhookEventAdded = files.some(file => file.filename.includes('webhook.yml'));
-            if (isWebhookEventAdded) {
-                fullCommentBody += "\n\n⚠️You may need to modify code when a webhook event is added, even when tests are passed." +
-                    `Parser in line-bot-sdk-${language} in not generated automatically.` +
-                    "Please add tests and modify parser manually in each repository before release.";
-            }
-        }
-
         await octokit.rest.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
