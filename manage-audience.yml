@@ -767,7 +767,7 @@ components:
             `READ`: Can use only.
             `READ_WRITE`: Can use and update.
         expireTimestamp:
-          type: number
+          type: integer
           format: int64
           description: |+
             Time of audience expiration. Only returned for specific audiences.
