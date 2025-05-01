@@ -1,5 +1,13 @@
 #!/usr/bin/env node
 
+/**
+ * validate-property-camelcase.mjs
+ *
+ * Usage:
+ *   node tools/validate-property-camelcase.mjs              # diff-based check: only newly added keys against origin/main
+ *   node tools/validate-property-camelcase.mjs --full-scan  # full-scan: check all keys in each OpenAPI file
+ */
+
 import { promises as fs } from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
@@ -7,7 +15,7 @@ import yaml from 'js-yaml';
 
 /**
  * Recursively collect all files under the given directory
- * that have a .yml or .yaml extension.
+ * that have a .yml or .yaml extension, excluding certain directories.
  */
 async function collectYamlFiles(dir) {
     const excludeDirs = new Set(['node_modules', '.github']);
@@ -15,12 +23,7 @@ async function collectYamlFiles(dir) {
     const entries = await fs.readdir(dir, { withFileTypes: true });
     for (const entry of entries) {
         const fullPath = path.join(dir, entry.name);
-
-        // Skip excluded directories
-        if (entry.isDirectory() && excludeDirs.has(entry.name)) {
-            continue;
-        }
-
+        if (entry.isDirectory() && excludeDirs.has(entry.name)) continue;
         if (entry.isDirectory()) {
             const sub = await collectYamlFiles(fullPath);
             results = results.concat(sub);
@@ -84,65 +87,82 @@ function isOpenApi(obj) {
 }
 
 async function main() {
+    const args = process.argv.slice(2);
+    const fullScan = args.includes('--full-scan');
+
+    // Use the current working directory
     const cwd = process.cwd();
     const yamlFiles = await collectYamlFiles(cwd);
     let hasError = false;
 
     for (const filePath of yamlFiles) {
-        console.log(`Processing ${filePath}...`);
+        const relPath = path.relative(cwd, filePath);
+        console.log(`Processing ${relPath}`);
+
         // Read the new (HEAD) file content
         let newContent;
         try {
             newContent = await fs.readFile(filePath, 'utf8');
         } catch {
-            continue; // Skip if file cannot be read
+            continue;
         }
 
         // Get the old file content from origin/main (empty if not present)
         let oldContent = '';
-        try {
-            oldContent = execSync(`git show origin/main:${filePath}`, { encoding: 'utf8' });
-        } catch {
-            oldContent = '';
+        if (!fullScan) {
+            try {
+                oldContent = execSync(`git show origin/main:${relPath}`, { encoding: 'utf8' });
+            } catch {
+                oldContent = '';
+            }
         }
 
         // Parse YAML contents
         let newObj, oldObj;
         try {
             newObj = parseYaml(newContent);
-            oldObj = parseYaml(oldContent);
+            oldObj = fullScan ? {} : parseYaml(oldContent);
         } catch (err) {
-            console.warn(`Warning: parse error in ${filePath}: ${err.message}`);
+            console.warn(`Warning: parse error in ${relPath}: ${err.message}`);
             continue;
         }
-        console.log(`Parsed ${filePath} successfully.`);
 
         // Skip files that are not OpenAPI definitions
-        if (!isOpenApi(newObj)) {
-            continue;
-        }
-        console.log(`Checking ${filePath}...`);
+        if (!isOpenApi(newObj)) continue;
 
-        // Get keys newly added in newObj compared to oldObj
-        const newKeys = getNewKeys(oldObj, newObj);
+        // Determine keys to check: either full or diff
+        const keysToCheck = fullScan
+            ? getAllObjectPaths(newObj)
+            : getNewKeys(oldObj, newObj);
 
-        // Filter paths whose last segment contains an underscore
-        const invalid = newKeys.filter(p => {
+        // Filter out example and x-www-form-urlencoded paths, then find underscores
+        const invalid = keysToCheck.filter(p => {
             const last = p.split('.').pop();
+            if (/\.examples?\./.test(p)) return false;
+            if (/x-www-form-urlencoded/.test(p)) return false;
             return last.includes('_');
         });
 
         if (invalid.length) {
             hasError = true;
-            console.error(`\n[ERROR] ${filePath}: the following newly added keys contain underscores:`);
+            console.error(`\n[ERROR] ${relPath}: the following ${
+                fullScan ? 'keys' : 'newly added keys'
+            } contain underscores:`);
             invalid.forEach(p => console.error(`  - ${p}`));
+            console.error('[ERROR] You should change production code to use camelCase instead. ' +
+                'Especially, request body as JSON should be camelCase. line-bot-sdk-ruby depends on this. ' +
+                'However, You can ignore this if the defined class is not for JSON (like x-www-form-urlencoded), ' +
+                'or the class is for response body.');
         }
     }
 
     if (hasError) {
         process.exit(1);
     } else {
-        console.log('OK: No underscores found in newly added OpenAPI keys.');
+        console.log(fullScan
+            ? 'OK: No underscores found in OpenAPI keys (excluding examples and x-www-form-urlencoded).'
+            : 'OK: No underscores found in newly added OpenAPI keys (excluding examples and x-www-form-urlencoded).'
+        );
     }
 }
 

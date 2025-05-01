@@ -57,6 +57,22 @@ jobs:
     - name: Check there is no diff (Run ./tools/reformat.mjs if there is a diff)
       run: git diff --exit-code
 
+  property-should-be-camelcase:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      with:
+        # ensures origin/main is available for git show
+        fetch-depth: 0
+    - name: Use Node.js
+      uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+      with:
+        cache: 'npm'
+    - run: npm install
+    - run: node tools/validate-property-camelcase.mjs
+
   pinact:
     runs-on: ubuntu-latest
     steps:
