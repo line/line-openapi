@@ -1055,7 +1055,7 @@ components:
           "$ref": "#/components/schemas/AudienceGroupJobStatus"
         failedType:
           "$ref": "#/components/schemas/AudienceGroupJobFailedType"
-        audienceCount:
+        audience_count:
           type: integer
           format: int64
           description: "The number of accounts (recipients) that were added or removed."
