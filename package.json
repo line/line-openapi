@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "ibm-openapi-validator": "^0.97.5"
+    "ibm-openapi-validator": "^0.97.5",
+    "js-yaml": "^4.1.0"
   }
 }
