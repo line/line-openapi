@@ -1932,6 +1932,147 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
 
+  # Coupon
+  "/v2/bot/coupon":
+    get:
+      tags:
+        - messaging-api
+      operationId: listCoupon
+      description: "Get a paginated list of coupons."
+      parameters:
+        - in: query
+          name: status
+          required: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              type: string
+              enum:
+                - DRAFT
+                - RUNNING
+                - CLOSED
+          description: "Filter coupons by their status."
+        - in: query
+          name: start
+          required: false
+          schema:
+            type: string
+          description: "Pagination token to retrieve the next page of results."
+        - in: query
+          name: limit
+          required: false
+          schema:
+            maximum: 100
+            minimum: 1
+            type: integer
+            format: int32
+            default: 20
+          description: "Maximum number of coupons to return per request."
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/MessagingApiPagerCouponListResponse"
+        "400":
+          description: "Bad Request"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+
+    post:
+      tags:
+        - messaging-api
+      operationId: createCoupon
+      description: "Create a new coupon. Define coupon details such as type, title, and validity period."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CouponCreateRequest"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/CouponCreateResponse"
+        "400":
+          description: "Bad Request"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+
+  "/v2/bot/coupon/{couponId}":
+    get:
+      tags:
+        - messaging-api
+      operationId: getCouponDetail
+      description: "Get coupon detail"
+      parameters:
+        - in: path
+          name: couponId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/CouponResponse"
+        "400":
+          description: "Bad Request"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        "404":
+          description: "Not Found"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+
+  "/v2/bot/coupon/{couponId}/close":
+    put:
+      tags:
+        - messaging-api
+      operationId: closeCoupon
+      description: "Close coupon"
+      parameters:
+        - in: path
+          name: couponId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "Bad Request"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        "404":
+          description: "Not Found"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        "410":
+          description: "Gone"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+
   "/v2/bot/chat/loading/start":
     post:
       externalDocs:
@@ -3481,6 +3622,7 @@ components:
           imagemap: "#/components/schemas/ImagemapMessage"
           template: "#/components/schemas/TemplateMessage"
           flex: "#/components/schemas/FlexMessage"
+          coupon: "#/components/schemas/CouponMessage"
     QuickReply:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#items-object
@@ -4030,6 +4172,23 @@ components:
           format: uri
         action:
           "$ref": "#/components/schemas/Action"
+    CouponMessage:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#coupon-message
+      required:
+        - couponId
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/Message"
+        - type: object
+          properties:
+            couponId:
+              type: string
+              description: "Unique identifier of the coupon."
+            deliveryTag:
+              type: string
+              maxLength: 30
+              description: "Delivery route tag information. It can be used for analysis in LINE OA Manager."
     FlexMessage:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#flex-message
@@ -5056,6 +5215,579 @@ components:
           type: boolean
           description: "Membership plan status."
 
+    # Coupon APIs
+    CouponCreateRequest:
+      description: "Request object for creating a coupon. Contains all configurable coupon properties."
+      required:
+        - acquisitionCondition
+        - endTimestamp
+        - maxUseCountPerTicket
+        - startTimestamp
+        - title
+        - visibility
+        - timezone
+      type: object
+      properties:
+        acquisitionCondition:
+          $ref: "#/components/schemas/AcquisitionConditionRequest"
+        barcodeImageUrl:
+          type: string
+          description: "URL of the barcode image associated with the coupon. Used for in-store redemption."
+        couponCode:
+          type: string
+          description: "Unique code to be presented by the user to redeem the coupon. Optional."
+        description:
+          maxLength: 1000
+          minLength: 0
+          type: string
+          description: "Detailed description of the coupon. Displayed to users."
+        endTimestamp:
+          type: integer
+          format: int64
+          description: "Coupon expiration time (epoch seconds). Coupon cannot be used after this time."
+        imageUrl:
+          type: string
+          description: "URL of the main image representing the coupon. Displayed in the coupon list."
+        maxUseCountPerTicket:
+          type: integer
+          format: int32
+          maximum: 1
+          description: "Maximum number of times a single coupon ticket can be used. Use -1 to indicate no limit."
+        startTimestamp:
+          type: integer
+          format: int64
+          description: "Coupon start time (epoch seconds). Coupon can be used from this time."
+        title:
+          maxLength: 60
+          minLength: 1
+          type: string
+          description: "Title of the coupon. Displayed in the coupon list."
+        usageCondition:
+          maxLength: 100
+          minLength: 0
+          type: string
+          description: "Conditions for using the coupon. Shown to users."
+        reward:
+          $ref: "#/components/schemas/CouponRewardRequest"
+        visibility:
+          type: string
+          description: "Visibility of the coupon. Determines who can see or acquire the coupon."
+          enum:
+            - UNLISTED
+            - PUBLIC
+        timezone:
+          type: string
+          description: "Timezone for interpreting start and end timestamps."
+          enum:
+            - ETC_GMT_MINUS_12
+            - ETC_GMT_MINUS_11
+            - PACIFIC_HONOLULU
+            - AMERICA_ANCHORAGE
+            - AMERICA_LOS_ANGELES
+            - AMERICA_PHOENIX
+            - AMERICA_CHICAGO
+            - AMERICA_NEW_YORK
+            - AMERICA_CARACAS
+            - AMERICA_SANTIAGO
+            - AMERICA_ST_JOHNS
+            - AMERICA_SAO_PAULO
+            - ETC_GMT_MINUS_2
+            - ATLANTIC_CAPE_VERDE
+            - EUROPE_LONDON
+            - EUROPE_PARIS
+            - EUROPE_ISTANBUL
+            - EUROPE_MOSCOW
+            - ASIA_TEHRAN
+            - ASIA_TBILISI
+            - ASIA_KABUL
+            - ASIA_TASHKENT
+            - ASIA_COLOMBO
+            - ASIA_KATHMANDU
+            - ASIA_ALMATY
+            - ASIA_RANGOON
+            - ASIA_BANGKOK
+            - ASIA_TAIPEI
+            - ASIA_TOKYO
+            - AUSTRALIA_DARWIN
+            - AUSTRALIA_SYDNEY
+            - ASIA_VLADIVOSTOK
+            - ETC_GMT_PLUS_12
+            - PACIFIC_TONGATAPU
+    AcquisitionConditionRequest:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          description: "Determines how the coupon is distributed or used."
+      discriminator:
+        propertyName: type
+        mapping:
+          normal: "#/components/schemas/NormalAcquisitionConditionRequest"
+          lottery: "#/components/schemas/LotteryAcquisitionConditionRequest"
+    NormalAcquisitionConditionRequest:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/AcquisitionConditionRequest"
+    LotteryAcquisitionConditionRequest:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/AcquisitionConditionRequest"
+        - type: object
+          required:
+            - lotteryProbability
+            - maxAcquireCount
+          properties:
+            lotteryProbability:
+              maximum: 99
+              minimum: 1
+              type: integer
+              format: int32
+              description: "Probability (1-99) of winning the coupon in lottery-type campaigns."
+            maxAcquireCount:
+              type: integer
+              format: int32
+              maximum: 999999
+              description: "Maximum number of coupons that can be issued in total. Use -1 to indicate no limit"
+    CouponRewardRequest:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          description: "Type of coupon. Determines the benefit provided."
+      discriminator:
+        propertyName: type
+        mapping:
+          cashBack: "#/components/schemas/CouponCashBackRewardRequest"
+          discount: "#/components/schemas/CouponDiscountRewardRequest"
+          free: "#/components/schemas/CouponFreeRewardRequest"
+          gift: "#/components/schemas/CouponGiftRewardRequest"
+          others: "#/components/schemas/CouponOthersRewardRequest"
+    CouponCashBackRewardRequest:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/CouponRewardRequest"
+        - type: object
+          properties:
+            priceInfo:
+              $ref: "#/components/schemas/CashBackPriceInfoRequest"
+    CouponDiscountRewardRequest:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/CouponRewardRequest"
+        - type: object
+          properties:
+            priceInfo:
+              $ref: "#/components/schemas/DiscountPriceInfoRequest"
+    CouponFreeRewardRequest:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/CouponRewardRequest"
+    CouponGiftRewardRequest:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/CouponRewardRequest"
+    CouponOthersRewardRequest:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/CouponRewardRequest"
+    CashBackPriceInfoRequest:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          fixed: "#/components/schemas/CashBackFixedPriceInfoRequest"
+          percentage: "#/components/schemas/CashBackPercentagePriceInfoRequest"
+    CashBackFixedPriceInfoRequest:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/CashBackPriceInfoRequest"
+        - type: object
+          properties:
+            fixedAmount:
+              type: integer
+              format: int64
+    CashBackPercentagePriceInfoRequest:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/CashBackPriceInfoRequest"
+        - type: object
+          properties:
+            percentage:
+              maximum: 99
+              minimum: 1
+              type: integer
+              format: int32
+              description: "Specifies the cashback rate as a percentage. Must be an integer between 1 and 99."
+    DiscountPriceInfoRequest:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          fixed: "#/components/schemas/DiscountFixedPriceInfoRequest"
+          percentage: "#/components/schemas/DiscountPercentagePriceInfoRequest"
+          explicit: "#/components/schemas/DiscountExplicitPriceInfoRequest"
+    DiscountFixedPriceInfoRequest:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/DiscountPriceInfoRequest"
+        - type: object
+          properties:
+            fixedAmount:
+              type: integer
+              format: int64
+    DiscountPercentagePriceInfoRequest:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/DiscountPriceInfoRequest"
+        - type: object
+          properties:
+            percentage:
+              maximum: 99
+              minimum: 1
+              type: integer
+              format: int32
+              description: "Specifies the discount rate as a percentage. Must be an integer between 1 and 99."
+    DiscountExplicitPriceInfoRequest:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/DiscountPriceInfoRequest"
+        - type: object
+          properties:
+            priceAfterDiscount:
+              type: integer
+              format: int64
+            originalPrice:
+              type: integer
+              format: int64
+    CouponCreateResponse:
+      description: "Response object returned after creating a coupon. Contains the coupon ID."
+      required:
+        - couponId
+      type: object
+      properties:
+        couponId:
+          type: string
+          description: "Unique identifier of the coupon."
+    CouponResponse:
+      description: "Detailed information about a coupon, including all properties and current status."
+      type: object
+      properties:
+        acquisitionCondition:
+          $ref: "#/components/schemas/AcquisitionConditionResponse"
+        barcodeImageUrl:
+          type: string
+          description: "URL of the barcode image associated with the coupon. Used for in-store redemption."
+          format: uri
+        couponCode:
+          type: string
+          description: "Unique code to be presented by the user to redeem the coupon."
+        description:
+          type: string
+          description: "Detailed description of the coupon. Displayed to users."
+        endTimestamp:
+          type: integer
+          description: "Coupon expiration time (epoch seconds). Coupon cannot be used after this time."
+          format: int64
+        imageUrl:
+          type: string
+          description: "URL of the main image representing the coupon. Displayed in the coupon list."
+          format: uri
+        maxAcquireCount:
+          type: integer
+          format: int64
+          description: "Maximum number of coupons that can be issued in total."
+        maxUseCountPerTicket:
+          type: integer
+          format: int32
+          description: "Maximum number of times a single coupon ticket can be used."
+        maxTicketPerUser:
+          type: integer
+          format: int64
+          description: "Maximum number of coupon tickets a single user can acquire."
+        startTimestamp:
+          type: integer
+          description: "Coupon start time (epoch seconds). Coupon can be used from this time."
+          format: int64
+        title:
+          type: string
+          description: "Title of the coupon. Displayed in the coupon list."
+        usageCondition:
+          type: string
+          description: "Conditions for using the coupon. Shown to users."
+        reward:
+          $ref: "#/components/schemas/CouponRewardResponse"
+        visibility:
+          type: string
+          description: "Visibility of the coupon. Determines who can see or acquire the coupon."
+          enum:
+            - UNLISTED
+            - PUBLIC
+            - PRIVATE
+        timezone:
+          type: string
+          description: "Timezone for interpreting start and end timestamps."
+          enum:
+            - ETC_GMT_MINUS_12
+            - ETC_GMT_MINUS_11
+            - PACIFIC_HONOLULU
+            - AMERICA_ANCHORAGE
+            - AMERICA_LOS_ANGELES
+            - AMERICA_PHOENIX
+            - AMERICA_CHICAGO
+            - AMERICA_NEW_YORK
+            - AMERICA_CARACAS
+            - AMERICA_SANTIAGO
+            - AMERICA_ST_JOHNS
+            - AMERICA_SAO_PAULO
+            - ETC_GMT_MINUS_2
+            - ATLANTIC_CAPE_VERDE
+            - EUROPE_LONDON
+            - EUROPE_PARIS
+            - EUROPE_ISTANBUL
+            - EUROPE_MOSCOW
+            - ASIA_TEHRAN
+            - ASIA_TBILISI
+            - ASIA_KABUL
+            - ASIA_TASHKENT
+            - ASIA_COLOMBO
+            - ASIA_KATHMANDU
+            - ASIA_ALMATY
+            - ASIA_RANGOON
+            - ASIA_BANGKOK
+            - ASIA_TAIPEI
+            - ASIA_TOKYO
+            - AUSTRALIA_DARWIN
+            - AUSTRALIA_SYDNEY
+            - ASIA_VLADIVOSTOK
+            - ETC_GMT_PLUS_12
+            - PACIFIC_TONGATAPU
+        couponId:
+          type: string
+          description: "Unique identifier of the coupon."
+        createdTimestamp:
+          type: integer
+          description: "Created timestamp (seconds) of the coupon."
+          format: int64
+        status:
+          type: string
+          description: "Current status of the coupon."
+          enum:
+            - DRAFT
+            - RUNNING
+            - CLOSED
+    AcquisitionConditionResponse:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          description: "Determines how the coupon is distributed or used."
+      discriminator:
+        propertyName: type
+        mapping:
+          normal: "#/components/schemas/NormalAcquisitionConditionResponse"
+          lottery: "#/components/schemas/LotteryAcquisitionConditionResponse"
+          referral: "#/components/schemas/ReferralAcquisitionConditionResponse"
+    NormalAcquisitionConditionResponse:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/AcquisitionConditionResponse"
+    LotteryAcquisitionConditionResponse:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/AcquisitionConditionResponse"
+        - type: object
+          properties:
+            lotteryProbability:
+              type: integer
+              format: int32
+            maxAcquireCount:
+              type: integer
+              format: int32
+    ReferralAcquisitionConditionResponse:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/AcquisitionConditionResponse"
+    CouponRewardResponse:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          description: "Type of coupon. Determines the benefit provided."
+      discriminator:
+        propertyName: type
+        mapping:
+          cashBack: "#/components/schemas/CouponCashBackRewardResponse"
+          discount: "#/components/schemas/CouponDiscountRewardResponse"
+          free: "#/components/schemas/CouponFreeRewardResponse"
+          gift: "#/components/schemas/CouponGiftRewardResponse"
+          others: "#/components/schemas/CouponOthersRewardResponse"
+    CouponCashBackRewardResponse:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/CouponRewardResponse"
+        - type: object
+          properties:
+            priceInfo:
+              $ref: "#/components/schemas/CashBackPriceInfoResponse"
+    CouponDiscountRewardResponse:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/CouponRewardResponse"
+        - type: object
+          properties:
+            priceInfo:
+              $ref: "#/components/schemas/DiscountPriceInfoResponse"
+    CouponFreeRewardResponse:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/CouponRewardResponse"
+    CouponGiftRewardResponse:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/CouponRewardResponse"
+    CouponOthersRewardResponse:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/CouponRewardResponse"
+    CashBackPriceInfoResponse:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          fixed: "#/components/schemas/CashBackFixedPriceInfoResponse"
+          percentage: "#/components/schemas/CashBackPercentagePriceInfoResponse"
+    CashBackFixedPriceInfoResponse:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/CashBackPriceInfoResponse"
+        - type: object
+          properties:
+            currency:
+              type: string
+              description: "Currency code (e.g., JPY, THB, TWD)."
+              enum:
+                - JPY
+                - THB
+                - TWD
+            fixedAmount:
+              type: integer
+              format: int64
+    CashBackPercentagePriceInfoResponse:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/CashBackPriceInfoResponse"
+        - type: object
+          properties:
+            percentage:
+              type: integer
+              format: int32
+    DiscountPriceInfoResponse:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          fixed: "#/components/schemas/DiscountFixedPriceInfoResponse"
+          percentage: "#/components/schemas/DiscountPercentagePriceInfoResponse"
+          explicit: "#/components/schemas/DiscountExplicitPriceInfoResponse"
+    DiscountFixedPriceInfoResponse:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/DiscountPriceInfoResponse"
+        - type: object
+          properties:
+            currency:
+              type: string
+              description: "Currency code (e.g., JPY, THB, TWD)."
+              enum:
+                - JPY
+                - THB
+                - TWD
+            fixedAmount:
+              type: integer
+              format: int64
+    DiscountPercentagePriceInfoResponse:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/DiscountPriceInfoResponse"
+        - type: object
+          properties:
+            percentage:
+              type: integer
+              format: int32
+    DiscountExplicitPriceInfoResponse:
+      type: object
+      allOf:
+        - "$ref": "#/components/schemas/DiscountPriceInfoResponse"
+        - type: object
+          properties:
+            currency:
+              type: string
+              description: "Currency code (e.g., JPY, THB, TWD)."
+              enum:
+                - JPY
+                - THB
+                - TWD
+            priceAfterDiscount:
+              type: integer
+              format: int64
+            originalPrice:
+              type: integer
+              format: int64
+    MessagingApiPagerCouponListResponse:
+      description: "Paginated response object containing a list of coupons."
+      required:
+        - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/CouponListResponse"
+          description: "List of coupon summary objects."
+        next:
+          type: string
+          description: "Token for fetching the next page of results."
+    CouponListResponse:
+      description: "Summary information about a coupon, used in coupon lists."
+      required:
+        - couponId
+        - title
+      type: object
+      properties:
+        couponId:
+          type: string
+          description: "Unique identifier of the coupon."
+        title:
+          type: string
+          description: "Title of the coupon. Displayed in the coupon list."
     ShowLoadingAnimationRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator-request-body
