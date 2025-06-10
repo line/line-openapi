@@ -44,3 +44,15 @@ Please note the following guidelines:
 
 - OpenAPI Generator can't generate Python client with Java 17+
   - https://github.com/OpenAPITools/openapi-generator/issues/13684
+
+## Usage
+
+You can launch the Swagger UI to browse the OpenAPI specs locally using Docker and the provided Makefile.
+
+```sh
+make docker/open-api-doc
+```
+
+By default, the Swagger UI will be available at: [http://localhost:8080](http://localhost:8080)
+
+If you want to use a different port, edit the `-p` option in the `Makefile`.
