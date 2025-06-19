@@ -47,12 +47,10 @@ Please note the following guidelines:
 
 ## Usage
 
-You can launch the Swagger UI to browse the OpenAPI specs locally using Docker and the provided Makefile.
+You can launch the Swagger UI to browse the OpenAPI specs locally using Docker.
 
 ```sh
-make docker/open-api-doc
+docker run --rm --name line-open-api-doc -p 8080:8080 -e PORT=8080 -e API_URL=/openapi/messaging-api.yml -v ./:/usr/share/nginx/html/openapi swaggerapi/swagger-ui:latest
 ```
 
 By default, the Swagger UI will be available at: [http://localhost:8080](http://localhost:8080)
-
-If you want to use a different port, edit the `-p` option in the `Makefile`.
