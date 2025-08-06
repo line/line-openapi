@@ -1935,6 +1935,8 @@ paths:
   # Coupon
   "/v2/bot/coupon":
     get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-coupons-list
       tags:
         - messaging-api
       operationId: listCoupon
@@ -1984,6 +1986,8 @@ paths:
                 "$ref": "#/components/schemas/ErrorResponse"
 
     post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#create-coupon
       tags:
         - messaging-api
       operationId: createCoupon
@@ -2009,6 +2013,8 @@ paths:
 
   "/v2/bot/coupon/{couponId}":
     get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-coupon
       tags:
         - messaging-api
       operationId: getCouponDetail
@@ -2041,6 +2047,8 @@ paths:
 
   "/v2/bot/coupon/{couponId}/close":
     put:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#discontinue-coupon
       tags:
         - messaging-api
       operationId: closeCoupon
