@@ -107,7 +107,6 @@ components:
           videoPlayComplete: "#/components/schemas/VideoPlayCompleteEvent"
           beacon: "#/components/schemas/BeaconEvent"
           accountLink: "#/components/schemas/AccountLinkEvent"
-          things: "#/components/schemas/ThingsEvent"
           membership: "#/components/schemas/MembershipEvent"
           module: "#/components/schemas/ModuleEvent"
           activated: "#/components/schemas/ActivatedEvent"
@@ -746,122 +745,6 @@ components:
         nonce:
           type: string
           description: "Specified nonce (number used once) when verifying the user ID."
-
-
-    # https://developers.line.biz/en/reference/messaging-api/#scenario-result-event
-    ThingsEvent:
-      description: "Indicates that a user linked a device with LINE."
-      allOf:
-        - $ref: "#/components/schemas/Event"
-        - type: object
-          required:
-            - replyToken
-            - things
-          properties:
-            replyToken:
-              type: string
-              description: "Reply token used to send reply message to this event"
-            things:
-              $ref: "#/components/schemas/ThingsContent"
-
-    ThingsContent:
-      type: object
-      required:
-        - type
-      properties:
-        type:
-          type: string
-          description: "Type"
-      discriminator:
-        propertyName: type
-        mapping:
-          link: "#/components/schemas/LinkThingsContent"
-          unlink: "#/components/schemas/UnlinkThingsContent"
-          scenarioResult: "#/components/schemas/ScenarioResultThingsContent"
-    LinkThingsContent:
-      allOf:
-        - $ref: "#/components/schemas/ThingsContent"
-        - type: object
-          required:
-            - deviceId
-          description: "Indicates that a user linked a device with LINE."
-          properties:
-            deviceId:
-              type: string
-              description: "Device ID of the device that has been linked with LINE."
-    UnlinkThingsContent:
-      allOf:
-        - $ref: "#/components/schemas/ThingsContent"
-        - type: object
-          required:
-            - deviceId
-          description: "Indicates that the user unlinked a device from LINE."
-          properties:
-            deviceId:
-              type: string
-              description: "Device ID of the device that has been linked with LINE."
-    ScenarioResultThingsContent:
-      allOf:
-        - $ref: "#/components/schemas/ThingsContent"
-        - type: object
-          required:
-            - deviceId
-            - result
-          description: "This event indicates that an automatic communication scenario has been executed."
-          properties:
-            deviceId:
-              type: string
-              description: "Device ID of the device that has been linked with LINE."
-            result:
-              $ref: "#/components/schemas/ScenarioResult"
-    ScenarioResult:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#scenario-result-event
-      required:
-        - startTime
-        - endTime
-        - resultCode
-      type: object
-      properties:
-        scenarioId:
-          type: string
-          description: "Scenario ID executed"
-        revision:
-          type: integer
-          description: "Revision number of the scenario set containing the executed scenario"
-        startTime:
-          type: integer
-          format: int64
-          description: "Timestamp for when execution of scenario action started (milliseconds, LINE app time)"
-        endTime:
-          type: integer
-          format: int64
-          description: "Timestamp for when execution of scenario was completed (milliseconds, LINE app time)"
-        resultCode:
-          type: string
-          description: "Scenario execution completion status"
-        actionResults:
-          description: "Execution result of individual operations specified in action. Only included when things.result.resultCode is success."
-          type: array
-          items:
-            $ref: "#/components/schemas/ActionResult"
-        bleNotificationPayload:
-          description: "Data contained in notification."
-          type: string
-        errorReason:
-          description: "Error reason."
-          type: string
-    ActionResult:
-      required:
-        - type
-      type: object
-      properties:
-        type:
-          type: string
-          enum: [ void, binary ]
-        data:
-          description: "Base64-encoded binary data"
-          type: string
 
     # https://developers.line.biz/en/reference/messaging-api/#membership-event
     MembershipEvent:
