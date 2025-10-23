@@ -2837,6 +2837,15 @@ components:
             If true, the message will be sent within the maximum number of deliverable messages. The default value is `false`.
 
             Targets will be selected at random.
+        forbidPartialDelivery:
+          type: boolean
+          default: false
+          description: |+
+            This option prevents messages from being delivered to only a subset of the target audience.
+            If true, the narrowcast request success but fails asynchronously.
+            You can check whether message delivery was canceled by retrieving the narrowcast message progress.
+
+            This property can be set to true only if upToRemainingQuota is set to true.
     NarrowcastProgressResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status
@@ -2885,6 +2894,7 @@ components:
             `2`: An error occurred because there weren't enough recipients.
             `3`: A conflict error of requests occurs because a request that has already been accepted is retried.
             `4`: An audience of less than 50 recipients is included as a condition of sending.
+            `5`: Message delivery has been canceled to prevent messages from being delivered only to a subset of the target audience.
         acceptedTime:
           type: string
           format: date-time
