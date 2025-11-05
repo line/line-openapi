@@ -219,10 +219,6 @@ components:
         id:
           type: string
           description: "Message ID"
-        markAsReadToken:
-          type: string
-          description: |+
-            Token used to mark the message as read.
       discriminator:
         propertyName: type
         mapping:
@@ -278,6 +274,10 @@ components:
             quotedMessageId:
               type: string
               description: "Message ID of a quoted message. Only included when the received message quotes a past message."
+            markAsReadToken:
+              type: string
+              description: |+
+                Token used to mark the message as read.
     Emoji:
       required:
         - index
@@ -366,6 +366,10 @@ components:
               type: string
               description: |+
                 Quote token to quote this message.
+            markAsReadToken:
+              type: string
+              description: |+
+                Token used to mark the message as read.
     ImageSet:
       type: object
       required:
@@ -400,6 +404,10 @@ components:
               type: string
               description: |+
                 Quote token to quote this message.
+            markAsReadToken:
+              type: string
+              description: |+
+                Token used to mark the message as read.
     AudioMessageContent:
       allOf:
         - $ref: "#/components/schemas/MessageContent"
@@ -414,6 +422,10 @@ components:
               type: integer
               format: int64
               description: "Length of audio file (milliseconds)"
+            markAsReadToken:
+              type: string
+              description: |+
+                Token used to mark the message as read.
     FileMessageContent:
       allOf:
         - $ref: "#/components/schemas/MessageContent"
@@ -429,6 +441,10 @@ components:
             fileSize:
               type: integer
               description: "File size in bytes"
+            markAsReadToken:
+              type: string
+              description: |+
+                Token used to mark the message as read.
     LocationMessageContent:
       allOf:
         - $ref: "#/components/schemas/MessageContent"
@@ -452,6 +468,10 @@ components:
               type: number
               format: double
               description: "Longitude"
+            markAsReadToken:
+              type: string
+              description: |+
+                Token used to mark the message as read.
     StickerMessageContent:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#wh-sticker
@@ -508,6 +528,10 @@ components:
               type: string
               description: |+
                 Message ID of a quoted message. Only included when the received message quotes a past message.
+            markAsReadToken:
+              type: string
+              description: |+
+                Token used to mark the message as read.
 
     # https://developers.line.biz/en/reference/messaging-api/#unsend-event
     UnsendEvent:
