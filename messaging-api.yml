@@ -2109,6 +2109,32 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
 
+  "/v2/bot/chat/markAsRead":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#mark-as-read
+      tags:
+        - messaging-api
+      operationId: markMessagesAsReadByToken
+      description: "Mark messages from users as read by token"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MarkMessagesAsReadByTokenRequest"
+            example:
+              markAsReadToken: nz0x74mZT2mRn...
+        required: true
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "An invalid markAsReadToken is specified. Tokens must be used by the bot that received them via Webhook."
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+
 components:
   securitySchemes:
     Bearer:
@@ -5828,6 +5854,16 @@ components:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator-response
       type: object
+    MarkMessagesAsReadByTokenRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#mark-as-read-request-body
+      required:
+        - markAsReadToken
+      type: object
+      properties:
+        markAsReadToken:
+          type: string
+          description: "Token used to mark messages as read."
 
     # Error response
     ErrorResponse:
