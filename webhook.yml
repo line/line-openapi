@@ -202,9 +202,6 @@ components:
           properties:
             replyToken:
               type: string
-            markAsReadToken:
-              type: string
-              description: "Token used to mark the message as read"
             message:
               $ref: "#/components/schemas/MessageContent"
 
@@ -222,6 +219,10 @@ components:
         id:
           type: string
           description: "Message ID"
+        markAsReadToken:
+          type: string
+          description: |+
+            Token used to mark the message as read.
       discriminator:
         propertyName: type
         mapping:
