@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   swagger-ui:
     image: swaggerapi/swagger-ui:latest

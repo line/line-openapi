@@ -51,7 +51,7 @@ You can launch the Swagger UI to browse the OpenAPI specs locally using Docker.
 First, make sure you have `docker-compose.yml` in this directory. Then run:
 
 ```sh
-docker-compose up
+docker compose up
 ```
 
 By default, the Swagger UI will be available at: [http://localhost:8080](http://localhost:8080)
@@ -59,3 +59,7 @@ By default, the Swagger UI will be available at: [http://localhost:8080](http://
 ### Using Docker Command
 
 Alternatively, you can use the following Docker command:
+
+```sh
+docker run -p 8080:8080 -e PORT=8080 -e API_URL=/openapi/messaging-api.yml -v $(pwd):/usr/share/nginx/html/openapi swaggerapi/swagger-ui:latest
+```
