@@ -5,7 +5,7 @@ const fs = require('fs');
 let nonSuffixed = 0;
 
 // All request objects should have `Request` suffix.
-for (let ymlFile of globby.globbySync("*.yml")) {
+for (let ymlFile of globby.globbySync("*.yml", { ignore: ["docker-compose.yml"] })) {
     console.log(`# Processing ${ymlFile}`);
     const yml = YAML.parse(fs.readFileSync(ymlFile, {encoding: 'utf-8'}));
     for (let pathName in yml['paths']) {

@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 
-for (let ymlFile of globby.globbySync("*.yml")) {
+for (let ymlFile of globby.globbySync("*.yml", { ignore: ["docker-compose.yml"] })) {
     console.log(`Processing ${ymlFile}`);
 
     await convertSingleQuotesToDoubleQuotes(ymlFile);

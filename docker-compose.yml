@@ -1,0 +1,11 @@
+services:
+  swagger-ui:
+    image: swaggerapi/swagger-ui:latest
+    container_name: line-open-api-doc
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - API_URL=/openapi/messaging-api.yml
+    volumes:
+      - ./:/usr/share/nginx/html/openapi

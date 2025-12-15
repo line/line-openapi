@@ -16,11 +16,21 @@ async function run() {
         const jobName = context.job;
 
         // Delete the previous comment if it exists
-        const { data: comments } = await octokit.rest.issues.listComments({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: prNumber,
-        });
+        let comments = [];
+        try {
+            const response = await octokit.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+            });
+            comments = response.data;
+        } catch (error) {
+            if (error.status === 403) {
+                console.log('Unable to list comments (forked PR), skipping cleanup');
+            } else {
+                throw error;
+            }
+        }
 
         const medadataForComment = `<!-- ${jobName}-comment -->`;
 
@@ -29,11 +39,19 @@ async function run() {
                 comment.user.login === 'github-actions[bot]' &&
                 comment.body.includes(medadataForComment)
             ) {
-                await octokit.rest.issues.deleteComment({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    comment_id: comment.id,
-                });
+                try {
+                    await octokit.rest.issues.deleteComment({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        comment_id: comment.id,
+                    });
+                } catch (error) {
+                    if (error.status === 403) {
+                        console.log('Unable to delete comment (forked PR)');
+                    } else {
+                        throw error;
+                    }
+                }
             }
         }
 
@@ -72,8 +90,14 @@ async function run() {
             body: `${medadataForComment}\n${fullCommentBody}`,
         });
     } catch (error) {
-        console.error(error);
-        core.setFailed(`Error in this script: ${error.message}`);
+        // Handle 403 errors from forked PRs gracefully
+        if (error.status === 403 && error.message.includes('Resource not accessible by integration')) {
+            core.warning('Unable to post comment - this is expected for PRs from forked repositories. See .github/workflows/warn-pr-from-forked-repository.yml for more information.');
+            console.log('Skipping comment creation due to permissions (forked PR)');
+        } else {
+            console.error(error);
+            core.setFailed(`Error in this script: ${error.message}`);
+        }
     }
 }
 
