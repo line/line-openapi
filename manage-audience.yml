@@ -795,6 +795,7 @@ components:
         - RICHMENU_IMP
         - RICHMENU_CLICK
         - POP_AD_IMP
+        - TRACKINGTAG_WEBTRAFFIC
     AddAudienceToAudienceGroupRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group
