@@ -1,0 +1,19 @@
+name: Demo PR Comment Injection
+
+on:
+  workflow_dispatch:
+    inputs:
+      attacker_input:
+        description: "Simulate PR author"
+        required: true
+        default: "normal-user"
+
+jobs:
+  demo-shell-injection:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Unsafe shell usage
+        run: |
+          PR_AUTHOR="${{ github.event.inputs.attacker_input }}"
+          COMMENT="Hello @$PR_AUTHOR"
+          echo "Would run: gh pr comment 1 --body \"$COMMENT\""
