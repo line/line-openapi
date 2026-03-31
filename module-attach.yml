@@ -94,6 +94,8 @@ components:
 
   schemas:
     AttachModuleResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider
       description: "Attach by operation of the module channel provider"
       required:
         - bot_id
