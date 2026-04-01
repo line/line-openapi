@@ -3345,8 +3345,8 @@ components:
           type: string
           description: "Rich menu ID"
     RichMenuResponse:
-      # https://developers.line.biz/en/reference/messaging-api/#get-rich-menu
-      # https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#rich-menu-response-object
       required:
         - richMenuId
         - size

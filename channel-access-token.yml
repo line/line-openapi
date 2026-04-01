@@ -422,6 +422,8 @@ components:
           type: string
           description: "Unique key ID for identifying the channel access token."
     VerifyChannelAccessTokenResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1
       description: "Verification result"
       required:
         - client_id
@@ -440,6 +442,8 @@ components:
           description: "Permissions granted to the channel access token."
 
     ErrorResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#error-responses
       description: "Error response of the Channel access token"
       type: object
       properties:
