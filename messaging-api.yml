@@ -1216,6 +1216,7 @@ paths:
           schema:
             type: string
       requestBody:
+        required: true
         content:
           "*/*":
             schema:
@@ -1745,7 +1746,7 @@ paths:
       tags:
         - messaging-api
       operationId: getPNPMessageStatistics
-      description: "Get number of sent LINE notification messages　"
+      description: "Get number of sent LINE notification messages"
       parameters:
         - name: date
           in: query
