@@ -258,6 +258,8 @@ components:
             `true` to use the LIFF app in modular mode.
             When in modular mode, the action button in the header is not displayed.
     LiffFeatures:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
       type: object
       properties:
         ble:
@@ -271,6 +273,8 @@ components:
           default: false
 
     AddLiffAppResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
       type: object
       required:
         - liffId
@@ -316,6 +320,8 @@ components:
         The default value is `["profile", "chat_message.write"]`.
 
     GetAllLiffAppsResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
       type: object
       properties:
         apps:
@@ -323,6 +329,8 @@ components:
           items:
             $ref: "#/components/schemas/LiffApp"
     LiffApp:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
       type: object
       properties:
         liffId:

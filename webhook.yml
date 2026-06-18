@@ -189,8 +189,9 @@ components:
               description: "Room ID of the source multi-person chat"
 
 
-    # https://developers.line.biz/en/reference/messaging-api/#message-event
     MessageEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#message-event
       description: "Webhook event object which contains the sent message."
       type: object
       allOf:
@@ -250,6 +251,8 @@ components:
           type: string
           description: "URL of the preview image. Only included when contentProvider.type is external."
     TextMessageContent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#wh-text
       allOf:
         - $ref: "#/components/schemas/MessageContent"
         - type: object
@@ -351,6 +354,8 @@ components:
         - $ref: "#/components/schemas/Mentionee"
         - type: object
     ImageMessageContent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#wh-image
       allOf:
         - $ref: "#/components/schemas/MessageContent"
         - type: object
@@ -386,6 +391,8 @@ components:
           description: "The total number of images sent simultaneously."
 
     VideoMessageContent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#wh-video
       allOf:
         - $ref: "#/components/schemas/MessageContent"
         - type: object
@@ -409,6 +416,8 @@ components:
               description: |+
                 Token used to mark the message as read.
     AudioMessageContent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#wh-audio
       allOf:
         - $ref: "#/components/schemas/MessageContent"
         - type: object
@@ -427,6 +436,8 @@ components:
               description: |+
                 Token used to mark the message as read.
     FileMessageContent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#wh-file
       allOf:
         - $ref: "#/components/schemas/MessageContent"
         - type: object
@@ -446,6 +457,8 @@ components:
               description: |+
                 Token used to mark the message as read.
     LocationMessageContent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#wh-location
       allOf:
         - $ref: "#/components/schemas/MessageContent"
         - type: object
@@ -533,8 +546,9 @@ components:
               description: |+
                 Token used to mark the message as read.
 
-    # https://developers.line.biz/en/reference/messaging-api/#unsend-event
     UnsendEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#unsend-event
       description: "Event object for when the user unsends a message."
       allOf:
         - $ref: "#/components/schemas/Event"
@@ -545,6 +559,8 @@ components:
             unsend:
               "$ref": "#/components/schemas/UnsendDetail"
     UnsendDetail:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#unsend-event
       required:
         - messageId
       type: object
@@ -554,8 +570,9 @@ components:
           description: "The message ID of the unsent message"
 
 
-    # https://developers.line.biz/en/reference/messaging-api/#follow-event
     FollowEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#follow-event
       description: "Event object for when your LINE Official Account is added as a friend (or unblocked). You can reply to follow events."
       allOf:
         - $ref: "#/components/schemas/Event"
@@ -570,6 +587,8 @@ components:
             follow:
               "$ref": "#/components/schemas/FollowDetail"
     FollowDetail:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#follow-event
       type: object
       required:
         - isUnblocked
@@ -579,16 +598,18 @@ components:
           description: "Whether a user has added your LINE Official Account as a friend or unblocked."
 
 
-    # https://developers.line.biz/en/reference/messaging-api/#unfollow-event
     UnfollowEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#unfollow-event
       description: "Event object for when your LINE Official Account is blocked."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
 
 
-    # https://developers.line.biz/en/reference/messaging-api/#join-event
     JoinEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#join-event
       description: "Event object for when your LINE Official Account joins a group chat or multi-person chat. You can reply to join events."
       allOf:
         - $ref: "#/components/schemas/Event"
@@ -601,16 +622,18 @@ components:
               description: "Reply token used to send reply message to this event"
 
 
-    # https://developers.line.biz/en/reference/messaging-api/#leave-event
     LeaveEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#leave-event
       description: "Event object for when a user removes your LINE Official Account from a group chat or when your LINE Official Account leaves a group chat or multi-person chat."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
 
 
-    # https://developers.line.biz/en/reference/messaging-api/#member-joined-event
     MemberJoinedEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#member-joined-event
       description: "Event object for when a user joins a group chat or multi-person chat that the LINE Official Account is in."
       allOf:
         - $ref: "#/components/schemas/Event"
@@ -625,6 +648,8 @@ components:
             joined:
               $ref: "#/components/schemas/JoinedMembers"
     JoinedMembers:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#member-joined-event
       required:
         - members
       type: object
@@ -636,8 +661,9 @@ components:
             $ref: "#/components/schemas/UserSource"
 
 
-    # https://developers.line.biz/en/reference/messaging-api/#member-left-event
     MemberLeftEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#member-left-event
       description: "Event object for when a user leaves a group chat or multi-person chat that the LINE Official Account is in."
       allOf:
         - $ref: "#/components/schemas/Event"
@@ -648,6 +674,8 @@ components:
             left:
               $ref: "#/components/schemas/LeftMembers"
     LeftMembers:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#member-left-event
       required:
         - members
       type: object
@@ -659,8 +687,9 @@ components:
             $ref: "#/components/schemas/UserSource"
 
 
-    # https://developers.line.biz/en/reference/messaging-api/#postback-event
     PostbackEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#postback-event
       description: "Event object for when a user performs a postback action which initiates a postback. You can reply to postback events."
       allOf:
         - $ref: "#/components/schemas/Event"
@@ -674,6 +703,8 @@ components:
             postback:
               $ref: "#/components/schemas/PostbackContent"
     PostbackContent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#postback-event
       type: object
       required:
         - data
@@ -687,8 +718,9 @@ components:
             type: string
 
 
-    # https://developers.line.biz/en/reference/messaging-api/#video-viewing-complete
     VideoPlayCompleteEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#video-viewing-complete
       description: "Event for when a user finishes viewing a video at least once with the specified trackingId sent by the LINE Official Account."
       allOf:
         - $ref: "#/components/schemas/Event"
@@ -703,6 +735,8 @@ components:
             videoPlayComplete:
               $ref: "#/components/schemas/VideoPlayComplete"
     VideoPlayComplete:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#video-viewing-complete
       required:
         - trackingId
       type: object
@@ -712,8 +746,9 @@ components:
           description: "ID used to identify a video. Returns the same value as the trackingId assigned to the video message."
 
 
-    # https://developers.line.biz/en/reference/messaging-api/#beacon-event
     BeaconEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#beacon-event
       description: "Event object for when a user enters the range of a LINE Beacon. You can reply to beacon events."
       allOf:
         - $ref: "#/components/schemas/Event"
@@ -728,6 +763,8 @@ components:
             beacon:
               $ref: "#/components/schemas/BeaconContent"
     BeaconContent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#beacon-event
       required:
         - hwid
         - type
@@ -745,8 +782,9 @@ components:
           description: "Device message of beacon that was detected."
 
 
-    # https://developers.line.biz/en/reference/messaging-api/#account-link-event
     AccountLinkEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#account-link-event
       description: "Event object for when a user has linked their LINE account with a provider's service account. You can reply to account link events."
       allOf:
         - $ref: "#/components/schemas/Event"
@@ -760,6 +798,8 @@ components:
             link:
               $ref: "#/components/schemas/LinkContent"
     LinkContent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#account-link-event
       description: "Content of the account link event."
       required:
         - result
@@ -774,8 +814,9 @@ components:
           type: string
           description: "Specified nonce (number used once) when verifying the user ID."
 
-    # https://developers.line.biz/en/reference/messaging-api/#membership-event
     MembershipEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#membership-event
       description: "This event indicates that a user has subscribed (joined), unsubscribed (left), or renewed the bot's membership."
       allOf:
         - $ref: "#/components/schemas/Event"
@@ -790,6 +831,8 @@ components:
             membership:
               $ref: "#/components/schemas/MembershipContent"
     MembershipContent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#membership-event
       description: "Content of the membership event."
       required:
         - type
@@ -836,8 +879,9 @@ components:
               type: integer
               description: "The ID of the membership that the user renewed. This is defined for each membership."
 
-    # https://developers.line.biz/en/reference/partner-docs/#module-webhook-event-object
     ModuleEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#module-channel-specific-webhook-events
       description: "This event indicates that the module channel has been attached to the LINE Official Account. Sent to the webhook URL server of the module channel."
       allOf:
         - $ref: "#/components/schemas/Event"
@@ -848,6 +892,8 @@ components:
             module:
               $ref: "#/components/schemas/ModuleContent"
     ModuleContent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#module-channel-specific-webhook-events
       type: object
       required:
         - type
@@ -861,6 +907,8 @@ components:
           attached: "#/components/schemas/AttachedModuleContent"
           detached: "#/components/schemas/DetachedModuleContent"
     AttachedModuleContent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#attached-event
       allOf:
         - $ref: "#/components/schemas/ModuleContent"
         - type: object
@@ -877,6 +925,8 @@ components:
               items:
                 type: string
     DetachedModuleContent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#detached-event
       allOf:
         - $ref: "#/components/schemas/ModuleContent"
         - type: object
@@ -893,8 +943,9 @@ components:
               enum:
                 - bot_deleted
 
-    # https://developers.line.biz/en/reference/partner-docs/#activated-event
     ActivatedEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#activated-event
       description: "This event indicates that the module channel has been switched to Active Channel by calling the Acquire Control API. Sent to the webhook URL server of the module channel."
       allOf:
         - $ref: "#/components/schemas/Event"
@@ -905,6 +956,8 @@ components:
             chatControl:
               $ref: "#/components/schemas/ChatControl"
     ChatControl:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#activated-event
       required:
         - expireAt
       type: object
@@ -913,29 +966,33 @@ components:
           type: integer
           format: int64
 
-    # https://developers.line.biz/en/reference/partner-docs/#deactivated-event
     DeactivatedEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#deactivated-event
       description: "This event indicates that the module channel has been switched to Standby Channel by calling Acquire Control API or Release Control API. Sent to the webhook URL server of the module channel."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
 
-    # https://developers.line.biz/en/reference/partner-docs/#botsuspend-event
     BotSuspendedEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#botsuspend-event
       description: "This event indicates that the LINE Official Account has been suspended (Suspend). Sent to the webhook URL server of the module channel."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
 
-    # https://developers.line.biz/en/reference/partner-docs/#botresumed-event
     BotResumedEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#botresumed-event
       description: "This event indicates that the LINE Official Account has returned from the suspended state. Sent to the webhook URL server of the module channel."
       allOf:
         - $ref: "#/components/schemas/Event"
         - type: object
 
-    # https://developers.line.biz/en/docs/partner-docs/line-notification-messages/message-sending-complete-webhook-event/#overview-delivery-webhook-event
     PnpDeliveryCompletionEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/docs/partner-docs/line-notification-messages/message-sending-complete-webhook-event/#overview-delivery-webhook-event
       description: "When a request is made to the LINE notification messages API and delivery of the LINE notification message to the user is completed, a dedicated webhook event (delivery completion event) is sent from the LINE Platform to the webhook URL of the bot server."
       allOf:
         - $ref: "#/components/schemas/Event"
@@ -947,6 +1004,8 @@ components:
               $ref: "#/components/schemas/PnpDelivery"
 
     PnpDelivery:
+      externalDocs:
+        url: https://developers.line.biz/en/docs/partner-docs/line-notification-messages/message-sending-complete-webhook-event/#overview-delivery-webhook-event
       description: "A delivery object containing a hashed phone number string or a string specified by `X-Line-Delivery-Tag` header"
       type: object
       required:

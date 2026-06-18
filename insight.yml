@@ -230,7 +230,6 @@ paths:
             Name of aggregation unit specified when sending the message. Case-sensitive.
             For example, `Promotion_a` and `Promotion_A` are regarded as different unit names.
           schema:
-            # https://developers.line.biz/en/reference/messaging-api/#send-push-message-request-body
             type: string
             pattern: "^[a-zA-Z0-9_]{1,30}$"
             minLength: 1
@@ -344,6 +343,8 @@ components:
           type: array
           description: "Percentage per friendship duration."
     GenderTile:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
       type: object
       properties:
         gender:
@@ -358,6 +359,8 @@ components:
           format: double
           description: "Percentage"
     AgeTile:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
       type: object
       properties:
         age:
@@ -384,6 +387,8 @@ components:
           format: double
           description: "Percentage"
     AreaTile:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
       type: object
       properties:
         area:
@@ -394,6 +399,8 @@ components:
           format: double
           description: "Percentage"
     AppTypeTile:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
       properties:
         appType:
           type: string
@@ -408,6 +415,8 @@ components:
           description: "Percentage"
       type: object
     SubscriptionPeriodTile:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
       properties:
         subscriptionPeriod:
           type: string
@@ -540,6 +549,8 @@ components:
             $ref: "#/components/schemas/GetMessageEventResponseClick"
       type: object
     GetMessageEventResponseOverview:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response
       description: "Summary of message statistics."
       type: object
       properties:
@@ -578,6 +589,8 @@ components:
           description: "Number of users who played the entirety of any video or audio in the message."
           nullable: true
     GetMessageEventResponseMessage:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response
       type: object
       properties:
         seq:
@@ -640,6 +653,8 @@ components:
           description: "Number of users that started playing audio or video in the bubble and played 100% of the total time."
           nullable: true
     GetMessageEventResponseClick:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response
       type: object
       properties:
         seq:
@@ -834,6 +849,8 @@ components:
             $ref: "#/components/schemas/ErrorDetail"
           description: "An array of error details. If the array is empty, this property will not be included in the response."
     ErrorDetail:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#error-responses
       type: object
       properties:
         message:
