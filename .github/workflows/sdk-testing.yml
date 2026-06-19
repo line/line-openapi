@@ -209,7 +209,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Test Project
-        run: export NODE_OPTIONS=--max-old-space-size=6144; npm test
+        run: npm run checkAll
 
   test-go:
     runs-on: ubuntu-latest
@@ -266,19 +266,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: run tests
-        run: go test ./...
-
-      - name: go vet
-        run: go vet $(go list ./... | grep -v /examples/)
-
-      - name: Compile example scripts
-        run: |
-          for file in $(find ./examples/ -name '*.go'); do
-            dir=$(dirname $file)
-            pushd $dir
-            go build -o /dev/null
-            popd
-          done
+        run: bash script/checkAll.sh
 
   test-ruby:
     runs-on: ubuntu-latest
