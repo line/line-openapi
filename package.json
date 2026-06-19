@@ -1,7 +1,14 @@
 {
-  "dependencies": {
+  "scripts": {
+    "format": "zx ./tools/reformat.mjs",
+    "validate:all": "zx ./tools/validate-all.mjs",
+    "validate:inheritance": "zx ./tools/validate-inheritance.mjs",
+    "validate:request-suffix": "zx ./tools/validate-request-suffix.mjs"
+  },
+  "devDependencies": {
     "ibm-openapi-validator": "^1.37.14",
-    "js-yaml": "^4.2.0"
+    "js-yaml": "^4.2.0",
+    "zx": "^8.8.5"
   },
   "overrides": {
     "lodash": "^4.18.1",
