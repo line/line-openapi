@@ -1,6 +1,18 @@
 {
   "dependencies": {
-    "ibm-openapi-validator": "^0.97.5",
-    "js-yaml": "^4.1.0"
+    "ibm-openapi-validator": "^1.37.14",
+    "js-yaml": "^4.2.0"
+  },
+  "overrides": {
+    "lodash": "^4.18.1",
+    "@stoplight/spectral-core": {
+      "minimatch": "^3.1.5"
+    },
+    "glob": {
+      "minimatch": "^3.1.5"
+    },
+    "ibm-openapi-validator": {
+      "js-yaml": "^4.2.0"
+    }
   }
 }
