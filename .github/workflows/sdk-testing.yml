@@ -30,7 +30,7 @@ jobs:
         uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4.7.0
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
 
       - name: Generate code
         run: python3 generate-code.py
@@ -72,7 +72,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5.5.0
         with:
-          python-version: '3.11'
+          python-version: '3.14'
 
       - name: Install dependencies
         run: |
@@ -108,6 +108,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: 'line/line-bot-sdk-php'
+          ref: 'unify-command'
           submodules: recursive
 
       - name: Update line-openapi submodule
@@ -119,7 +120,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@9e72090525849c5e82e596468b86eb55e9cc5401 # 2.32.0
         with:
-          php-version: '8.2'
+          php-version: '8.5'
 
       - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
         with:
@@ -128,18 +129,6 @@ jobs:
 
       - name: Generate code
         run: python generate-code.py
-
-      - name: Get Composer Cache Directory
-        id: composer-cache
-        run: |
-          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-${{ matrix.php }}-
 
       - name: Install dependencies with Composer
         uses: ramsey/composer-install@a2636af0004d1c0499ffca16ac0b4cc94df70565 # 3.1.0
@@ -156,8 +145,8 @@ jobs:
           language: php
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run unit tests
-        run: ./vendor/bin/phpunit --test-suffix=Test.php
+      - name: Run tests
+        run: composer check
 
   test-nodejs:
     runs-on: ubuntu-latest
@@ -170,6 +159,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: 'line/line-bot-sdk-nodejs'
+          ref: 'maintenance-example'
           submodules: recursive
 
       - name: Update line-openapi submodule
@@ -188,7 +178,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
         with:
-          node-version: '20'
+          node-version: '26'
 
       - name: Install Dependency
         run: npm ci
@@ -222,6 +212,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: 'line/line-bot-sdk-go'
+          ref: 'check-all'
           submodules: recursive
 
       - name: Update line-openapi submodule
@@ -289,7 +280,7 @@ jobs:
       # https://github.com/line/line-bot-sdk-ruby/blob/master/.github/workflows/pull_request.yml
       - uses: ruby/setup-ruby@354a1ad156761f5ee2b7b13fa8e09943a5e8d252 # v1.229.0
         with:
-          ruby-version: 3.4
+          ruby-version: 4.0
       - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
         with:
           distribution: 'temurin'
