@@ -82,6 +82,7 @@ paths:
               description: "Request for createAudienceForUploadingUserIds"
               type: object
               required:
+                - description
                 - file
               properties:
                 description:
