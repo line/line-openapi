@@ -829,6 +829,7 @@ components:
       description: "Create audience for click-based retargeting"
       required:
         - description
+        - requestId
       properties:
         description:
           type: string
