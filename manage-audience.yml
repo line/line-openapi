@@ -827,6 +827,8 @@ components:
         url: https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group
       type: object
       description: "Create audience for click-based retargeting"
+      required:
+        - description
       properties:
         description:
           type: string
