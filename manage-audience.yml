@@ -143,6 +143,7 @@ paths:
               description: "Request of the addUserIdsToAudience"
               type: object
               required:
+                - audienceGroupId
                 - file
               properties:
                 audienceGroupId:
