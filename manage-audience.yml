@@ -911,6 +911,7 @@ components:
       description: "Create audience for impression-based retargeting"
       required:
         - description
+        - requestId
       properties:
         description:
           type: string
