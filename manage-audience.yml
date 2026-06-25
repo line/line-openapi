@@ -909,6 +909,8 @@ components:
         url: https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group
       type: object
       description: "Create audience for impression-based retargeting"
+      required:
+        - description
       properties:
         description:
           type: string
