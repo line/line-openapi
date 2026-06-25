@@ -698,6 +698,8 @@ components:
         url: https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group
       type: object
       description: "Create audience for uploading user IDs (by JSON)"
+      required:
+        - description
       properties:
         description:
           type: string
