@@ -5273,6 +5273,7 @@ components:
         - acquisitionCondition
         - endTimestamp
         - maxUseCountPerTicket
+        - reward
         - startTimestamp
         - title
         - visibility
