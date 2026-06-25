@@ -584,7 +584,7 @@ paths:
       parameters:
         - name: page
           in: query
-          required: true
+          required: false
           schema:
             type: integer
             format: int64
