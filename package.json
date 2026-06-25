@@ -3,11 +3,13 @@
     "format": "zx ./tools/reformat.mjs",
     "validate:all": "zx ./tools/validate-all.mjs",
     "validate:inheritance": "zx ./tools/validate-inheritance.mjs",
-    "validate:request-suffix": "zx ./tools/validate-request-suffix.mjs"
+    "validate:request-suffix": "zx ./tools/validate-request-suffix.mjs",
+    "generate-test": "openapi-generator-cli version-manager set 7.23.0 && zx ./tools/generate-test.mjs"
   },
   "devDependencies": {
     "ibm-openapi-validator": "^1.37.14",
     "js-yaml": "^4.2.0",
+    "@openapitools/openapi-generator-cli": "^2.38.0",
     "zx": "^8.8.5"
   },
   "overrides": {
