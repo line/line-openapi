@@ -806,6 +806,7 @@ components:
       description: "Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)"
       required:
         - audienceGroupId
+        - audiences
       properties:
         audienceGroupId:
           type: integer
