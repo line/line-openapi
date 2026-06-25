@@ -2,6 +2,7 @@
     "name": "post-comment-action",
     "version": "1.0.0",
     "description": "Post comments on a pull request",
+    "type": "module",
     "main": "main.js",
     "dependencies": {
         "@actions/core": "^3.0.1",
