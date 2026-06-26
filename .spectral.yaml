@@ -11,33 +11,36 @@ rules:
   # https://github.com/IBM/openapi-validator/blob/main/docs/ibm-cloud-rules.md
 
   # some API end points doesn't have a version number in path.
-  major-version-in-path: off
+  ibm-major-version-in-path: off
   # we're using kebab case.
-  operation-id-case-convention: off
-  parameter-case-convention: off
-  property-case-convention: off
-  path-segment-case-convention: off
-  operation-id-naming-convention: off
+  ibm-operationid-casing-convention: off
+  ibm-parameter-casing-convention: off
+  ibm-property-casing-convention: off
+  ibm-path-segment-casing-convention: off
+  ibm-operationid-naming-convention: off
   # This rule doesn't match to our API specs.
-  enum-case-convention: off
+  ibm-enum-casing-convention: off
   # This rule doesn't match to our API specs.
-  response-status-codes: off
+  ibm-response-status-codes: off
   # Can't care both description and summary at this time.
   # TODO We may write summary field in the future.
-  operation-summary: off
+  ibm-operation-summary: off
   # We're using `format: uri`. But it's not allowed by '@ibm-cloud/openapi-ruleset'.
-  valid-type-format: off
+  ibm-schema-type-format: off
   # I can't understand why it's needed.
-  request-body-name: off
+  ibm-requestbody-name: off
   # we don't use ibm-cloud's pagination style
-  pagination-style: off
+  ibm-pagination-style: off
   # description-mentions-json is meaningless
-  description-mentions-json: off
-  schema-description: off
-  collection-array-property: off
-  response-error-response-schema: off
-  array-boundary: off
-  string-boundary: off
+  ibm-schema-description: off
+  ibm-collection-array-property: off
+  ibm-error-response-schemas: off
+  ibm-array-attributes: off
+  ibm-string-attributes: off
+  ibm-integer-attributes: off
+  ibm-required-array-properties-in-response: off
+  ibm-required-enum-properties-in-response: off
+  ibm-accept-and-return-models: off
 
 overrides:
   # TODO Response detail wasn't documented yet.
@@ -47,7 +50,7 @@ overrides:
       - "module.yml#/paths/~1v2~1bot~1chat~1{chatId}~1control~1release"
       - "shop.yml#/paths/~1shop~1v3~1mission"
     rules:
-      content-entry-provided: off
+      ibm-request-and-response-content: off
 
   # blob response
   - files:
@@ -57,7 +60,7 @@ overrides:
       - "messaging-api-blob.yml#/paths/~1v2~1bot~1richmenu~1{richMenuId}~1content/post"
       - "messaging-api-blob.yml#/paths/~1v2~1bot~1message~1{messageId}~1content~1transcoding/get"
     rules:
-      string-boundary: off
+      ibm-string-attributes: off
       ibm-content-type-is-specific: off
 
   # empty response
@@ -71,7 +74,7 @@ overrides:
       - "channel-access-token.yml#/paths/~1v2~1oauth~1revoke"
       - "messaging-api-blob.yml#/paths/~1v2~1bot~1richmenu~1{richMenuId}~1content"
     rules:
-      content-entry-provided: off
+      ibm-request-and-response-content: off
 
   # enum with null issue.
   - files:
