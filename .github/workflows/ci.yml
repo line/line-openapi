@@ -12,48 +12,42 @@ jobs:
     permissions:
       contents: read
     steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-    - name: Use Node.js
-      uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+    - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
       with:
         cache: 'npm'
-    - run: npm install -g @stoplight/spectral-cli
-    - run: npm install .
-    - run: npx zx ./tools/validate-all.mjs
-    - run: npx zx ./tools/validate-request-suffix.mjs
-    - run: npx zx ./tools/validate-inheritance.mjs
+    - run: npm ci
+    - run: npm run validate:all
+    - run: npm run validate:request-suffix
+    - run: npm run validate:inheritance
 
   generate-test:
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-    - name: Use Node.js
-      uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+    - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
       with:
         cache: 'npm'
-    - run: npm install -g @openapitools/openapi-generator-cli
-    - run: openapi-generator-cli version-manager set 7.0.1
-    - run: sed -i -e 's/openapi-generator/openapi-generator-cli/g' ./tools/generate-test.mjs
-    - name: actions/setup-java@v3 (JDK 17)
-      uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4.7.0
+    - uses: actions/setup-java@ad2b38190b15e4d6bdf0c97fb4fca8412226d287 # v5.3.0
       with:
         distribution: 'temurin'
         java-version: 17
-        architecture: x64
-    - run: npx zx ./tools/generate-test.mjs
+    - run: npm ci
+    - run: npm run generate-test
 
   format-diff:
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-    - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+    - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
       with:
         cache: 'npm'
-    - run: npx zx ./tools/reformat.mjs
+    - run: npm ci
+    - run: npm run format
     - name: Check there is no diff (Run ./tools/reformat.mjs if there is a diff)
       run: git diff --exit-code
 
@@ -62,22 +56,21 @@ jobs:
     permissions:
       contents: read
     steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       with:
         # ensures origin/main is available for git show
         fetch-depth: 0
-    - name: Use Node.js
-      uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+    - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
       with:
         cache: 'npm'
-    - run: npm install
+    - run: npm ci
     - run: node tools/validate-property-camelcase.mjs
 
   pinact:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Run pinact
-        uses: suzuki-shunsuke/pinact-action@a6896d13d22e2bf108a78b0c52d3f867c1f41b34 # v0.2.1
+        uses: suzuki-shunsuke/pinact-action@3132770ecce73073bcd618342c7f4092ed2f994c # v3.0.0
         with:
           skip_push: "true"
