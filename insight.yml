@@ -300,6 +300,229 @@ paths:
                     uniqueClick: ~
                     uniqueClickOfRequest: ~
 
+  "/v2/bot/insight/richmenu/{richMenuId}/summary":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-insight-summary
+      tags:
+        - insight
+      operationId: getRichMenuInsightSummary
+      summary: "Get rich menu insight summary"
+      description: |+
+        Gets a summary of rich menu statistics for the specified period, for a rich
+        menu created via the Messaging API. Returns the total impression count for
+        the whole rich menu and the click count for each tappable area, aggregated
+        over the entire period as a single result.
+        When the total number of unique clicks during the period is below the
+        privacy threshold, only `richMenuId` is returned and the other fields are
+        omitted.
+      parameters:
+        - in: path
+          name: richMenuId
+          required: true
+          description: "ID of the rich menu created via the Messaging API."
+          schema:
+            type: string
+            example: "richmenu-0123456789abcdef0123456789abcdef"
+        - in: query
+          name: from
+          required: true
+          description: |+
+            Start date of the aggregation period (inclusive).
+            Must be within the most recent 3 years.
+
+            Format: yyyyMMdd (e.g. 20260213)
+            Time zone: UTC+9
+          schema:
+            type: string
+            pattern: "^[0-9]{8}$"
+            example: "20260213"
+            minLength: 8
+            maxLength: 8
+        - in: query
+          name: to
+          required: true
+          description: |+
+            End date of the aggregation period (inclusive).
+            The end date can be specified for up to 396 days after the start date.
+
+            Format: yyyyMMdd (e.g. 20260215)
+            Time zone: UTC+9
+          schema:
+            type: string
+            pattern: "^[0-9]{8}$"
+            example: "20260215"
+            minLength: 8
+            maxLength: 8
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/GetRichMenuInsightSummaryResponse"
+              examples:
+                default:
+                  summary: "Statistics are available"
+                  value:
+                    richMenuId: "richmenu-0123456789abcdef0123456789abcdef"
+                    metricsFrom: "20260213"
+                    metricsTo: "20260215"
+                    impression:
+                      metrics:
+                        count: 567
+                        uniqueUsers: 300
+                    clicks:
+                      - bounds:
+                          x: 0
+                          y: 0
+                          width: 400
+                          height: 250
+                        metrics:
+                          count: 123
+                          uniqueUsers: 45
+                      - bounds:
+                          x: 400
+                          y: 0
+                          width: 400
+                          height: 250
+                        metrics:
+                          count: 45
+                          uniqueUsers: 24
+                belowThreshold:
+                  summary: "Returned when the total number of unique clicks is below the privacy threshold"
+                  value:
+                    richMenuId: "richmenu-0123456789abcdef0123456789abcdef"
+        "400":
+          description: "Bad request. The `from` or `to` parameter is missing or invalid, or the aggregation period exceeds the allowed maximum."
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "Not found. The specified rich menu does not exist."
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  "/v2/bot/insight/richmenu/{richMenuId}/daily":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-insight-daily
+      tags:
+        - insight
+      operationId: getRichMenuInsightDaily
+      summary: "Get rich menu insight daily"
+      description: |+
+        Gets rich menu statistics broken down by day for the specified period, for a
+        rich menu created via the Messaging API. Returns the daily impression count
+        for the whole rich menu and the daily click count for each tappable area.
+        When the total number of unique clicks during the period is below the
+        privacy threshold, only `richMenuId` is returned and the other fields are
+        omitted.
+      parameters:
+        - in: path
+          name: richMenuId
+          required: true
+          description: "ID of the rich menu created via the Messaging API."
+          schema:
+            type: string
+            example: "richmenu-0123456789abcdef0123456789abcdef"
+        - in: query
+          name: from
+          required: true
+          description: |+
+            Start date of the aggregation period (inclusive).
+            Must be within the most recent 3 years.
+
+            Format: yyyyMMdd (e.g. 20260213)
+            Time zone: UTC+9
+          schema:
+            type: string
+            pattern: "^[0-9]{8}$"
+            example: "20260213"
+            minLength: 8
+            maxLength: 8
+        - in: query
+          name: to
+          required: true
+          description: |+
+            End date of the aggregation period (inclusive).
+            The end date can be specified for up to 99 days after the start date.
+
+            Format: yyyyMMdd (e.g. 20260215)
+            Time zone: UTC+9
+          schema:
+            type: string
+            pattern: "^[0-9]{8}$"
+            example: "20260215"
+            minLength: 8
+            maxLength: 8
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/GetRichMenuInsightDailyResponse"
+              examples:
+                default:
+                  summary: "Statistics are available"
+                  value:
+                    richMenuId: "richmenu-0123456789abcdef0123456789abcdef"
+                    metricsFrom: "20260213"
+                    metricsTo: "20260215"
+                    impression:
+                      metrics:
+                        - date: "20260213"
+                          count: 300
+                          uniqueUsers: 191
+                        - date: "20260214"
+                          count: 267
+                          uniqueUsers: 222
+                    clicks:
+                      - bounds:
+                          x: 0
+                          y: 0
+                          width: 400
+                          height: 250
+                        metrics:
+                          - date: "20260213"
+                            count: 45
+                            uniqueUsers: 22
+                          - date: "20260214"
+                            count: 78
+                            uniqueUsers: 35
+                      - bounds:
+                          x: 400
+                          y: 0
+                          width: 400
+                          height: 250
+                        metrics:
+                          - date: "20260213"
+                            count: 22
+                            uniqueUsers: 21
+                          - date: "20260214"
+                            count: 23
+                            uniqueUsers: 22
+                belowThreshold:
+                  summary: "Returned when the total number of unique clicks is below the privacy threshold"
+                  value:
+                    richMenuId: "richmenu-0123456789abcdef0123456789abcdef"
+        "400":
+          description: "Bad request. The `from` or `to` parameter is missing or invalid, or the aggregation period exceeds the allowed maximum."
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "Not found. The specified rich menu does not exist."
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   securitySchemes:
     Bearer:
@@ -832,6 +1055,202 @@ components:
       required:
         - seq
         - url
+
+    GetRichMenuInsightSummaryResponse:
+      description: "Summary of impression and click statistics for a rich menu created via the Messaging API."
+      type: object
+      required:
+        - richMenuId
+      properties:
+        richMenuId:
+          type: string
+          description: "Rich menu ID."
+        metricsFrom:
+          type: string
+          pattern: "^[0-9]{8}$"
+          nullable: true
+          example: "20260213"
+          description: "Start date (JST) of the period actually covered by the returned metrics. Format: yyyyMMdd (e.g. 20260213)."
+        metricsTo:
+          type: string
+          pattern: "^[0-9]{8}$"
+          nullable: true
+          example: "20260215"
+          description: "End date (JST) of the period actually covered by the returned metrics. Format: yyyyMMdd (e.g. 20260215)."
+        impression:
+          $ref: "#/components/schemas/GetRichMenuInsightSummaryResponseImpression"
+        clicks:
+          type: array
+          description: "Click metrics for each tappable area of the rich menu."
+          items:
+            $ref: "#/components/schemas/GetRichMenuInsightSummaryResponseClick"
+
+    GetRichMenuInsightSummaryResponseImpression:
+      description: "Impression metrics for the whole rich menu."
+      type: object
+      required:
+        - metrics
+      properties:
+        metrics:
+          $ref: "#/components/schemas/GetRichMenuInsightSummaryResponseMetrics"
+
+    GetRichMenuInsightSummaryResponseClick:
+      description: "Click metrics for a single tappable area of the rich menu."
+      type: object
+      required:
+        - bounds
+        - metrics
+      properties:
+        bounds:
+          $ref: "#/components/schemas/GetRichMenuInsightSummaryResponseBounds"
+        metrics:
+          $ref: "#/components/schemas/GetRichMenuInsightSummaryResponseMetrics"
+
+    GetRichMenuInsightSummaryResponseBounds:
+      description: "Target area of the metrics, represented by the top-left coordinate, width, and height."
+      type: object
+      required:
+        - x
+        - y
+        - width
+        - height
+      properties:
+        x:
+          type: integer
+          format: int32
+          description: "The x coordinate of the top-left corner of the target area."
+        y:
+          type: integer
+          format: int32
+          description: "The y coordinate of the top-left corner of the target area."
+        width:
+          type: integer
+          format: int32
+          description: "The width of the target area."
+        height:
+          type: integer
+          format: int32
+          description: "The height of the target area."
+
+    GetRichMenuInsightSummaryResponseMetrics:
+      description: "Aggregated number of events and unique users over the whole period."
+      type: object
+      required:
+        - count
+        - uniqueUsers
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: "Number of impressions or clicks."
+        uniqueUsers:
+          type: integer
+          format: int64
+          description: "Approximate number of unique users who triggered an impression or click."
+
+    GetRichMenuInsightDailyResponse:
+      description: "Daily impression and click statistics for a rich menu created via the Messaging API."
+      type: object
+      required:
+        - richMenuId
+      properties:
+        richMenuId:
+          type: string
+          description: "Rich menu ID."
+        metricsFrom:
+          type: string
+          pattern: "^[0-9]{8}$"
+          nullable: true
+          example: "20260213"
+          description: "Start date (JST) of the period actually covered by the returned metrics. Format: yyyyMMdd (e.g. 20260213)."
+        metricsTo:
+          type: string
+          pattern: "^[0-9]{8}$"
+          nullable: true
+          example: "20260215"
+          description: "End date (JST) of the period actually covered by the returned metrics. Format: yyyyMMdd (e.g. 20260215)."
+        impression:
+          $ref: "#/components/schemas/GetRichMenuInsightDailyResponseImpression"
+        clicks:
+          type: array
+          description: "Daily click metrics for each tappable area of the rich menu."
+          items:
+            $ref: "#/components/schemas/GetRichMenuInsightDailyResponseClick"
+
+    GetRichMenuInsightDailyResponseImpression:
+      description: "Daily impression metrics for the whole rich menu."
+      type: object
+      required:
+        - metrics
+      properties:
+        metrics:
+          type: array
+          description: "Per-day impression metrics."
+          items:
+            $ref: "#/components/schemas/GetRichMenuInsightDailyResponseDailyMetrics"
+
+    GetRichMenuInsightDailyResponseClick:
+      description: "Daily click metrics for a single tappable area of the rich menu."
+      type: object
+      required:
+        - bounds
+        - metrics
+      properties:
+        bounds:
+          $ref: "#/components/schemas/GetRichMenuInsightDailyResponseBounds"
+        metrics:
+          type: array
+          description: "Per-day click metrics for the target area."
+          items:
+            $ref: "#/components/schemas/GetRichMenuInsightDailyResponseDailyMetrics"
+
+    GetRichMenuInsightDailyResponseBounds:
+      description: "Target area of the metrics, represented by the top-left coordinate, width, and height."
+      type: object
+      required:
+        - x
+        - y
+        - width
+        - height
+      properties:
+        x:
+          type: integer
+          format: int32
+          description: "The x coordinate of the top-left corner of the target area."
+        y:
+          type: integer
+          format: int32
+          description: "The y coordinate of the top-left corner of the target area."
+        width:
+          type: integer
+          format: int32
+          description: "The width of the target area."
+        height:
+          type: integer
+          format: int32
+          description: "The height of the target area."
+
+    GetRichMenuInsightDailyResponseDailyMetrics:
+      description: "Aggregated number of events and unique users for a single day."
+      type: object
+      required:
+        - date
+        - count
+        - uniqueUsers
+      properties:
+        date:
+          type: string
+          pattern: "^[0-9]{8}$"
+          example: "20260213"
+          description: "The date (JST) of these metrics. Format: yyyyMMdd (e.g. 20260213)."
+        count:
+          type: integer
+          format: int64
+          description: "Number of impressions or clicks on this day."
+        uniqueUsers:
+          type: integer
+          format: int64
+          description: "Approximate number of unique users who triggered an impression or click on this day."
 
     ErrorResponse:
       externalDocs:
