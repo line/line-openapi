@@ -3261,6 +3261,12 @@ components:
     # RichMenu
     RichMenuRequest:
       type: object
+      required:
+        - size
+        - selected
+        - name
+        - chatBarText
+        - areas
       properties:
         size:
           "$ref": "#/components/schemas/RichMenuSize"
@@ -5267,6 +5273,7 @@ components:
         - acquisitionCondition
         - endTimestamp
         - maxUseCountPerTicket
+        - reward
         - startTimestamp
         - title
         - visibility
