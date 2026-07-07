@@ -114,6 +114,7 @@ components:
           botSuspended: "#/components/schemas/BotSuspendedEvent"
           botResumed: "#/components/schemas/BotResumedEvent"
           delivery: "#/components/schemas/PnpDeliveryCompletionEvent"
+          messageEdited: "#/components/schemas/MessageEditedEvent"
 
     EventMode:
       type: string
@@ -1014,3 +1015,24 @@ components:
         data:
           type: string
           description: "A hashed phone number string or a string specified by `X-Line-Delivery-Tag` header"
+
+    MessageEditedEvent:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#edit-event
+      description: |+
+        Webhook event object which contains the edited message. This event is triggered when a user edits a text message.
+        Currently, message editing is not available in one-on-one chats with LINE Official Accounts, so this event is only triggered in group chats.
+        Multiple messageEdited webhook events may arrive out of order. The event with the largest timestamp represents the latest edit state.
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Event"
+        - type: object
+          required:
+            - type
+            - message
+          properties:
+            replyToken:
+              type: string
+            message:
+              $ref: "#/components/schemas/MessageContent"
+
