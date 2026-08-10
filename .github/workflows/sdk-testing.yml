@@ -18,7 +18,6 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           repository: 'line/line-bot-sdk-java'
-          ref: 'line-openapi-126-prepare'
           submodules: recursive
 
       - name: Update line-openapi submodule
@@ -159,7 +158,6 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           repository: 'line/line-bot-sdk-nodejs'
-          ref: 'line-openapi-126-prepare'
           submodules: recursive
 
       - name: Update line-openapi submodule
@@ -212,7 +210,6 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           repository: 'line/line-bot-sdk-go'
-          ref: 'line-openapi-126-prepare'
           submodules: recursive
 
       - name: Update line-openapi submodule
@@ -270,7 +267,6 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           repository: 'line/line-bot-sdk-ruby'
-          ref: 'line-openapi-126-prepare'
           submodules: recursive
 
       - name: Update line-openapi submodule
