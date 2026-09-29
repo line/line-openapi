@@ -1739,6 +1739,40 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
 
+  "/v2/bot/message/pnp/templated/push":
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template
+      tags:
+        - messaging-api
+      operationId: pushTemplatedMessagesByPhone
+      description: "Send LINE notification message (template)"
+      parameters:
+        - name: X-Line-Delivery-Tag
+          in: header
+          required: false
+          schema:
+            type: string
+            minLength: 16
+            maxLength: 100
+          description: "String returned in the delivery.data property of the delivery completion event via Webhook."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PnpTemplatedMessageRequest"
+        required: true
+      responses:
+        "202":
+          description: "Accepted"
+        "422":
+          description: |+
+            Failed to send the LINE notification message. For example, there is no LINE user associated with the specified phone number, the phone number is outside the LINE notification message service area, the user has refused to receive LINE notification messages, or the user hasn't agreed to LINE's Privacy Policy.
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+
   "/v2/bot/message/delivery/pnp":
     get:
       externalDocs:
@@ -1747,6 +1781,37 @@ paths:
         - messaging-api
       operationId: getPNPMessageStatistics
       description: "Get number of sent LINE notification messages"
+      parameters:
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: "^[0-9]{8}$"
+          description: |+
+            Date the message was sent
+
+            Format: `yyyyMMdd` (Example:`20211231`)
+            Time zone: UTC+9
+      responses:
+        "200":
+          description: "OK"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/NumberOfMessagesResponse"
+              example:
+                status: ready
+                success: 3
+
+  "/v2/bot/message/delivery/pnp/templated":
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/line-notification-messages/#get-number-of-sent-line-notification-messages-template
+      tags:
+        - messaging-api
+      operationId: getPNPTemplatedMessageStatistics
+      description: "Get number of sent LINE notification messages (template)"
       parameters:
         - name: date
           in: query
@@ -3638,6 +3703,117 @@ components:
           description: "Message destination. Specify a phone number that has been normalized to E.164 format and hashed with SHA256."
         notificationDisabled:
           "$ref": "#/components/schemas/NotificationDisabled"
+        customAggregationUnits:
+          type: array
+          maxItems: 1
+          description: "Name of aggregation unit. Case-sensitive."
+          items:
+            type: string
+            maxLength: 30
+            minLength: 1
+            pattern: "^[a-zA-Z0-9_]{1,30}$"
+
+    PnpTemplatedMessageRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template
+      required:
+        - to
+        - templateKey
+      type: object
+      properties:
+        to:
+          type: string
+          description: "Message destination. Specify a phone number that has been normalized to E.164 format and hashed with SHA256."
+        templateKey:
+          type: string
+          description: |+
+            Specify the key of the template you want to send.
+            For available keys, see https://developers.line.biz/en/docs/partner-docs/line-notification-messages/template/#templates
+        body:
+          "$ref": "#/components/schemas/PnpTemplatedMessageBody"
+        customAggregationUnits:
+          type: array
+          maxItems: 1
+          description: |+
+            Name of aggregation unit. Case-sensitive.
+            For more information about assigning a unit name, see https://developers.line.biz/en/docs/messaging-api/unit-based-statistics-aggregation/#assign-names-to-units-when-sending-messages
+          items:
+            type: string
+            maxLength: 30
+            minLength: 1
+            pattern: "^[a-zA-Z0-9_]{1,30}$"
+    PnpTemplatedMessageBody:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template
+      type: object
+      description: "The body object of the template you want to send. You can't specify the same item more than once in a single message."
+      properties:
+        emphasizedItem:
+          "$ref": "#/components/schemas/PnpTemplatedEmphasizedItem"
+        items:
+          type: array
+          maxItems: 15
+          description: "Array of items to include in the message. The `itemKey` must be unique across `emphasizedItem` and `items`."
+          items:
+            "$ref": "#/components/schemas/PnpTemplatedItem"
+        buttons:
+          type: array
+          maxItems: 2
+          description: "Array of buttons to include in the message. The `buttonKey` must be unique."
+          items:
+            "$ref": "#/components/schemas/PnpTemplatedButton"
+    PnpTemplatedEmphasizedItem:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template-items
+      required:
+        - itemKey
+        - content
+      type: object
+      description: "Item to emphasize in the message."
+      properties:
+        itemKey:
+          type: string
+          description: |+
+            Specify the key of the item you want to include.
+            For available keys, see https://developers.line.biz/en/docs/partner-docs/line-notification-messages/template/#items
+        content:
+          type: string
+          maxLength: 15
+          description: "String to be displayed as the value of the item."
+    PnpTemplatedItem:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template-items
+      required:
+        - itemKey
+        - content
+      type: object
+      properties:
+        itemKey:
+          type: string
+          description: |+
+            Specify the key of the item you want to include.
+            For available keys, see https://developers.line.biz/en/docs/partner-docs/line-notification-messages/template/#items
+        content:
+          type: string
+          maxLength: 300
+          description: "String to be displayed as the value of the item."
+    PnpTemplatedButton:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template-buttons
+      required:
+        - buttonKey
+        - url
+      type: object
+      properties:
+        buttonKey:
+          type: string
+          description: |+
+            Specify the key of the button you want to include.
+            For available keys, see https://developers.line.biz/en/docs/partner-docs/line-notification-messages/template/#buttons
+        url:
+          type: string
+          maxLength: 1000
+          description: "URL of the page to be opened when the user presses the button."
 
     # Message objects
     Message:
