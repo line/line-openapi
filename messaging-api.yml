@@ -1742,7 +1742,7 @@ paths:
   "/v2/bot/message/pnp/templated/push":
     post:
       externalDocs:
-        url: https://developers.line.biz/en/docs/partner-docs/line-notification-messages/template/
+        url: https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template
       tags:
         - messaging-api
       operationId: pushTemplatedMessagesByPhone
@@ -1807,7 +1807,7 @@ paths:
   "/v2/bot/message/delivery/pnp/templated":
     get:
       externalDocs:
-        url: https://developers.line.biz/en/docs/partner-docs/line-notification-messages/statistics/
+        url: https://developers.line.biz/en/reference/line-notification-messages/#get-number-of-sent-line-notification-messages-template
       tags:
         - messaging-api
       operationId: getPNPTemplatedMessageStatistics
@@ -3715,7 +3715,7 @@ components:
 
     PnpTemplatedMessageRequest:
       externalDocs:
-        url: https://developers.line.biz/en/docs/partner-docs/line-notification-messages/template/
+        url: https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template
       required:
         - to
         - templateKey
@@ -3726,50 +3726,63 @@ components:
           description: "Message destination. Specify a phone number that has been normalized to E.164 format and hashed with SHA256."
         templateKey:
           type: string
-          description: "Key of the template to use. The template must be registered in advance and authorized for the bot."
+          description: |+
+            Specify the key of the template you want to send.
+            For available keys, see https://developers.line.biz/en/docs/partner-docs/line-notification-messages/template/#templates
         body:
           "$ref": "#/components/schemas/PnpTemplatedMessageBody"
         customAggregationUnits:
           type: array
           maxItems: 1
-          description: "Name of aggregation unit. Case-sensitive."
+          description: |+
+            Name of aggregation unit. Case-sensitive.
+            For more information about assigning a unit name, see https://developers.line.biz/en/docs/messaging-api/unit-based-statistics-aggregation/#assign-names-to-units-when-sending-messages
           items:
             type: string
             maxLength: 30
             minLength: 1
             pattern: "^[a-zA-Z0-9_]{1,30}$"
     PnpTemplatedMessageBody:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template
       type: object
-      description: "Content to be substituted into the template."
+      description: "The body object of the template you want to send. You can't specify the same item more than once in a single message."
       properties:
         emphasizedItem:
           "$ref": "#/components/schemas/PnpTemplatedEmphasizedItem"
         items:
           type: array
           maxItems: 15
-          description: "List of items to be substituted into the template. The `itemKey` must be unique across `emphasizedItem` and `items`."
+          description: "Array of items to include in the message. The `itemKey` must be unique across `emphasizedItem` and `items`."
           items:
             "$ref": "#/components/schemas/PnpTemplatedItem"
         buttons:
           type: array
           maxItems: 2
-          description: "List of buttons to be substituted into the template. The `buttonKey` must be unique."
+          description: "Array of buttons to include in the message. The `buttonKey` must be unique."
           items:
             "$ref": "#/components/schemas/PnpTemplatedButton"
     PnpTemplatedEmphasizedItem:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template-items
       required:
         - itemKey
         - content
       type: object
+      description: "Item to emphasize in the message."
       properties:
         itemKey:
           type: string
-          description: "Key of the item defined in the template."
+          description: |+
+            Specify the key of the item you want to include.
+            For available keys, see https://developers.line.biz/en/docs/partner-docs/line-notification-messages/template/#items
         content:
           type: string
           maxLength: 15
-          description: "Value to be substituted into the item."
+          description: "String to be displayed as the value of the item."
     PnpTemplatedItem:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template-items
       required:
         - itemKey
         - content
@@ -3777,12 +3790,16 @@ components:
       properties:
         itemKey:
           type: string
-          description: "Key of the item defined in the template."
+          description: |+
+            Specify the key of the item you want to include.
+            For available keys, see https://developers.line.biz/en/docs/partner-docs/line-notification-messages/template/#items
         content:
           type: string
           maxLength: 300
-          description: "Value to be substituted into the item."
+          description: "String to be displayed as the value of the item."
     PnpTemplatedButton:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template-buttons
       required:
         - buttonKey
         - url
@@ -3790,11 +3807,13 @@ components:
       properties:
         buttonKey:
           type: string
-          description: "Key of the button defined in the template."
+          description: |+
+            Specify the key of the button you want to include.
+            For available keys, see https://developers.line.biz/en/docs/partner-docs/line-notification-messages/template/#buttons
         url:
           type: string
           maxLength: 1000
-          description: "URL to be substituted into the button."
+          description: "URL of the page to be opened when the user presses the button."
 
     # Message objects
     Message:
