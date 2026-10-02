@@ -82,6 +82,7 @@ paths:
               description: "Request for createAudienceForUploadingUserIds"
               type: object
               required:
+                - description
                 - file
               properties:
                 description:
@@ -142,6 +143,7 @@ paths:
               description: "Request of the addUserIdsToAudience"
               type: object
               required:
+                - audienceGroupId
                 - file
               properties:
                 audienceGroupId:
@@ -582,7 +584,7 @@ paths:
       parameters:
         - name: page
           in: query
-          required: true
+          required: false
           schema:
             type: integer
             format: int64
@@ -698,6 +700,8 @@ components:
         url: https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group
       type: object
       description: "Create audience for uploading user IDs (by JSON)"
+      required:
+        - description
       properties:
         description:
           type: string
@@ -801,6 +805,9 @@ components:
         url: https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group
       type: object
       description: "Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)"
+      required:
+        - audienceGroupId
+        - audiences
       properties:
         audienceGroupId:
           type: integer
@@ -820,6 +827,9 @@ components:
         url: https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group
       type: object
       description: "Create audience for click-based retargeting"
+      required:
+        - description
+        - requestId
       properties:
         description:
           type: string
@@ -899,6 +909,9 @@ components:
         url: https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group
       type: object
       description: "Create audience for impression-based retargeting"
+      required:
+        - description
+        - requestId
       properties:
         description:
           type: string
@@ -940,6 +953,8 @@ components:
         url: https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group
       type: object
       description: "Rename an audience"
+      required:
+        - description
       properties:
         description:
           type: string
