@@ -125,7 +125,7 @@ paths:
       parameters:
         - in: query
           name: date
-          required: false
+          required: true
           description: |+
             Date for which to retrieve the number of followers.
 
