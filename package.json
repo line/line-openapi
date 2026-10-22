@@ -4,20 +4,17 @@
     "validate:all": "zx ./tools/validate-all.mjs",
     "validate:inheritance": "zx ./tools/validate-inheritance.mjs",
     "validate:request-suffix": "zx ./tools/validate-request-suffix.mjs",
-    "generate-test": "openapi-generator-cli version-manager set 7.23.0 && zx ./tools/generate-test.mjs"
+    "generate-test": "openapi-generator-cli version-manager set 7.26.0 && zx ./tools/generate-test.mjs"
   },
   "devDependencies": {
-    "ibm-openapi-validator": "^1.37.14",
-    "js-yaml": "^4.2.0",
-    "@openapitools/openapi-generator-cli": "^2.38.0",
+    "@openapitools/openapi-generator-cli": "^2.42.0",
+    "ibm-openapi-validator": "^1.38.4",
+    "js-yaml": "^5.5.0",
     "zx": "^8.8.5"
   },
   "overrides": {
     "lodash": "^4.18.1",
     "@stoplight/spectral-core": {
-      "minimatch": "^3.1.5"
-    },
-    "glob": {
       "minimatch": "^3.1.5"
     },
     "ibm-openapi-validator": {

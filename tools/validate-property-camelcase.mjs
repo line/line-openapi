@@ -11,14 +11,14 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
-import yaml from 'js-yaml';
+import { load } from 'js-yaml';
 
 /**
  * Recursively collect all files under the given directory
  * that have a .yml or .yaml extension, excluding certain directories.
  */
 async function collectYamlFiles(dir) {
-    const excludeDirs = new Set(['node_modules', '.github']);
+    const excludeDirs = new Set(['node_modules', '.github', 'tmp']);
     let results = [];
     const entries = await fs.readdir(dir, { withFileTypes: true });
     for (const entry of entries) {
@@ -40,7 +40,7 @@ async function collectYamlFiles(dir) {
  */
 function parseYaml(content) {
     try {
-        return yaml.load(content) || {};
+        return load(content) || {};
     } catch (err) {
         throw new Error(`YAML parse error: ${err.message}`);
     }
