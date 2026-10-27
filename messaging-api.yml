@@ -5241,13 +5241,14 @@ components:
             uri:
               type: string
               format: uri
+              maxLength: 10000
             altUri:
               "$ref": "#/components/schemas/AltUri"
     AltUri:
       type: object
       properties:
         desktop:
-          maxLength: 1000
+          maxLength: 10000
           minLength: 0
           type: string
     # Membership
